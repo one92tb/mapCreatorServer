@@ -9,9 +9,9 @@ import {
   NavItem,
   NavLink
 } from 'reactstrap';
-import './CSS/panel.css'
-import MarkerList from './markerList';
-import MarkerFilter from './markerFilter';
+import './panel.css'
+import MarkerList from './MarkerList/MarkerList';
+import MarkerFilter from './MarkerFilter/MarkerFilter';
 import {Link, BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 const routes = [
@@ -19,7 +19,12 @@ const routes = [
     path: '/',
     exact: true,
     sidebar: () => <MarkerList/>
-  }, {
+  },
+  {
+    path: '/createMarker',
+    sidebar: () => <MarkerList/>
+  },
+  {
     path: "/selectMarker",
     sidebar: () => <MarkerList/>
   }, {

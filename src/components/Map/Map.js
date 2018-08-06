@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import GoogleMapReact from 'google-map-react';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+const AnyReactComponent = () => <div><i className="icon-home"></i></div>;
 
 class Map extends Component {
 
@@ -10,7 +10,7 @@ class Map extends Component {
   }
 
   componentDidMount() {
-    fetch('https://maps.googleapis.com/maps/api/js?key=AIzaSyA7P_AWI7wDBqw4PSJDYCmI22HSi8vi2qQ&callback=initMap')
+    fetch('https://maps.googleapis.com/maps/api/js?key=AIzaSyC9KF6ohkrQU2JPS8wiBWLmlcUqbAf0ik8&callback=initMap')
     .then(data => console.log(data)) // JSON from `response.json()` call
     .catch(error => console.error(error));
   }
@@ -34,9 +34,8 @@ class Map extends Component {
           defaultZoom={this.props.zoom}
         >
           <AnyReactComponent
-            lat={59.955413}
-            lng={30.337844}
-            text={'Kreyser Avrora'}
+            lat={50.89973}
+            lng={15.72899}
           />
         </GoogleMapReact>
       </div>

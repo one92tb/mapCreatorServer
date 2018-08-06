@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import './App.css';
-import NavBar from './components/nav';
-import Marker from './components/marker';
-import Main from './components/main';
+import NavBar from './components/NavBar/NavBar';
+import MarkerCreator from './components/MarkerCreator/MarkerCreator';
+import Map from './components/Map/Map';
+import Panel from './components/Panel/Panel';
+
 import {Container, Row, Col} from 'reactstrap';
-import MarkerCreator from './components/markerCreator';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -12,19 +13,16 @@ const routes = [
   {
     path: '/',
     exact: true,
-    main: () => <Main />
-  },
-  {
+    section: () => <Map/>
+  }, {
     path: '/createMarker',
-    main: () => <MarkerCreator />
-  },
-  {
+    section: () => <MarkerCreator/>
+  }, {
     path: '/selectMarker',
-    main: () => <Main />
-  },
-  {
+    section: () => <Map/>
+  }, {
     path: '/filterMarker',
-    main: () => <Main />
+    section: () => <Map/>
   }
 ];
 
@@ -34,20 +32,22 @@ class App extends Component {
     console.log(routes);
     return (<Router>
       <Container className="mainContainer">
-        <header className="header">
+        <header className="header">s
           <span className="headerText">Map Creator</span>
         </header>
         <nav className="nav"><NavBar/></nav>
-        <Switch>
-          {routes.map((route,id) => (
-            <Route
-              key={id}
-              path={route.path}
-              exact={route.exact}
-              component={route.main}
-            />
-          ))}
-        </Switch>
+        <Container className="main">
+          <Row className="row">
+            <Col className="col-lg-4">
+              <Panel/>
+            </Col>
+            <Col className="col-lg-8">
+              <Switch>
+                {routes.map((route, id) => (<Route key={id} path={route.path} exact={route.exact} component={route.section}/>))}
+              </Switch>
+            </Col>
+          </Row>
+        </Container>
         <footer className="footer">@Copyright</footer>
       </Container>
     </Router>);

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './CSS/markerList.css';
+import './markerList.css';
 import {ListGroup, ListGroupItem} from 'reactstrap';
 
 class MarkerList extends Component {
@@ -23,7 +23,7 @@ class MarkerList extends Component {
   }
 
   render() {
-    
+
     const initData = [
       {
         name: 'Home',
