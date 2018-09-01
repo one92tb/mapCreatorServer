@@ -10,10 +10,24 @@ import {
 import './markerCreator.css'
 
 class MarkerCreator extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      selectedFile: null
+    }
+
+    this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
+  }
+
+  fileSelectedHandler(e){
+    console.log(e.target.files[0]);
+  }
+
   render() {
+    console.log(this.state);
     return (<div>
       <div className="markerImage">
-      
+
       </div>
       <Form>
         <FormGroup>
@@ -21,9 +35,10 @@ class MarkerCreator extends Component {
           <Input type="text" name="text" id="exampleText"/>
         </FormGroup>
         <FormGroup>
-          <Input type="file" name="file" id="exampleFile"/>
+          <Input type="file" name="file" id="exampleFile" onChange={(e) => this.fileSelectedHandler(e)}/>
           <FormText color="muted"></FormText>
         </FormGroup>
+        <Button>Upload</Button>
       </Form>
     </div>);
   }
