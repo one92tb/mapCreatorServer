@@ -3,4 +3,9 @@
 node_modules/
 build/
 tmp/
-temp/
+temp
+# ignore files in folders db and images
+db/**
+public/images/**
+# but keep the folders
+!*.gitkeep
