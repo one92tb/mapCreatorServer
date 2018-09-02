@@ -1,24 +1,21 @@
-import * as express from "express";
-const router = express.Router();
-const multer = require('multer');
+import {getHomePage} from '../controllers/homePage';
+import {getMarkers} from '../controllers/getMarkers';
+import {postMarker} from '../controllers/postMarker';
 
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, './public/images')
+export const routes = [
+  {
+    path: '/',
+    method: 'get',
+    action: getHomePage
   },
-  filename: function(req, file, cb) {
-    cb(null, Date.now() + '.png');
+  {
+    path: '/markers',
+    method: 'get',
+    action: getMarkers
   },
-});
-
-const upload = multer({ storage: storage });
-
-const PagesController = require('../controllers/PagesController');
-const MarkerController = require('../controllers/MarkerController');
-
-router.get('/', PagesController.home);
-
-router.get('/markers', MarkerController.get);
-router.post('/markers',  upload.any(), MarkerController.post);
-
-module.exports = router;
+  {
+    path: '/markers',
+    method: 'post',
+    action: postMarker
+  }
+]

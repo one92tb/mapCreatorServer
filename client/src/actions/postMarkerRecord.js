@@ -11,6 +11,7 @@ export const postedMarkerError = (error) => ({
 })
 
 export const postMarkerRecord = (record) => (dispatch) =>{
+  console.log(record);
     dispatch({type: 'POSTING_RECORD'})
     axios.create({baseURL: 'http://localhost:8080'}).post('/markers', record)
       .then(res=>{

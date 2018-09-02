@@ -1,22 +1,19 @@
 import "reflect-metadata";
-import {createConnection} from "typeorm";
-import {User} from "./entity/User";
-import "reflect-metadata";
 import * as bodyParser from "body-parser";
 import { Request, Response } from "express";
+import { createConnection } from "typeorm";
 import { ConnectionOptions } from 'typeorm';
 import { getManager, getRepository } from "typeorm";
 
 const express = require('express');
 const app = express();
-
+const multer = require('multer');
 const path = require('path');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 
-const routes = require('./routes/index');
-
+import { routes } from './routes/index';
 
 app.engine('pug', require('pug').__express);
 app.set('port', 8080);
@@ -30,12 +27,43 @@ app.use(cookieParser());
 app.use(express.static('public'));
 app.use(flash());
 
-app.use('/', routes);
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './public/images')
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + '.png');
+  },
+});
 
+const upload = multer({ storage: storage });
 
+const options: ConnectionOptions = {
+  'type': 'sqlite',
+  "logging": true,
+  'database': 'db/mydb.db',
+  'synchronize': true,
+  'entities': ["src/entity/*.ts"]
+};
 
-
-
-
+createConnection(options).then(async connection => {
+  routes.forEach(route => {
+    if (route.method === 'post' && route.path === '/markers') {
+      app[route.method](route.path, upload.any(), (request: Request, response: Response, next: Function) => {
+        console.log(request.body);
+        route.action(request, response)
+          .then(() => next)
+          .catch(err => next(err));
+      });
+    } else {
+      app[route.method](route.path, (request: Request, response: Response, next: Function) => {
+        console.log(request.body);
+        route.action(request, response)
+          .then(() => next)
+          .catch(err => next(err));
+      });
+    }
+  });
+})
 
 module.exports = app;
