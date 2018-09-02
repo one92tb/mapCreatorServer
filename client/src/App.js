@@ -32,7 +32,7 @@ class App extends Component {
     console.log(routes);
     return (<Router>
       <Container className="mainContainer">
-        <header className="header">s
+        <header className="header">
           <span className="headerText">Map Creator</span>
         </header>
         <nav className="nav"><NavBar/></nav>

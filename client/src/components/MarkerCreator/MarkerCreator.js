@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {postMarkerRecord} from '../../actions/postMarkerRecord';
+import {connect} from 'react-redux';
 import {
   Button,
   Form,
@@ -10,32 +12,48 @@ import {
 import './markerCreator.css'
 
 class MarkerCreator extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      selectedFile: null
+      markerName: '',
+      markerImage: ''
     }
 
-    this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.sendRecord = this.sendRecord.bind(this);
   }
 
-  fileSelectedHandler(e){
-    console.log(e.target.files[0]);
+  onChange(event) {
+    if (event.target.name === "markerName") {
+      this.setState({markerName: event.target.value})
+    } else {
+      this.setState({markerImage: event.target.files[0]})
+    }
+  }
+
+  sendRecord(event) {
+    event.preventDefault();
+    const postMarkerRecord = this.props.postMarkerRecord;
+
+    const fd = new FormData();
+
+    fd.append('file', this.state.markerImage);
+    fd.append('markerName', this.state.markerName);
+
+    postMarkerRecord(fd);
   }
 
   render() {
     console.log(this.state);
     return (<div>
-      <div className="markerImage">
-
-      </div>
-      <Form>
+      <div className="markerImage"></div>
+      <Form onSubmit={this.sendRecord}>
         <FormGroup>
           <Label for="exampleText">Name</Label>
-          <Input type="text" name="text" id="exampleText"/>
+          <Input type="text" name="markerName" onChange={(e) => this.onChange(e)}/>
         </FormGroup>
         <FormGroup>
-          <Input type="file" name="file" id="exampleFile" onChange={(e) => this.fileSelectedHandler(e)}/>
+          <Input type="file" name="markerImage" onChange={(e) => this.onChange(e)}/>
           <FormText color="muted"></FormText>
         </FormGroup>
         <Button>Upload</Button>
@@ -44,4 +62,10 @@ class MarkerCreator extends Component {
   }
 }
 
-export default MarkerCreator;
+const mapStateToProps = {}
+
+const mapDispatchToProps = {
+  postMarkerRecord
+}
+
+export default connect(null, mapDispatchToProps)(MarkerCreator);
