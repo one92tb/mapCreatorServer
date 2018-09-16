@@ -2,25 +2,27 @@ const initialState = {
   records: [],
   posting: false,
   posted: false,
+  fetching: false,
+  fetched: false,
   erorr: null
 }
 
 const marker = (state = initialState, action) => {
   switch (action.type) {
-    case 'FETCHING_RECORD':
+    case 'FETCHING_RECORDS':
       return{
         ...state,
         fetching: true,
         fetched: false,
       }
-    case 'FETCHED_RECORD_SUCCESS':
+    case 'FETCHED_RECORDS_SUCCESS':
       return{
         ...state,
         records: action.records,
         fetching: false,
         fetched: true,
       }
-    case 'FETCHED_RECORD_ERROR':
+    case 'FETCHED_RECORDS_ERROR':
       return{
         ...state,
         fetching: false,

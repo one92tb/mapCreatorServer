@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const postedSelectedRecord = (record) => ({
+const postedSelectedRecord = (marker) => ({
   type: 'POSTED_SELECTED_MARKER_SUCCESS',
-  record
+  marker
 });
 
 const postedSelectedError = (error) => ({
@@ -10,10 +10,9 @@ const postedSelectedError = (error) => ({
   error
 })
 
-export const postSelectedMarker = (record) => (dispatch) => {
-  console.log(record);
+export const postSelectedMarker = (marker) => (dispatch) => {
   dispatch({type: 'POSTING_SELECTED_MARKER'});
-  axios.create({baseURL: 'http://localhost:8080'}).post('/selectedMarkers', record)
+  axios.create({baseURL: 'http://localhost:8080'}).post('/selectedMarkers', marker)
     .then(res => {
       console.log(res.data);
       dispatch(postedSelectedRecord(res.data));
