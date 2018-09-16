@@ -10,7 +10,6 @@ export async function postMarker (request: Request, response: Response) {
     name: request.body.markerName,
     icon: request.files[0].filename
   }
-  console.log(marker);
 
   const newMarker = await markerRepository.save(marker);
   return response.json(newMarker);

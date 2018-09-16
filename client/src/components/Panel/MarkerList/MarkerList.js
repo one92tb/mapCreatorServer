@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './markerList.css';
 import {ListGroup, ListGroupItem} from 'reactstrap';
 import {fetchMarkerRecord} from '../../../actions/fetchMarkerRecord';
+import {getSelectedMarker} from '../../../actions/getSelectedMarker';
 import {connect} from 'react-redux';
 
 class MarkerList extends Component {
@@ -19,34 +20,30 @@ class MarkerList extends Component {
     this.props.fetchMarkerRecord();
   }
 
-  onSelect(id) {
+  onSelect(marker, id) {
+
     if (id === this.state.selectedId) {
-      id = '';
+        id = '';
+        marker = null;
       this.setState({selectedId: id})
     } else {
       this.setState({selectedId: id})
     }
+
+    const getSelectedMarker = this.props.getSelectedMarker;
+
+
+    getSelectedMarker(marker);
   }
 
   render() {
-    console.log(this.props);
-    const initData = [
-      {
-        name: 'Home',
-        icon: 'icon-home'
-      }, {
-        name: 'Football Pitch',
-        icon: 'icon-soccer-ball'
-      }
-    ]
-
-    const {selectedId} = this.state;
+    const selectedId = this.state.selectedId;
 
     return (<ul className="markerList">
       {
-        this.props.records.map((marker, id) => (<li key={id} className={`markerBox ${ (selectedId === id)
+        this.props.records.map((marker, id) => (<li key={id} className={`markerBox ${ (selectedId === id) // klikniete id z recordem z map
             ? 'selectedMarker'
-            : ''}`} onClick={() => this.onSelect(id)}>
+            : ''}`} onClick={() => this.onSelect(marker, id)}>
           <div className="markerBox__name">
             <span>{marker.name}</span>
           </div>
@@ -63,7 +60,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  fetchMarkerRecord
+  fetchMarkerRecord,
+  getSelectedMarker
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MarkerList);

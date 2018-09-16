@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-export const fetchedMarkerRecord = (records) => ({
+const fetchedMarkerRecord = (records) => ({
   type: 'FETCHED_RECORD_SUCCESS',
   records
 })
 
-export const fetchedMarkerError = (error) => ({
+const fetchedMarkerError = (error) => ({
   type: 'FETCHED_RECORD_ERROR',
   error
 })

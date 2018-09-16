@@ -1,6 +1,7 @@
 import {getHomePage} from '../controllers/homePage';
 import {getMarkers} from '../controllers/getMarkers';
 import {postMarker} from '../controllers/postMarker';
+import {postSelectedMarker} from '../controllers/postSelectedMarker';
 
 export const routes = [
   {
@@ -17,5 +18,10 @@ export const routes = [
     path: '/markers',
     method: 'post',
     action: postMarker
+  },
+  {
+    path: '/selectedMarkers',
+    method: 'post',
+    action: postSelectedMarker
   }
 ]

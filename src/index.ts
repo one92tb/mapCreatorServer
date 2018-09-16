@@ -50,14 +50,12 @@ createConnection(options).then(async connection => {
   routes.forEach(route => {
     if (route.method === 'post' && route.path === '/markers') {
       app[route.method](route.path, upload.any(), (request: Request, response: Response, next: Function) => {
-        console.log(request.body);
         route.action(request, response)
           .then(() => next)
           .catch(err => next(err));
       });
     } else {
       app[route.method](route.path, (request: Request, response: Response, next: Function) => {
-        console.log(request.body);
         route.action(request, response)
           .then(() => next)
           .catch(err => next(err));
