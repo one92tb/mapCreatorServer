@@ -1,25 +1,28 @@
 import React, {Component} from 'react';
-import GoogleMapReact from 'google-map-react';
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow} from "react-google-maps"
 import {connect} from 'react-redux';
 import {postSelectedMarker} from '../../actions/postSelectedMarker';
 import {fetchSelectedMarkers} from '../../actions/fetchSelectedMarkers';
 
+const { compose, withProps, withStateHandlers } = require("recompose");
 
-const Marker = () => <div><i className="icon-home"></i></div>;
 
 class Map extends Component {
 
   constructor(props){
     super(props);
+    this.state = {
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {},
+      position: null,
+      currentId : 1,
+    };
 
     this.checkLocalization = this.checkLocalization.bind(this);
   }
 
   componentDidMount() {
-    fetch('https://maps.googleapis.com/maps/api/js?key=AIzaSyC9KF6ohkrQU2JPS8wiBWLmlcUqbAf0ik8&callback=initMap')
-    .then(data => console.log(data)) // JSON from `response.json()` call
-    .catch(error => console.error(error));
-
     this.props.fetchSelectedMarkers();
   }
 
@@ -32,6 +35,7 @@ class Map extends Component {
   };
 
   checkLocalization(event){
+    console.log(event.latLng.lat(), event.latLng.lng());
     const selectedMarker = this.props.selectedMarker;
     const postSelectedMarker = this.props.postSelectedMarker;
 
@@ -39,43 +43,84 @@ class Map extends Component {
       const marker = {
         name: selectedMarker.name,
         icon: selectedMarker.icon,
-        lat: event.lat,
-        lng: event.lng
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng()
       }
-      console.log(marker)
+      console.log(marker);
       postSelectedMarker(marker);
+    }
+
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      })
     }
   }
 
-  render() {
-
-    const markers = this.props.markers;
-    console.log(markers);
-
-      return (
-      // Important! Always set the container height explicitly
-      <div style={{ height: '100%', width: '100%' }}>
-        <GoogleMapReact onClick={this.checkLocalization}
-          bootstrapURLKeys={{ key: 'AIzaSyCFD4s2zRMFuSEiH9O3zWW19s-556oiMxg' }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-        >
-      
-        {markers.map((marker, index)=> {
-          return (
-            <Marker
-              lat={marker.lat}
-              lng={marker.lng}
-            />
-          )
-        })}
-
-        </GoogleMapReact>
-      </div>
-    );
-
+  onMarkerClick(id){
+    this.setState({
+      currentId: id
+    })
   }
 
+
+  render() {
+    const markers = this.props.markers;
+
+
+    const MapWithAMakredInfoWindow = compose(
+  withStateHandlers(() => ({
+    isOpen: false,
+  }), {
+    onToggleOpen: ({ isOpen }) => () => ({
+      isOpen: !isOpen,
+    })
+  }),
+  withScriptjs,
+  withGoogleMap
+)(props =>
+  <GoogleMap
+    onClick={this.checkLocalization}
+    defaultZoom={12}
+    defaultCenter={{
+      lat: 50.89973,
+      lng: 15.72899
+     }}
+  >
+  {markers.map((marker, index)=>
+    <Marker
+      key={index}
+      position ={{
+        lat : marker.lat,
+        lng : marker.lng
+      }}
+      icon = {{
+         url: `http://localhost:8080/images/${marker.icon}`
+       }}
+       onClick={props.onToggleOpen}
+    //  onClick={() => this.onMarkerClick(marker.id)}
+    >
+      {props.isOpen && <InfoWindow onCloseClick={props.onToggleOpen}>
+      <h1>sss</h1>
+      </InfoWindow>}
+    </Marker>
+  )}
+  </GoogleMap>
+);
+
+
+
+      return (
+
+<MapWithAMakredInfoWindow
+  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2ZQRnC-OFhTQ7YE9noKjho5rDkI6rYUQ&v=3.exp&libraries=geometry,drawing,places"
+  loadingElement={<div style={{ height: `100%` }} />}
+  containerElement={<div style={{ height: `100%` }} />}
+  mapElement={<div style={{ height: `100%` }} />}
+/>
+    );
+  }
 }
 
 const mapStateToProps = (state) =>  ({
