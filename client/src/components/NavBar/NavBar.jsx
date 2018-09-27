@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import {Nav, NavItem, NavLink} from 'reactstrap';
 import {InputGroup, InputGroupAddon, InputGroupText, Input} from 'reactstrap';
 import './nav.css'
-import {
-  Link,
-} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 class NavBar extends Component {
 

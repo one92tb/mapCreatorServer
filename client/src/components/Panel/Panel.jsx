@@ -19,12 +19,10 @@ const routes = [
     path: '/',
     exact: true,
     sidebar: () => <MarkerList/>
-  },
-  {
+  }, {
     path: '/createMarker',
     sidebar: () => <MarkerList/>
-  },
-  {
+  }, {
     path: "/selectMarker",
     sidebar: () => <MarkerList/>
   }, {

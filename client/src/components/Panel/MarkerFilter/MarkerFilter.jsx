@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 
 class MarkerFilter extends Component {
-  render(){
-    return(
-      <div>MarkerFilter</div>
-    );
+  render() {
+    return (<div>MarkerFilter</div>);
   }
 }
 

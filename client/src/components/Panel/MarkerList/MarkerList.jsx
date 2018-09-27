@@ -16,22 +16,21 @@ class MarkerList extends Component {
     this.onSelect = this.onSelect.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.fetchMarkerRecord();
   }
 
   onSelect(marker, id) {
 
     if (id === this.state.selectedId) {
-        id = '';
-        marker = null;
+      id = '';
+      marker = null;
       this.setState({selectedId: id})
     } else {
       this.setState({selectedId: id})
     }
 
     const getSelectedMarker = this.props.getSelectedMarker;
-
 
     getSelectedMarker(marker);
   }
@@ -48,16 +47,14 @@ class MarkerList extends Component {
             <span>{marker.name}</span>
           </div>
           <div className="markerBox__icon">
-            <img src={`http://localhost:8080/images/${marker.icon}`} alt={marker.icon} />
+            <img src={`http://localhost:8080/images/${marker.icon}`} alt={marker.icon}/>
           </div>
         </li>))
       }
     </ul>);
   }
 }
-const mapStateToProps = (state) => ({
-  records: state.marker.records
-})
+const mapStateToProps = (state) => ({records: state.marker.records})
 
 const mapDispatchToProps = {
   fetchMarkerRecord,
