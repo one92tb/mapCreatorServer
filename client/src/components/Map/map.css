@@ -1,3 +1,10 @@
 .marker{
   cursor: pointer;
 }
+.infoWindow{
+  background: red!important;
+
+}
+.card{
+  width: 100%;
+}

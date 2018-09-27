@@ -50,7 +50,7 @@ class Panel extends Component {
           </NavItem>
         </Nav>
       </CardHeader>
-      <CardBody>
+      <CardBody  className="scroll">
         <Switch>
           {routes.map((route, id) => (<Route key={id} path={route.path} exact={route.exact} component={route.sidebar}/>))}
         </Switch>
