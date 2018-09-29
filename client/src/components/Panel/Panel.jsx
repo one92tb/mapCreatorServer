@@ -3,8 +3,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  CardText,
   Nav,
   NavItem,
   NavLink
@@ -12,7 +10,7 @@ import {
 import './panel.css'
 import MarkerList from './MarkerList/MarkerList';
 import MarkerFilter from './MarkerFilter/MarkerFilter';
-import {Link, BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {Link, Route, Switch} from 'react-router-dom';
 
 const routes = [
   {
@@ -32,10 +30,7 @@ const routes = [
 ];
 
 class Panel extends Component {
-  constructor(props) {
-    super(props);
 
-  }
 
   render() {
 

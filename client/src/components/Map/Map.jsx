@@ -3,27 +3,38 @@ import {withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow} from "react-
 import {connect} from 'react-redux';
 import {postSelectedMarker} from '../../actions/postSelectedMarker';
 import {fetchSelectedMarkers} from '../../actions/fetchSelectedMarkers';
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  CardText,
-} from 'reactstrap';
+
 import './map.css';
 
 const {compose, withProps, withStateHandlers} = require("recompose");
+//const iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 
-const MapWithAMakredInfoWindow = compose(withStateHandlers(() => ({isOpen: false, id: null}), {
-  onToggleOpen: ({isOpen, id}) => (id) => (id !== undefined && isOpen === false)
-    ? ({
-      isOpen: !isOpen,
-      id: id
-    })
-    : ({id: id}),
-}), withScriptjs, withGoogleMap)(props => {
-  console.log(props);
-  return <GoogleMap onClick={props.addMarker} defaultZoom={12} defaultCenter={{
+const onToggleOpen = ({isOpen, id}) => (id) => (id && !isOpen)
+  ? ({
+    isOpen: !isOpen,
+    id
+  })
+  : ({id})
+
+//stan,
+const MapWithAMakredInfoWindow = compose(withProps({
+  googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAPEsdYi05TjFM_0kelKEbHab8QyZxm-qc&v=3.exp&libraries=geometry,drawing,places",
+  containerElement: <div style={{
+    height: `100%`
+  }}/>,
+loadingElement: <div style={{
+    height: `100%`
+  }}/>,
+mapElement: <div style={{
+      height: `100%`
+    }}/>
+}),
+  withStateHandlers(() => ({
+  isOpen: false,
+  id: null
+}), {onToggleOpen}), withScriptjs, withGoogleMap)(props => {
+  console.log(props); /// default props zoom
+  return <GoogleMap ref={props.onMapMounted} zoom={props.zoom} onZoomChanged={props.onZoomChanged} onClick={props.addMarker} defaultCenter={{
       lat: 50.89973,
       lng: 15.72899
     }}>
@@ -32,11 +43,17 @@ const MapWithAMakredInfoWindow = compose(withStateHandlers(() => ({isOpen: false
           lat: marker.lat,
           lng: marker.lng
         }} icon={{
-          url: `http://localhost:8080/images/${marker.icon}`
-        }}>
+          url: `http://localhost:8080/images/${marker.icon}`,
+          scaledSize: {
+            width: (props.zoom < 14) ? 16 : 32,
+            height: (props.zoom < 14) ? 16 :32
+          }
+        }} visible={!(props.zoom < 11)}>
         {
           props.isOpen && props.id === marker.id && <InfoWindow className="infoWindow" onCloseClick={props.onToggleOpen}>
-              <div className="infoWindow">sss</div>
+              <div className="infoWindow">
+                <span>{marker.name}</span>
+              </div>
             </InfoWindow>
         }
       </Marker>)
@@ -44,16 +61,18 @@ const MapWithAMakredInfoWindow = compose(withStateHandlers(() => ({isOpen: false
   </GoogleMap>
 });
 
-
 class Map extends Component {
 
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      position: null
+      position: null,
+      zoom: 12,
+      mapRef: ""
     };
 
     this.checkLocalization = this.checkLocalization.bind(this);
@@ -64,7 +83,7 @@ class Map extends Component {
   }
 
   checkLocalization(event) {
-    console.log(event.latLng.lat(), event.latLng.lng());
+    console.log(event, event.latLng.lat(), event.latLng.lng());
     const selectedMarker = this.props.selectedMarker;
     const postSelectedMarker = this.props.postSelectedMarker;
 
@@ -80,17 +99,18 @@ class Map extends Component {
     }
   }
 
-  render() {
-    console.log(this.props.markers);
-    const markers = this.props.markers;
+  onMapMounted = (mapRef) => {
 
-    return (<MapWithAMakredInfoWindow
-      googleMapURL="https://maps.googleapis.com/maps/api/js?key=[API_KEY]&v=3.exp&libraries=geometry,drawing,places"
-      markers={this.props.markers}
-      addMarker={(e) => this.checkLocalization(e)}
-      loadingElement={<div style = {{ height: `100%` }}/>}
-      containerElement={<div style = {{ height: `100%` }}/>}
-      mapElement={<div style = {{ height: `100%` }}/>}/>);
+    this.setState({mapRef: mapRef})
+  }
+
+  onZoomChanged = () => {
+    this.setState({zoom: this.state.mapRef.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.zoom});
+  }
+
+  render() {
+    return (<MapWithAMakredInfoWindow onZoomChanged={this.onZoomChanged} zoom={this.state.zoom} onMapMounted={this.onMapMounted} markers={this.props.markers}
+    addMarker={(e) => this.checkLocalization(e)} /> );
   }
 }
 

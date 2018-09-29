@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './markerList.css';
-import {ListGroup, ListGroupItem} from 'reactstrap';
 import {fetchMarkerRecord} from '../../../actions/fetchMarkerRecord';
 import {getSelectedMarker} from '../../../actions/getSelectedMarker';
 import {connect} from 'react-redux';

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Nav, NavItem, NavLink} from 'reactstrap';
-import {InputGroup, InputGroupAddon, InputGroupText, Input} from 'reactstrap';
+import {InputGroup, InputGroupAddon, Input} from 'reactstrap';
 import './nav.css'
 import {Link} from 'react-router-dom';
 

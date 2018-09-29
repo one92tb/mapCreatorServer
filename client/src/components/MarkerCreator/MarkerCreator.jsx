@@ -62,7 +62,7 @@ class MarkerCreator extends Component {
   }
 }
 
-const mapStateToProps = {}
+
 
 const mapDispatchToProps = {
   postMarkerRecord
