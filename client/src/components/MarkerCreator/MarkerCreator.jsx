@@ -16,7 +16,8 @@ class MarkerCreator extends Component {
     super(props);
     this.state = {
       markerName: '',
-      markerImage: ''
+      markerImage: '',
+      imageURL: ''
     }
   }
 
@@ -24,8 +25,12 @@ class MarkerCreator extends Component {
     if (event.target.name === "markerName") {
       this.setState({markerName: event.target.value})
     } else {
-      this.setState({markerImage: event.target.files[0]})
+      this.setState({
+        markerImage: event.target.files[0],
+        imageURL: URL.createObjectURL(event.target.files[0])
+      })
     }
+
   }
 
   sendRecord = (event) => {
@@ -42,9 +47,11 @@ class MarkerCreator extends Component {
 
   render() {
     console.log(this.state);
-    return (<div>
-      <div className="markerImage"></div>
-      <Form onSubmit={this.sendRecord}>
+    return (<div className="wrapper">
+      <div className="imageBox">
+        <img className="markerImage" alt="" src={(this.state.imageURL === '') ? 'IMG-default.png' : this.state.imageURL}/>
+      </div>
+      <Form className="markerForm" onSubmit={this.sendRecord}>
         <FormGroup>
           <Label for="exampleText">Name</Label>
           <Input type="text" name="markerName" onChange={(e) => this.onChange(e)}/>
@@ -58,8 +65,6 @@ class MarkerCreator extends Component {
     </div>);
   }
 }
-
-
 
 const mapDispatchToProps = {
   postRecord

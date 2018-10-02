@@ -1,13 +1,28 @@
 .markerImage{
-  width: 150px;
-  height: 150px;
-  background: rgba(0, 0, 0, 0.125);
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 50px;
-}
-#exampleFile{
-  margin-left: auto;
-  margin-right: auto;
+  width: 50px;
+  height: 50px;
 
+
+display: block;
+text-align: center;
+
+}
+
+.imageBox{
+    border: 1px solid #000;
+    width: 100px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.wrapper{
+
+  margin-top: 30px;
+}
+.markerForm{
+  display: block;;
 }
