@@ -31,9 +31,7 @@ const routes = [
 
 class Panel extends Component {
 
-
   render() {
-
     return (<Card className="panelCard">
       <CardHeader>
         <Nav>

@@ -3,6 +3,7 @@ import {withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow} from "react-
 import {connect} from 'react-redux';
 import {postSelectedMarker} from '../../actions/postSelectedMarker';
 import {fetchSelectedMarkers} from '../../actions/fetchSelectedMarkers';
+import {removeSelectedMarker} from '../../actions/removeSelectedMarker';
 
 import './map.css';
 
@@ -50,9 +51,10 @@ mapElement: <div style={{
           }
         }} visible={!(props.zoom < 11)}>
         {
-          props.isOpen && props.id === marker.id && <InfoWindow className="infoWindow" onCloseClick={props.onToggleOpen}>
+          props.isOpen && props.id === marker.id && <InfoWindow className="infoWindow" ref={props.onInfoMounted} onCloseClick={props.onToggleOpen}>
               <div className="infoWindow">
-                <span>{marker.name}</span>
+                <span className="markerName">name: {marker.name}</span>
+                <button className="infoBtn" onClick={() => props.removeMarker(marker.id)}>Remove Marker</button>
               </div>
             </InfoWindow>
         }
@@ -75,14 +77,13 @@ class Map extends Component {
       mapRef: ""
     };
 
-    this.checkLocalization = this.checkLocalization.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchSelectedMarkers();
   }
 
-  checkLocalization(event) {
+  addMarker = (event) => {
     console.log(event, event.latLng.lat(), event.latLng.lng());
     const selectedMarker = this.props.selectedMarker;
     const postSelectedMarker = this.props.postSelectedMarker;
@@ -99,8 +100,12 @@ class Map extends Component {
     }
   }
 
-  onMapMounted = (mapRef) => {
+  removeMarker = (id) => {
+    console.log(id);
+    this.props.removeSelectedMarker(id);
+  }
 
+  onMapMounted = (mapRef) => {
     this.setState({mapRef: mapRef})
   }
 
@@ -110,7 +115,7 @@ class Map extends Component {
 
   render() {
     return (<MapWithAMakredInfoWindow onZoomChanged={this.onZoomChanged} zoom={this.state.zoom} onMapMounted={this.onMapMounted} markers={this.props.markers}
-    addMarker={(e) => this.checkLocalization(e)} /> );
+    addMarker={(e) => this.addMarker(e)} removeMarker={this.removeMarker} /> );
   }
 }
 
@@ -118,7 +123,8 @@ const mapStateToProps = (state) => ({selectedMarker: state.selectedMarker.select
 
 const mapDispatchToProps = {
   postSelectedMarker,
-  fetchSelectedMarkers
+  fetchSelectedMarkers,
+  removeSelectedMarker
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);

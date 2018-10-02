@@ -3,6 +3,9 @@ import {getMarkers} from '../controllers/getMarkers';
 import {postMarker} from '../controllers/postMarker';
 import {postSelectedMarker} from '../controllers/postSelectedMarker';
 import {getSelectedMarkers} from '../controllers/getSelectedMarkers';
+import {getSelectedMarker} from '../controllers/getSelectedMarker';
+import {removeSelectedMarker} from '../controllers/removeSelectedMarker';
+
 
 export const routes = [
   {
@@ -29,5 +32,15 @@ export const routes = [
     path: '/selectedMarkers',
     method: 'get',
     action: getSelectedMarkers
+  },
+  {
+    path: '/selectedMarkers/:id',
+    method: 'get',
+    action: getSelectedMarker
+  },
+  {
+    path: '/selectedMarkers/:id',
+    method: 'delete',
+    action: removeSelectedMarker
   }
 ]

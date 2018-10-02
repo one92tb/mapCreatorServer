@@ -5,6 +5,8 @@ const initialState = {
   posted: false,
   fetching: false,
   fetched: false,
+  removing: false,
+  removed: false,
   error: null
 }
 
@@ -53,6 +55,26 @@ const selectedMarker = (state = initialState, action) => {
         ...state,
         posting: false,
         posted: false,
+        error: action.error
+      }
+    case 'REMOVING_SELECTED_MARKER':
+      return{
+        ...state,
+        removing: true,
+        removed: false,
+      }
+    case 'REMOVED_SELECTED_MARKER_SUCCESS':
+      return{
+        ...state,
+        removing: false,
+        removed: true,
+        selectedMarkers: state.selectedMarkers.filter(el => el.id !== action.id)
+      }
+    case 'REMOVED_SELECTED_MARKER_ERROR':
+      return{
+        ...state,
+        removing: false,
+        removed: false,
         error: action.error
       }
     default:

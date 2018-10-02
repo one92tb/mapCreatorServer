@@ -1,22 +1,22 @@
 import axios from 'axios';
 
-const fetchedMarkerRecord = (records) => ({
+const fetchedRecords = (records) => ({
   type: 'FETCHED_RECORDS_SUCCESS',
   records
 })
 
-const fetchedMarkerError = (error) => ({
+const fetchedRecordsError = (error) => ({
   type: 'FETCHED_RECORDS_ERROR',
   error
 })
 
-export const fetchMarkerRecord = () => (dispatch) => {
+export const fetchRecords = () => (dispatch) => {
   dispatch({type: 'FETCHING_RECORDS'});
   axios.create({baseURL: 'http://localhost:8080'}).get('/markers')
     .then(res=>{
-      dispatch(fetchedMarkerRecord(res.data));
+      dispatch(fetchedRecords(res.data));
     })
     .catch(error=>{
-      dispatch(fetchedMarkerError(error));
+      dispatch(fetchedRecordsError(error));
     })
 }

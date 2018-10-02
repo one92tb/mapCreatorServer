@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {postMarkerRecord} from '../../actions/postMarkerRecord';
+import {postRecord} from '../../actions/postRecord';
 import {connect} from 'react-redux';
 import {
   Button,
@@ -18,12 +18,9 @@ class MarkerCreator extends Component {
       markerName: '',
       markerImage: ''
     }
-
-    this.onChange = this.onChange.bind(this);
-    this.sendRecord = this.sendRecord.bind(this);
   }
 
-  onChange(event) {
+  onChange = (event) => {
     if (event.target.name === "markerName") {
       this.setState({markerName: event.target.value})
     } else {
@@ -31,16 +28,16 @@ class MarkerCreator extends Component {
     }
   }
 
-  sendRecord(event) {
+  sendRecord = (event) => {
     event.preventDefault();
-    const postMarkerRecord = this.props.postMarkerRecord;
+    const postRecord = this.props.postRecord;
 
     const fd = new FormData();
 
     fd.append('file', this.state.markerImage);
     fd.append('markerName', this.state.markerName);
 
-    postMarkerRecord(fd);
+    postRecord(fd);
   }
 
   render() {
@@ -65,7 +62,7 @@ class MarkerCreator extends Component {
 
 
 const mapDispatchToProps = {
-  postMarkerRecord
+  postRecord
 }
 
 export default connect(null, mapDispatchToProps)(MarkerCreator);

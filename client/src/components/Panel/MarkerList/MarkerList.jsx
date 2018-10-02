@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './markerList.css';
-import {fetchMarkerRecord} from '../../../actions/fetchMarkerRecord';
+import {fetchRecords} from '../../../actions/fetchRecords';
 import {getSelectedMarker} from '../../../actions/getSelectedMarker';
 import {connect} from 'react-redux';
 
@@ -11,15 +11,13 @@ class MarkerList extends Component {
     this.state = {
       selectedId: ''
     };
-
-    this.onSelect = this.onSelect.bind(this);
   }
 
   componentDidMount() {
-    this.props.fetchMarkerRecord();
+    this.props.fetchRecords();
   }
 
-  onSelect(marker, id) {
+  onSelect = (marker, id) => {
 
     if (id === this.state.selectedId) {
       id = '';
@@ -56,7 +54,7 @@ class MarkerList extends Component {
 const mapStateToProps = (state) => ({records: state.marker.records})
 
 const mapDispatchToProps = {
-  fetchMarkerRecord,
+  fetchRecords,
   getSelectedMarker
 }
 

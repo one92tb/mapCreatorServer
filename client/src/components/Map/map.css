@@ -2,9 +2,33 @@
   cursor: pointer;
 }
 .infoWindow{
-  background: red!important;
+width: 150px;
+height: 150px;
+margin: 10px;
+display: block;
 
 }
 .card{
   width: 100%;
+}
+.markerName{
+  font-size: 15px;
+
+
+}
+.markerName::after{
+  width: 100%;
+  border:  1px solid #333;
+  content: "";
+  display: block;
+}
+
+.infoBtn{
+display: block;
+margin-top: 20px;
+margin-left: auto;
+margin-right: auto;
+}
+.infoWindow:parent{
+  background: red;
 }
