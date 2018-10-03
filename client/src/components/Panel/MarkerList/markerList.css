@@ -30,7 +30,7 @@
 }
 
 .selectedMarker{
-  background: red;
+  background-color: rgba(0, 0, 0, 0.050);
 }
 .markerList{
   list-style: none;

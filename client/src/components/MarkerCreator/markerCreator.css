@@ -1,28 +1,40 @@
-.markerImage{
+.markerImage {
   width: 50px;
   height: 50px;
-
-
-display: block;
-text-align: center;
-
+  display: block;
+  text-align: center;
 }
 
-.imageBox{
-    border: 1px solid #000;
-    width: 100px;
-    height: 100px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+.imageBox {
+  border: 1px solid #000;
+  width: 100px;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.wrapper{
 
+.wrapper {
   margin-top: 30px;
 }
-.markerForm{
-  display: block;;
+
+.markerForm {
+  display: block;
+}
+.addBtn {
+  margin-right: 10px;
+}
+.markerInputFile {
+  visibility: hidden;
+  position: absolute;
+  opacity: 0;
+  z-index: 99;
+}
+.inputLabel{
+  background: blue;
+  padding: 10px;
+  color: #fff;
+
 }

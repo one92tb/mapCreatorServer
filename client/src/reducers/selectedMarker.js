@@ -1,5 +1,5 @@
 const initialState = {
-  selectedMarker : null,
+  selectedMarker : '',
   selectedMarkers: [],
   posting: false,
   posted: false,
