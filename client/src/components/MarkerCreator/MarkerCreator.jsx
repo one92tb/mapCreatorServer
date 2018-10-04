@@ -57,7 +57,7 @@ class MarkerCreator extends Component {
 
     console.log("fd", this.state.markerImageFile, this.state.markerName);
 
-    if (this.props.selectedMarker.id) {
+    if (this.props.selectedMarker.id && !this.props.selectedMarker.isDeleted) {
       if (this.state.markerImageFile === "") {
         editRecord(
           {
@@ -139,9 +139,13 @@ class MarkerCreator extends Component {
             />
           </FormGroup>
           <Button className="addBtn">
-            {this.props.selectedMarker.id ? "Edit Marker" : "Upload new marker"}
+            {this.props.selectedMarker.id &&
+            !this.props.selectedMarker.isDeleted
+              ? "Edit Marker"
+              : "Upload new marker"}
           </Button>
-          {this.props.selectedMarker.id ? (
+          {this.props.selectedMarker.id &&
+          !this.props.selectedMarker.isDeleted ? (
             <Button
               onClick={this.removeRecord}
               type="button"
