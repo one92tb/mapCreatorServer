@@ -6,7 +6,9 @@ const initialState = {
   fetched: false,
   erorr: null,
   removing: false,
-  removed: false
+  removed: false,
+  editing: false,
+  edited: false
 };
 
 const marker = (state = initialState, action) => {
@@ -69,6 +71,28 @@ const marker = (state = initialState, action) => {
         ...state,
         removing: false,
         removed: false,
+        error: action.error
+      };
+    case "EDITING_RECORD":
+      return {
+        ...state,
+        editing: true,
+        edited: false
+      };
+    case "EDITED_RECORD_SUCCESS":
+      return {
+        ...state,
+        editing: false,
+        edited: true,
+        records: state.records.map(
+          el => (el.id === action.record.id ? action.record : el)
+        )
+      };
+    case "EDITED_RECORD_ERROR":
+      return {
+        ...state,
+        editing: false,
+        edited: false,
         error: action.error
       };
     default:

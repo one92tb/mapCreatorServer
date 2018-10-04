@@ -27,7 +27,7 @@ const onToggleOpen = ({ isOpen, id }) => id =>
 const MapWithAMakredInfoWindow = compose(
   withProps({
     googleMapURL:
-      "https://maps.googleapis.com/maps/api/js?key=AIzaSyAPEsdYi05TjFM_0kelKEbHab8QyZxm-qc&v=3.exp&libraries=geometry,drawing,places",
+      "https://maps.googleapis.com/maps/api/js?key=[API-KEY]&v=3.exp&libraries=geometry,drawing,places",
     containerElement: (
       <div
         style={{
@@ -136,7 +136,7 @@ class Map extends Component {
     const selectedMarker = this.props.selectedMarker;
     const postSelectedMarker = this.props.postSelectedMarker;
 
-    if (selectedMarker !== null) {
+    if (!selectedMarker.isDeleted) {
       const marker = {
         name: selectedMarker.name,
         icon: selectedMarker.icon,
@@ -165,6 +165,7 @@ class Map extends Component {
   };
 
   render() {
+    console.log(this.props, this.state);
     return (
       <MapWithAMakredInfoWindow
         onZoomChanged={this.onZoomChanged}

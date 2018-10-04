@@ -30,9 +30,7 @@ class MarkerList extends Component {
     } else {
       this.setState({ selectedId: id });
       getSelectedMarker({
-        id: marker.id,
-        name: marker.name,
-        icon: marker.icon,
+        ...marker,
         url: `http://localhost:8080/images/${marker.icon}`
       });
     }

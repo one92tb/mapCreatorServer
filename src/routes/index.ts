@@ -7,6 +7,7 @@ import {getSelectedMarker} from '../controllers/getSelectedMarker';
 import {removeSelectedMarker} from '../controllers/removeSelectedMarker';
 import {getMarker} from '../controllers/getMarker';
 import {removeMarker} from '../controllers/removeMarker';
+import {editMarker} from '../controllers/editMarker';
 
 
 export const routes = [
@@ -54,5 +55,10 @@ export const routes = [
     path: '/markers/:id',
     method: 'delete',
     action: removeMarker
+  },
+  {
+    path: '/markers/:id',
+    method: 'put',
+    action: editMarker
   }
 ]

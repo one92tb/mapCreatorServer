@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { postRecord } from "../../actions/postRecord";
 import { getSelectedMarker } from "../../actions/getSelectedMarker";
 import { removeRecord } from "../../actions/removeRecord";
+import { editRecord } from "../../actions/editRecord";
 import { connect } from "react-redux";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import "./markerCreator.css";
@@ -18,6 +19,7 @@ class MarkerCreator extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.selectedMarker.id !== prevProps.selectedMarker.id) {
+      console.log("x");
       this.setState({
         markerName: this.props.selectedMarker.name,
         displaySelectedImage: this.props.selectedMarker.url,
@@ -30,9 +32,11 @@ class MarkerCreator extends Component {
     if (event.target.name === "markerName") {
       this.setState({ markerName: event.target.value });
     } else {
-      this.setState({
-        markerImageFile: event.target.files[0]
-      });
+      if (event.target.files[0]) {
+        this.setState({
+          markerImageFile: event.target.files[0]
+        });
+      }
       if (event.target.files[0]) {
         this.setState({
           displaySelectedImage: URL.createObjectURL(event.target.files[0])
@@ -44,36 +48,60 @@ class MarkerCreator extends Component {
   sendRecord = event => {
     event.preventDefault();
     const postRecord = this.props.postRecord;
-    const isRemoved = this.props.isRemoved;
+    const editRecord = this.props.editRecord;
 
-    const fd = new FormData();
+    let fd = new FormData();
 
     fd.append("file", this.state.markerImageFile);
     fd.append("markerName", this.state.markerName);
 
-    postRecord(fd);
+    console.log("fd", this.state.markerImageFile, this.state.markerName);
 
-    this.setState({
-      markerName: "",
-      markerImageFile: "",
-      displaySelectedImage: "IMG-default.png"
-    });
+    if (this.props.selectedMarker.id) {
+      if (this.state.markerImageFile === "") {
+        editRecord(
+          {
+            name: this.state.markerName,
+            icon: this.props.selectedMarker.icon
+          },
+          this.props.selectedMarker.id
+        );
+      } else {
+        console.log("z pliku");
+        editRecord(fd, this.props.selectedMarker.id);
+      }
+    } else {
+      postRecord(fd);
+
+      this.setState({
+        markerName: "",
+        markerImageFile: "",
+        displaySelectedImage: "IMG-default.png"
+      });
+    }
   };
 
   removeRecord = () => {
     const isRemoved = this.props.isRemoved;
     const removeRecord = this.props.removeRecord;
-
-    removeRecord(this.props.selectedMarker.id);
+    const getSelectedMarker = this.props.getSelectedMarker;
 
     this.setState({
       markerName: "",
       markerImageFile: "",
       displaySelectedImage: "IMG-default.png"
     });
+
+    removeRecord(this.props.selectedMarker.id);
+
+    getSelectedMarker({
+      ...this.props.selectedMarker,
+      isDeleted: true
+    });
   };
 
   render() {
+    console.log(this.props, this.state);
     return (
       <div className="wrapper">
         <div className="imageBox">
@@ -95,11 +123,11 @@ class MarkerCreator extends Component {
           </FormGroup>
           <FormGroup>
             <Label for="file">
-              <span className="inputLabel">Chose File to Send</span>{" "}
+              <span className="inputLabel">Choose file to send</span>{" "}
               {this.state.displaySelectedImage === "IMG-default.png"
                 ? "Not file detected"
                 : this.state.markerImageFile === ""
-                  ? this.props.selectedMarker.name
+                  ? `${this.state.markerName}.png`
                   : this.state.markerImageFile.name}
             </Label>
             <Input
@@ -111,11 +139,9 @@ class MarkerCreator extends Component {
             />
           </FormGroup>
           <Button className="addBtn">
-            {this.props.selectedMarker.id !== undefined
-              ? "Edit Marker"
-              : "Upload new marker"}
+            {this.props.selectedMarker.id ? "Edit Marker" : "Upload new marker"}
           </Button>
-          {this.props.selectedMarker.id !== undefined ? (
+          {this.props.selectedMarker.id ? (
             <Button
               onClick={this.removeRecord}
               type="button"
@@ -136,7 +162,9 @@ class MarkerCreator extends Component {
 
 const mapDispatchToProps = {
   postRecord,
-  removeRecord
+  removeRecord,
+  editRecord,
+  getSelectedMarker
 };
 
 const mapStateToProps = state => ({
