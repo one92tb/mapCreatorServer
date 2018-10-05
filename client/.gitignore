@@ -9,6 +9,11 @@
 # production
 /build
 
+#apiKey
+/src/components/Map/apiKey.jsx
+
+
+
 # misc
 .DS_Store
 .env.local

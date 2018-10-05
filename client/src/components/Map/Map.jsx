@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { postSelectedMarker } from "../../actions/postSelectedMarker";
 import { fetchSelectedMarkers } from "../../actions/fetchSelectedMarkers";
 import { removeSelectedMarker } from "../../actions/removeSelectedMarker";
-
+import apiKey from './apiKey'
 import "./map.css";
 
 const { compose, withProps, withStateHandlers } = require("recompose");
@@ -27,7 +27,7 @@ const onToggleOpen = ({ isOpen, id }) => id =>
 const MapWithAMakredInfoWindow = compose(
   withProps({
     googleMapURL:
-      "https://maps.googleapis.com/maps/api/js?key=[API-KEY]&v=3.exp&libraries=geometry,drawing,places",
+      `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`,
     containerElement: (
       <div
         style={{
@@ -136,7 +136,7 @@ class Map extends Component {
     const selectedMarker = this.props.selectedMarker;
     const postSelectedMarker = this.props.postSelectedMarker;
 
-    if (!selectedMarker.isDeleted) {
+    if (this.props.selectedMarker.id && !this.props.selectedMarker.isDeleted) {
       const marker = {
         name: selectedMarker.name,
         icon: selectedMarker.icon,

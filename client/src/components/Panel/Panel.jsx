@@ -38,7 +38,7 @@ class Panel extends Component {
             </NavItem>
             <NavItem>
               <NavLink tag={Link} to="/filterMarker">
-                Fileter Marker
+                Filter Marker
               </NavLink>
             </NavItem>
           </Nav>
