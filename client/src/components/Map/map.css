@@ -1,34 +1,68 @@
-.marker{
-  cursor: pointer;
-}
-.infoWindow{
-width: 150px;
-height: 150px;
-margin: 10px;
-display: block;
-
-}
-.card{
+.card {
   width: 100%;
 }
-.markerName{
+.markerStreet, .markerName {
   font-size: 15px;
-
-
+  color: #fff;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+    border-bottom: 2px solid #0052cc;
+    font-weight: bold;
 }
-.markerName::after{
-  width: 100%;
-  border:  1px solid #333;
-  content: "";
+
+.infoBtn {
+  margin-top: 10px;
   display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background: #1a75ff;
+  color: #fff;
+  border: 0;
+  padding: 5px;
+  border-radius: 2px;
+  border: 2px solid #0052cc;
+  font-weight: bold;
 }
 
-.infoBtn{
-display: block;
-margin-top: 20px;
-margin-left: auto;
-margin-right: auto;
+.infoBtn:hover{
+  cursor: pointer;
+  background-color: #ff1a1a;
 }
-.infoWindow:parent{
-  background: red;
+.infoBoxContainer {
+
+  display: flex;
+  flex-direction: column;
+	position: relative;
+	background: #1a75ff;
+  opacity: 0.85;
+  height: 200px;
+  width: 200px;
+  border: 5px solid #0052cc;
+  border-radius: 5px;
+
+}
+.infoBoxContainer:after, .infoBoxContainer:before {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+.infoBoxContainer:after {
+  border-color: rgba(136, 183, 213, 0);
+	border-top-color: #1a75ff;
+	border-width: 20px;
+	margin-left: -20px;
+}
+.infoBoxContainer:before{
+	border-color: rgba(255, 31, 150, 0);
+	border-top-color: #0052cc;
+	border-width: 25px;
+	margin-left: -25px;
 }

@@ -1,5 +1,6 @@
 const initialState = {
   selectedMarker : '',
+  markerToGeocode: '',
   selectedMarkers: [],
   posting: false,
   posted: false,

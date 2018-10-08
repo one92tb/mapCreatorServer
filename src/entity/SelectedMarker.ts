@@ -17,4 +17,13 @@ export class SelectedMarker {
 
     @Column()
     lng: number;
+
+    @Column()
+    street: string;
+
+    @Column()
+    city: string;
+
+    @Column()
+    country: string;
 }

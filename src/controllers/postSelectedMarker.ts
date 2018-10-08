@@ -9,7 +9,10 @@ export async function postSelectedMarker (request: Request, response: Response) 
     name: request.body.name,
     icon: request.body.icon,
     lat: request.body.lat,
-    lng: request.body.lng
+    lng: request.body.lng,
+    street: request.body.street,
+    city: request.body.city,
+    country: request.body.country
   }
 
   const newSelectedMarker = await selectedMarkerRepository.save(marker);

@@ -11,7 +11,6 @@ const fetchedSelectedError = (error) => ({
 });
 
 export const fetchSelectedMarkers = () => (dispatch) => {
-  console.log('xxxx');
   dispatch({type: 'FETCHING_MARKERS'});
   axios.create({baseURL: 'http://localhost:8080'}).get('/selectedMarkers')
     .then(res => {
