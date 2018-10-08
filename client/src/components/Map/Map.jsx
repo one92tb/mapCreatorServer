@@ -102,7 +102,7 @@ const MapWithAMakredInfoWindow = compose(
   withScriptjs,
   withGoogleMap
 )(props => {
-  console.log(props); 
+  console.log(props);
   return (
     <GoogleMap
       ref={props.onMapMounted}
@@ -131,7 +131,7 @@ const MapWithAMakredInfoWindow = compose(
                 height: props.zoom < 14 ? 16 : 32
               }
             }}
-            visible={!(props.zoom <= 11)}
+            visible={!(props.zoom < 11)}
           >
             {props.isOpen &&
               props.id === marker.id && (
@@ -143,14 +143,14 @@ const MapWithAMakredInfoWindow = compose(
                   ref={props.onInfoWindowMounted}
                   onCloseClick={props.onToggleOpen}
                   closeBoxURL=""
-                  visible={!(props.zoom < 11)}
                   options={{
                     boxStyle: {
                       border: "none",
                       fontSize: "12pt",
                       overflow: "hidden",
                       height: "250px",
-                      width: "200px"
+                      width: "200px",
+                      display: (props.zoom < 11) ? 'none' : 'block'
                     },
                     closeBoxMargin: "5px 5px 2px 2px",
                     alignBottom: true,
@@ -259,7 +259,7 @@ class Map extends Component {
 
 const mapStateToProps = state => ({
   selectedMarker: state.selectedMarker.selectedMarker,
-  markers: state.selectedMarker.selectedMarkers,
+  markers: state.selectedMarker.selectedMarkers
 });
 
 const mapDispatchToProps = {
