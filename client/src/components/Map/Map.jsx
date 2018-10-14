@@ -14,6 +14,7 @@ const {
   withStateHandlers,
   lifecycle
 } = require("recompose");
+const _ = require("lodash");
 const {
   withScriptjs,
   withGoogleMap,
@@ -21,6 +22,9 @@ const {
   Marker
 } = require("react-google-maps");
 
+const {
+  SearchBox
+} = require("react-google-maps/lib/components/places/SearchBox");
 const onToggleOpen = ({ isOpen, id }) => id =>
   id && !isOpen
     ? {
@@ -30,8 +34,6 @@ const onToggleOpen = ({ isOpen, id }) => id =>
     : { id };
 
 const geocode = (marker, postSelectedMarker) => {
-  console.log(postSelectedMarker);
-  console.log(this);
   let geocoder = new window.google.maps.Geocoder();
   geocoder.geocode(
     {
@@ -95,27 +97,76 @@ const MapWithAMakredInfoWindow = compose(
     () => ({
       isOpen: false,
       id: null,
-      streets: []
+      bounds: null,
+      center: {
+        lat: 50.89973,
+        lng: 15.72899
+      },
+      zoom: 12
     }),
     { onToggleOpen, geocode }
   ),
   withScriptjs,
-  withGoogleMap
+  withGoogleMap,
+  lifecycle({
+    componentDidMount() {
+      const refs = {};
+
+      this.setState({
+        onMapMounted: ref => {
+          refs.map = ref;
+        },
+        onBoundsChanged: () => {
+          this.setState({
+            bounds: refs.map.getBounds(),
+            center: refs.map.getCenter()
+          });
+        },
+        onSearchBoxMounted: ref => {
+          refs.searchBox = ref;
+        },
+        onPlacesChanged: () => {
+          const places = refs.searchBox.getPlaces();
+          const bounds = new google.maps.LatLngBounds();
+
+          console.log(places, bounds);
+
+          places.forEach(
+            place =>
+              place.geometry.viewport
+                ? bounds.union(place.geometry.viewport)
+                : bounds.extend(place.geometry.location)
+          );
+
+          const nextCenter = _.get(this.state.center);
+
+          this.setState({
+            center: nextCenter
+          });
+
+          refs.map.fitBounds(bounds);
+        },
+        onZoomChanged: () => {
+          this.setState({
+            zoom:
+              refs.map.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.zoom
+          });
+        }
+      });
+    }
+  })
 )(props => {
   console.log(props);
   return (
     <GoogleMap
       ref={props.onMapMounted}
-      zoom={props.zoom}
+      onBoundsChanged={props.onBoundsChanged}
+      defaultZoom={props.zoom}
       onZoomChanged={props.onZoomChanged}
       onClick={e => props.addMarker(e, geocode, postSelectedMarker)}
-      defaultCenter={{
-        lat: 50.89973,
-        lng: 15.72899
-      }}
+      defaultCenter={props.center}
     >
       {props.markers.map((marker, index) => {
-        console.log(marker);
         return (
           <Marker
             onClick={() => props.onToggleOpen(marker.id)}
@@ -140,7 +191,7 @@ const MapWithAMakredInfoWindow = compose(
                     lat: marker.lat,
                     lng: marker.lng
                   }}
-                  ref={props.onInfoWindowMounted}
+                  ref={props.onInfoBox}
                   onCloseClick={props.onToggleOpen}
                   closeBoxURL=""
                   options={{
@@ -149,16 +200,16 @@ const MapWithAMakredInfoWindow = compose(
                       fontSize: "12pt",
                       overflow: "hidden",
                       height: "250px",
-                      width: "200px",
-                      display: (props.zoom < 11) ? 'none' : 'block'
+                      width: "250px",
+                      display: props.zoom < 11 ? "none" : "block"
                     },
                     closeBoxMargin: "5px 5px 2px 2px",
                     alignBottom: true,
                     isHidden: false,
                     pixelOffset:
                       props.zoom < 14
-                        ? new google.maps.Size(-100, -20)
-                        : new google.maps.Size(-100, -35),
+                        ? new google.maps.Size(-125, -20)
+                        : new google.maps.Size(-125, -35),
                     enableEventPropagation: true,
                     infoBoxClearance: new google.maps.Size(1, 1)
                   }}
@@ -167,7 +218,7 @@ const MapWithAMakredInfoWindow = compose(
                     <span className="markerName">{marker.name}</span>
                     <span className="markerStreet">{marker.street}</span>
                     <span className="markerStreet">{marker.city}</span>
-                    <span className="markerStreet">{marker.country}}</span>
+                    <span className="markerStreet">{marker.country}</span>
                     <button
                       className="infoBtn"
                       onClick={() => props.removeMarker(marker.id)}
@@ -180,28 +231,29 @@ const MapWithAMakredInfoWindow = compose(
           </Marker>
         );
       })}
+
+      <SearchBox
+        ref={props.onSearchBoxMounted}
+        bounds={props.bounds}
+        controlPosition={google.maps.ControlPosition.TOP_LEFT}
+        onPlacesChanged={props.onPlacesChanged}
+      >
+        <input
+          type="text"
+          placeholder="Customized your placeholder"
+          className="searchBox"
+        />
+      </SearchBox>
     </GoogleMap>
   );
 });
 
 class Map extends Component {
-  constructor(props) {
-    super(props);
-    console.log(props);
-    this.state = {
-      position: null,
-      zoom: 12,
-      mapRef: "",
-      infoWindowRef: ""
-    };
-  }
-
   componentDidMount() {
     this.props.fetchSelectedMarkers();
   }
 
   addMarker = (event, geocode) => {
-    console.log(event, event.latLng.lat(), event.latLng.lng());
     const selectedMarker = this.props.selectedMarker;
     const postSelectedMarker = this.props.postSelectedMarker;
 
@@ -217,37 +269,14 @@ class Map extends Component {
     }
   };
 
-  onMarkersStreets = street => {
-    this.setState({ markersStreets: [...this.state.markersStreets, street] });
-  };
-
   removeMarker = id => {
     this.props.removeSelectedMarker(id);
   };
 
-  onMapMounted = mapRef => {
-    this.setState({ mapRef: mapRef });
-  };
-
-  onInfoWindowMounted = infoRef => {
-    this.setState({ infoWindowRef: infoRef });
-  };
-
-  onZoomChanged = () => {
-    this.setState({
-      zoom: this.state.mapRef.context
-        .__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.zoom
-    });
-  };
-
   render() {
+    console.log(this.props, this.state);
     return (
       <MapWithAMakredInfoWindow
-        onZoomChanged={this.onZoomChanged}
-        zoom={this.state.zoom}
-        onMapMounted={this.onMapMounted}
-        onInfoWindowMounted={this.onInfoWindowMounted}
-        onMarkersStreets={this.onMarkersStreets}
         markers={this.props.markers}
         selectedMarker={this.props.selectedMarker}
         addMarker={this.addMarker}
