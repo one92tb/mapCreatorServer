@@ -1,61 +1,90 @@
 import React, { Component } from "react";
-import { Card, CardHeader, CardBody, Nav, NavItem, NavLink } from "reactstrap";
-import "./panel.css";
 import MarkerList from "./MarkerList/MarkerList";
-import MarkerFilter from "./MarkerFilter/MarkerFilter";
-import { Link, Route, Switch } from "react-router-dom";
+//import { NavLink as Link, Route, Switch } from "react-router-dom";
+import styled from "styled-components";
 
-const routes = [
-  {
-    path: "/",
-    exact: true,
-    sidebar: () => <MarkerList />
-  },
-  {
-    path: "/createMarker",
-    sidebar: () => <MarkerList />
-  },
-  {
-    path: "/selectMarker",
-    sidebar: () => <MarkerList />
-  },
-  {
-    path: "/filterMarker",
-    sidebar: () => <MarkerFilter />
-  }
-];
+const Wrapper = styled.div`
+  background:#f2f2f2
+  padding: 40px 10px 40px 20px;
+  height: 100%;
+`;
+const activeClassName = "nav-item-active";
+
+const NavLink = styled.span`
+
+  margin: 0 10px;
+  cursor: pointer;
+`;
+
+const Card = styled.div`
+  height: 100%;
+  border: 1px solid #00b8e6;
+  width: 100%;
+  position: relative;
+  display: flex;
+  min-width: 0;
+  word-wrap: break-word;
+  flex-direction: column;
+  border-radius: 3px;
+  overflow: hidden;
+`;
+
+const CardHeader = styled.div`
+  border-bottom: 1px solid #00b8e6;
+  padding: 0.75rem 1.25rem;
+  background: #4ddbff;
+  display: block;
+
+`;
+
+const Nav = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  justify-content: center;
+`;
+const NavItem = styled.li``;
+
+const CardBody = styled.div`
+  padding: 1.25rem;
+  min-height: 100%;
+  overflow-y: auto;
+`;
 
 class Panel extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFiltered: false
+    };
+  }
+
   render() {
     return (
-      <Card className="panelCard">
-        <CardHeader>
-          <Nav>
-            <NavItem>
-              <NavLink tag={Link} to="/selectMarker">
-                Select Marker
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink tag={Link} to="/filterMarker">
-                Filter Marker
-              </NavLink>
-            </NavItem>
-          </Nav>
-        </CardHeader>
-        <CardBody className="scroll">
-          <Switch>
-            {routes.map((route, id) => (
-              <Route
-                key={id}
-                path={route.path}
-                exact={route.exact}
-                component={route.sidebar}
-              />
-            ))}
-          </Switch>
-        </CardBody>
-      </Card>
+      <Wrapper>
+        <Card>
+          <CardHeader>
+            <Nav>
+              <NavItem>
+                <NavLink to="/selectMarker" activeClassName={activeClassName}>
+                  Select Markers
+                </NavLink>
+              </NavItem>
+              /
+              <NavItem>
+                <NavLink to="/filterMarker" activeClassName={activeClassName}>
+                  Filter Marker
+                </NavLink>
+              </NavItem>
+            </Nav>
+          </CardHeader>
+          <CardBody className="scroll">
+            <MarkerList />
+          </CardBody>
+        </Card>
+      </Wrapper>
     );
   }
 }
