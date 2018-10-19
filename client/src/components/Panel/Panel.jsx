@@ -1,19 +1,39 @@
 import React, { Component } from "react";
 import MarkerList from "./MarkerList/MarkerList";
-//import { NavLink as Link, Route, Switch } from "react-router-dom";
+import { css } from "styled-components";
 import styled from "styled-components";
+import { isNavSelect } from "../../actions/isNavSelect";
+import { connect } from "react-redux";
 
 const Wrapper = styled.div`
   background:#f2f2f2
   padding: 40px 10px 40px 20px;
   height: 100%;
 `;
-const activeClassName = "nav-item-active";
 
-const NavLink = styled.span`
-
+const NavLink = css`
   margin: 0 10px;
   cursor: pointer;
+`;
+
+const FilterLink = styled.span`
+  ${NavLink};
+
+  ${({ isSelected }) =>
+    !isSelected &&
+    `
+    font-weight: bold
+  `};
+`;
+
+const SelectLink = styled.span`
+  ${NavLink};
+
+  ${({ isSelected }) =>
+    isSelected &&
+    `
+    font-weight: bold
+  `};
 `;
 
 const Card = styled.div`
@@ -34,7 +54,6 @@ const CardHeader = styled.div`
   padding: 0.75rem 1.25rem;
   background: #4ddbff;
   display: block;
-
 `;
 
 const Nav = styled.ul`
@@ -57,31 +76,54 @@ class Panel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isFiltered: false
+      isSelected: true
     };
   }
 
+  switchToSelect = () => {
+    this.setState({
+      isSelected: true
+    });
+
+    this.props.isNavSelect(true);
+  };
+
+  switchToFilter = () => {
+    this.setState({
+      isSelected: false
+    });
+
+    this.props.isNavSelect(false);
+  };
+
   render() {
+    console.log(this.state, this.props);
     return (
       <Wrapper>
         <Card>
           <CardHeader>
             <Nav>
               <NavItem>
-                <NavLink to="/selectMarker" activeClassName={activeClassName}>
-                  Select Markers
-                </NavLink>
+                <SelectLink
+                  isSelected={this.state.isSelected}
+                  onClick={this.switchToSelect}
+                >
+                  Select marker
+                </SelectLink>
               </NavItem>
               /
               <NavItem>
-                <NavLink to="/filterMarker" activeClassName={activeClassName}>
-                  Filter Marker
-                </NavLink>
+                <FilterLink
+                  isSelected={this.state.isSelected}
+                  onClick={this.switchToFilter}
+                >
+                  Filter marker
+                </FilterLink>
               </NavItem>
             </Nav>
           </CardHeader>
           <CardBody className="scroll">
-            <MarkerList />
+            <MarkerList isNavSelect={this.state.isSelected} />
           </CardBody>
         </Card>
       </Wrapper>
@@ -89,4 +131,11 @@ class Panel extends Component {
   }
 }
 
-export default Panel;
+const mapDispatchToProps = {
+  isNavSelect,
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Panel);

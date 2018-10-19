@@ -1,7 +1,9 @@
 const initialState = {
-  selectedMarker : '',
-  markerToGeocode: '',
+  selectedMarker: "",
+  markerToGeocode: "",
   selectedMarkers: [],
+  disableMarkers: [],
+  isNavSelect: true,
   posting: false,
   posted: false,
   fetching: false,
@@ -9,78 +11,88 @@ const initialState = {
   removing: false,
   removed: false,
   error: null
-}
+};
 
 const selectedMarker = (state = initialState, action) => {
-  switch(action.type){
-    case 'GET_SELECTED_MARKER':
+  switch (action.type) {
+    case "MARKERS_TO_DISABLE":
+      return {
+        ...state,
+        disableMarkers: action.markers
+      };
+    case "IS_SELECT":
+      return {
+        ...state,
+        isNavSelect: action.bool
+      };
+    case "GET_SELECTED_MARKER":
       return {
         ...state,
         selectedMarker: action.marker
-      }
-    case 'FETCHING_MARKERS':
+      };
+    case "FETCHING_MARKERS":
       return {
         ...state,
         fetching: true,
         fetched: false
-      }
-    case 'FETCHED_MARKERS_SUCCESS':
+      };
+    case "FETCHED_MARKERS_SUCCESS":
       return {
         ...state,
         fetching: false,
         fetched: true,
         selectedMarkers: action.markers
-      }
-    case 'FETCHED_MARKERS_ERROR':
+      };
+    case "FETCHED_MARKERS_ERROR":
       return {
         ...state,
         fetching: false,
         fetched: false,
         error: action.error
-      }
-    case 'POSTING_SELECTED_MARKER':
+      };
+    case "POSTING_SELECTED_MARKER":
       return {
         ...state,
         posting: true,
-        posted: false,
-      }
-    case 'POSTED_SELECTED_MARKER_SUCCESS':
-      return{
+        posted: false
+      };
+    case "POSTED_SELECTED_MARKER_SUCCESS":
+      return {
         ...state,
         posting: false,
         posted: true,
         selectedMarkers: [...state.selectedMarkers, action.marker]
-      }
-    case 'POSTED_SELECTED_ERROR':
-      return{
+      };
+    case "POSTED_SELECTED_ERROR":
+      return {
         ...state,
         posting: false,
         posted: false,
         error: action.error
-      }
-    case 'REMOVING_SELECTED_MARKER':
-      return{
+      };
+    case "REMOVING_SELECTED_MARKER":
+      return {
         ...state,
         removing: true,
-        removed: false,
-      }
-    case 'REMOVED_SELECTED_MARKER_SUCCESS':
-      return{
+        removed: false
+      };
+    case "REMOVED_SELECTED_MARKER_SUCCESS":
+      return {
         ...state,
         removing: false,
         removed: true,
         selectedMarkers: state.selectedMarkers.filter(el => el.id !== action.id)
-      }
-    case 'REMOVED_SELECTED_MARKER_ERROR':
-      return{
+      };
+    case "REMOVED_SELECTED_MARKER_ERROR":
+      return {
         ...state,
         removing: false,
         removed: false,
         error: action.error
-      }
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
 export default selectedMarker;

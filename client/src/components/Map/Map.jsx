@@ -147,7 +147,7 @@ const geocode = (marker, postSelectedMarker) => {
         };
 
         postSelectedMarker(markerToPost);
-      } else if (status == "OVER_QUERY_LIMIT") {
+      } else if (status === "OVER_QUERY_LIMIT") {
         console.log(
           "Geocode was not successful for the following reason: " + status
         );
@@ -206,6 +206,7 @@ const MapWithAMakredInfoWindow = compose(
 
       this.setState({
         onMapMounted: ref => {
+          console.log(ref);
           refs.map = ref;
         },
         onBoundsChanged: () => {
@@ -217,6 +218,7 @@ const MapWithAMakredInfoWindow = compose(
         onSearchBoxMounted: ref => {
           refs.searchBox = ref;
         },
+        onMouseOver: () => {},
         onPlacesChanged: () => {
           const places = refs.searchBox.getPlaces();
           const bounds = new google.maps.LatLngBounds();
@@ -253,73 +255,82 @@ const MapWithAMakredInfoWindow = compose(
     <GoogleMap
       ref={props.onMapMounted}
       onBoundsChanged={props.onBoundsChanged}
+      onMouseOver={props.onMouseOver}
       defaultZoom={props.zoom}
       onZoomChanged={props.onZoomChanged}
       onClick={e => props.addMarker(e, geocode, postSelectedMarker)}
       defaultCenter={props.center}
+      defaultCursor={props.cursor}
     >
-      {props.markers.map((marker, index) => {
-        return (
-          <Marker
-            onClick={() => props.onToggleOpen(marker.id)}
-            key={index}
-            position={{
-              lat: marker.lat,
-              lng: marker.lng
-            }}
-            icon={{
-              url: `http://localhost:8080/images/${marker.icon}`,
-              scaledSize: {
-                width: props.zoom < 14 ? 16 : 32,
-                height: props.zoom < 14 ? 16 : 32
-              }
-            }}
-            visible={!(props.zoom < 11)}
-          >
-            {props.isOpen &&
-              props.id === marker.id && (
-                <InfoBox
-                  defaultPosition={{
-                    lat: marker.lat,
-                    lng: marker.lng
-                  }}
-                  ref={props.onInfoBox}
-                  onCloseClick={props.onToggleOpen}
-                  closeBoxURL=""
-                  options={{
-                    boxStyle: {
-                      border: "none",
-                      fontSize: "12pt",
-                      overflow: "hidden",
-                      height: "250px",
-                      width: "250px",
-                      display: props.zoom < 11 ? "none" : "block"
-                    },
-                    closeBoxMargin: "5px 5px 2px 2px",
-                    alignBottom: true,
-                    isHidden: false,
-                    pixelOffset:
-                      props.zoom < 14
-                        ? new google.maps.Size(-125, -20)
-                        : new google.maps.Size(-125, -35),
-                    enableEventPropagation: true,
-                    infoBoxClearance: new google.maps.Size(1, 1)
-                  }}
-                >
-                  <InfoBoxContainer>
-                    <InfoContent>{marker.name}</InfoContent>
-                    <InfoContent>{marker.street}</InfoContent>
-                    <InfoContent>{marker.city}</InfoContent>
-                    <InfoContent>{marker.country}</InfoContent>
-                    <InfoBtn onClick={() => props.removeMarker(marker.id)}>
-                      Remove Marker
-                    </InfoBtn>
-                  </InfoBoxContainer>
-                </InfoBox>
-              )}
-          </Marker>
-        );
-      })}
+      {props.markers
+        .filter(
+          marker =>
+            !props.disableMarkers.find(
+              disableItem => disableItem.name === marker.name
+            )
+        )
+        .map((marker, index) => {
+          return (
+            <Marker
+              onClick={() => props.onToggleOpen(marker.id)}
+              key={index}
+              position={{
+                lat: marker.lat,
+                lng: marker.lng
+              }}
+              icon={{
+                url: `http://localhost:8080/images/${marker.icon}`,
+                scaledSize: {
+                  width: props.zoom < 14 ? 16 : 32,
+                  height: props.zoom < 14 ? 16 : 32
+                }
+              }}
+              visible={!(props.zoom < 11)}
+            >
+              {props.isOpen &&
+                props.id === marker.id && (
+                  <InfoBox
+                    defaultPosition={{
+                      lat: marker.lat,
+                      lng: marker.lng
+                    }}
+                    ref={props.onInfoBox}
+                    onCloseClick={props.onToggleOpen}
+                    closeBoxURL=""
+                    options={{
+                      boxStyle: {
+                        border: "none",
+                        fontSize: "12pt",
+                        overflow: "hidden",
+                        height: "250px",
+                        width: "250px",
+                        display: props.zoom < 11 ? "none" : "block"
+                      },
+                      closeBoxMargin: "5px 5px 2px 2px",
+                      alignBottom: true,
+                      isHidden: false,
+                      pixelOffset:
+                        props.zoom < 14
+                          ? new google.maps.Size(-125, -20)
+                          : new google.maps.Size(-125, -35),
+                      enableEventPropagation: true,
+                      infoBoxClearance: new google.maps.Size(1, 1)
+                    }}
+                  >
+                    <InfoBoxContainer>
+                      <InfoContent>{marker.name}</InfoContent>
+                      <InfoContent>{marker.street}</InfoContent>
+                      <InfoContent>{marker.city}</InfoContent>
+                      <InfoContent>{marker.country}</InfoContent>
+                      <InfoBtn onClick={() => props.removeMarker(marker.id)}>
+                        Remove Marker
+                      </InfoBtn>
+                    </InfoBoxContainer>
+                  </InfoBox>
+                )}
+            </Marker>
+          );
+        })}
 
       <SearchBox
         ref={props.onSearchBoxMounted}
@@ -339,10 +350,13 @@ class Map extends Component {
   }
 
   addMarker = (event, geocode) => {
+    console.log(this.props);
     const selectedMarker = this.props.selectedMarker;
     const postSelectedMarker = this.props.postSelectedMarker;
+    const isNavSelect = this.props.isNavSelect;
 
-    if (this.props.selectedMarker.id && !this.props.selectedMarker.isDeleted) {
+    if (selectedMarker.id && !selectedMarker.isDeleted && isNavSelect) {
+      console.log(this.props.isNavSelect);
       const marker = {
         name: selectedMarker.name,
         icon: selectedMarker.icon,
@@ -367,6 +381,7 @@ class Map extends Component {
           selectedMarker={this.props.selectedMarker}
           addMarker={this.addMarker}
           removeMarker={this.removeMarker}
+          disableMarkers={this.props.disableMarkers}
         />
       </Wrapper>
     );
@@ -375,7 +390,9 @@ class Map extends Component {
 
 const mapStateToProps = state => ({
   selectedMarker: state.selectedMarker.selectedMarker,
-  markers: state.selectedMarker.selectedMarkers
+  markers: state.selectedMarker.selectedMarkers,
+  isNavSelect: state.selectedMarker.isNavSelect,
+  disableMarkers: state.selectedMarker.disableMarkers
 });
 
 const mapDispatchToProps = {

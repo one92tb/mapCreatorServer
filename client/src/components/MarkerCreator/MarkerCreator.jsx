@@ -203,7 +203,6 @@ class MarkerCreator extends Component {
   };
 
   removeRecord = () => {
-    const isRemoved = this.props.isRemoved;
     const removeRecord = this.props.removeRecord;
     const getSelectedMarker = this.props.getSelectedMarker;
 
@@ -296,6 +295,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(MarkerCreator);
-
-//  <span className="inputLabel">Chose File to Send</span> {(this.state.displaySelectedImage === 'IMG-default.png') ? 'Not file detected' : (this.props.selectedMarker.id !== undefined) ? `${this.props.selectedMarker.name}.png` : this.state.markerImageFile.name }
-//{(this.props.selectedMarker.id !== undefined) ? 'Edit Marker' : 'Upload new marker'}
