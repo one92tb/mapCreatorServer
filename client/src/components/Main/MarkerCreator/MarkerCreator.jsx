@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { postRecord } from "../../actions/postRecord";
-import { getSelectedMarker } from "../../actions/getSelectedMarker";
-import { removeRecord } from "../../actions/removeRecord";
-import { editRecord } from "../../actions/editRecord";
+import { postRecord } from "../../../actions/postRecord";
+import { getSelectedMarker } from "../../../actions/getSelectedMarker";
+import { removeRecord } from "../../../actions/removeRecord";
+import { editRecord } from "../../../actions/editRecord";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { css } from "styled-components";

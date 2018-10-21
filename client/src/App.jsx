@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import "./App.css";
 import NavBar from "./components/NavBar/NavBar";
-import MarkerCreator from "./components/MarkerCreator/MarkerCreator";
-import Map from "./components/Map/Map";
-import Panel from "./components/Panel/Panel";
+import Main from "./components/Main/Main";
+import Statistic from "./components/Statistic/Statistic";
+import List from "./components/List/List";
+
 import styled from "styled-components";
 import { Container, Row, Col } from "reactstrap";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -26,20 +26,20 @@ const routes = [
   {
     path: "/",
     exact: true,
-    section: Map
+    section: Main
   },
   {
     path: "/createMarker",
-    section: MarkerCreator
+    section: Main
   },
   {
-    path: "/selectMarker",
-    section: Map
+    path: "/statistic",
+    section: Statistic
   },
   {
-    path: "/filterMarker",
-    section: Map
-  }
+    path: "/list",
+    section: List
+  },
 ];
 
 class App extends Component {
@@ -51,25 +51,16 @@ class App extends Component {
             <Col tag={ColStyle} lg="2">
               <NavBar />
             </Col>
-            <Col tag={ColStyle} lg="10">
-              <Row tag={RowStyle}>
-                <Col tag={ColStyle} lg="3">
-                  <Panel />
-                </Col>
-                <Col tag={ColStyle} lg="9">
-                  <Switch>
-                    {routes.map((route, id) => (
-                      <Route
-                        key={id}
-                        path={route.path}
-                        exact={route.exact}
-                        component={route.section}
-                      />
-                    ))}
-                  </Switch>
-                </Col>
-              </Row>
-            </Col>
+            <Switch>
+              {routes.map((route, id) => (
+                <Route
+                  key={id}
+                  path={route.path}
+                  exact={route.exact}
+                  component={route.section}
+                />
+              ))}
+            </Switch>
           </Row>
         </Container>
       </Router>

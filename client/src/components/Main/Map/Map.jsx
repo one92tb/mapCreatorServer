@@ -1,9 +1,9 @@
 /*global google*/
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { postSelectedMarker } from "../../actions/postSelectedMarker";
-import { fetchSelectedMarkers } from "../../actions/fetchSelectedMarkers";
-import { removeSelectedMarker } from "../../actions/removeSelectedMarker";
+import { postSelectedMarker } from "../../../actions/postSelectedMarker";
+import { fetchSelectedMarkers } from "../../../actions/fetchSelectedMarkers";
+import { removeSelectedMarker } from "../../../actions/removeSelectedMarker";
 import apiKey from "./apiKey";
 import styled from "styled-components";
 const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");

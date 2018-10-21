@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { fetchRecords } from "../../../actions/fetchRecords";
-import { getSelectedMarker } from "../../../actions/getSelectedMarker";
-import { disableMarkers } from "../../../actions/disableMarkers";
+import { fetchRecords } from "../../../../actions/fetchRecords";
+import { getSelectedMarker } from "../../../../actions/getSelectedMarker";
+import { disableMarkers } from "../../../../actions/disableMarkers";
 import { connect } from "react-redux";
 import styled from "styled-components";
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import MarkerList from "./MarkerList/MarkerList";
 import { css } from "styled-components";
 import styled from "styled-components";
-import { isNavSelect } from "../../actions/isNavSelect";
+import { isNavSelect } from "../../../actions/isNavSelect";
 import { connect } from "react-redux";
 
 const Wrapper = styled.div`

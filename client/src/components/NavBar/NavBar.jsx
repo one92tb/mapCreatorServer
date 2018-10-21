@@ -106,12 +106,12 @@ class NavBar extends Component {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink to="/test1" activeClassName={activeClassName}>
+            <NavLink to="/statistic" activeClassName={activeClassName}>
               <Icon src={"graph.png"} width={32} height={32} />Statistic
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink to="/test2" activeClassName={activeClassName}>
+            <NavLink to="/list" activeClassName={activeClassName}>
               <Icon src={"list.png"} width={32} height={32} />List
             </NavLink>
           </NavItem>
