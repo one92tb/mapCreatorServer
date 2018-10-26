@@ -33,7 +33,6 @@ class Main extends Component {
   }
   render(){
     return(
-      <Col tag={ColStyle} lg="10">
         <Row tag={RowStyle}>
           <Col tag={ColStyle} lg="3">
             <Panel />
@@ -51,7 +50,6 @@ class Main extends Component {
             </Switch>
           </Col>
         </Row>
-      </Col>
     );
   }
 }

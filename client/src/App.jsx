@@ -39,7 +39,7 @@ const routes = [
   {
     path: "/list",
     section: List
-  },
+  }
 ];
 
 class App extends Component {
@@ -51,16 +51,18 @@ class App extends Component {
             <Col tag={ColStyle} lg="2">
               <NavBar />
             </Col>
-            <Switch>
-              {routes.map((route, id) => (
-                <Route
-                  key={id}
-                  path={route.path}
-                  exact={route.exact}
-                  component={route.section}
-                />
-              ))}
-            </Switch>
+            <Col tag={ColStyle} lg="10">
+              <Switch>
+                {routes.map((route, id) => (
+                  <Route
+                    key={id}
+                    path={route.path}
+                    exact={route.exact}
+                    component={route.section}
+                  />
+                ))}
+              </Switch>
+            </Col>
           </Row>
         </Container>
       </Router>

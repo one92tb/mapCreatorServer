@@ -11,6 +11,7 @@ const postedSelectedError = (error) => ({
 })
 
 export const postSelectedMarker = (marker) => (dispatch) => {
+  console.log(marker);
   dispatch({type: 'POSTING_SELECTED_MARKER'});
   axios.create({baseURL: 'http://localhost:8080'}).post('/selectedMarkers', marker)
     .then(res => {

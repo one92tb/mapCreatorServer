@@ -135,6 +135,7 @@ const geocode = (marker, postSelectedMarker) => {
       }
     },
     (results, status) => {
+      console.log(results);
       if (status === "OK") {
         const markerToPost = {
           name: marker.name,
@@ -250,7 +251,6 @@ const MapWithAMakredInfoWindow = compose(
     }
   })
 )(props => {
-  console.log(props);
   return (
     <GoogleMap
       ref={props.onMapMounted}
