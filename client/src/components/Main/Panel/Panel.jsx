@@ -68,7 +68,7 @@ const NavItem = styled.li``;
 
 const CardBody = styled.div`
   padding: 1.25rem;
-  min-height: 100%;
+  height: calc(100% - 48px);
   overflow-y: auto;
 `;
 

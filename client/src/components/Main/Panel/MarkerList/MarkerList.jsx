@@ -8,6 +8,7 @@ import styled from "styled-components";
 const List = styled.div`
   list-style: none;
   padding: 0;
+  height: 100%;
 `;
 
 const Marker = styled.li`
