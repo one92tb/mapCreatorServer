@@ -175,8 +175,7 @@ class List extends Component {
                       : this.state.markerName === marker.name &&
                         marker.city
                           .toLowerCase()
-                          .search(this.state.city.toLowerCase()) !== -1 &&
-                        marker;
+                          .search(this.state.city.toLowerCase()) !== -1 && marker;
                 })
                 .map((marker, id) => (
                   <Tr key={marker.id}>

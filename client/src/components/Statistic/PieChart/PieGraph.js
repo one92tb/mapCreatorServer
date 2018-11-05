@@ -89,7 +89,6 @@ class PieGraph extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
@@ -97,7 +96,6 @@ class PieGraph extends Component {
             activeIndex={this.state.activeIndex}
             activeShape={renderActiveShape}
             data={this.props.displayMarkers.map(el => {
-              console.log(el);
               return {
                 name: el[0],
                 value: el[1]

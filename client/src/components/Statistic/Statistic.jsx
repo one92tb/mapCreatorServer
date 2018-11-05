@@ -8,7 +8,7 @@ import PieGraph from "./PieChart/PieGraph";
 import { Container, Row, Col } from "reactstrap";
 
 const ContainerStyle = styled.div`
-  height: 50%;
+  height: 40%;
   padding: 0 !important;
 `;
 
@@ -19,8 +19,6 @@ const RowStyle = styled.div`
 const ColStyle = styled.div`
   padding: 0!important
   height: 100%;
-
-
 `;
 
 const Wrapper = styled.div`
@@ -29,9 +27,27 @@ const Wrapper = styled.div`
   background: #f2f2f2;
 `;
 
+const Form = styled.form`
+  height: calc(10% - 20px);
+  display: flex;
+  padding-right: 30px;
+  margin-bottom: 20px;
+  justify-content: flex-end;
+`;
+const Input = styled.input`
+  height: 40px;
+  width: 250px;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #bfbfbf;
+`;
+
 class Statistic extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      city: ""
+    };
   }
 
   componentDidMount() {
@@ -39,19 +55,44 @@ class Statistic extends Component {
     this.props.fetchRecords();
   }
 
-  render() {
-    const displayMarkers = Object.entries(
-      this.props.selectedMarkers.reduce((obj, el, id) => {
-        obj[el.name] = obj[el.name] ? ++obj[el.name] : 1;
-        return obj;
-      }, {})
-    );
+  handleChange = e => {
+    this.setState({
+      city: e.target.value
+    });
+  };
 
+  render() {
+    console.log(this.state);
+    const displayMarkers = Object.entries(
+      this.props.selectedMarkers
+        .filter(marker => {
+          if (
+            this.state.city === "" ||
+            marker.city.toLowerCase().search(this.state.city.toLowerCase()) !==
+              -1
+          ) {
+            return marker;
+          }
+        })
+        .reduce((obj, el, id) => {
+          obj[el.name] = obj[el.name] ? ++obj[el.name] : 1;
+          return obj;
+        }, {})
+    );
     const displaySumMarkers = [["markers", this.props.selectedMarkers.length]];
 
-    console.log(this.props, displayMarkers, displaySumMarkers);
     return (
       <Wrapper>
+        <Form>
+          <label>
+            <Input
+              onChange={this.handleChange}
+              type="text"
+              name="city"
+              placeholder="search your city"
+            />
+          </label>
+        </Form>
         <BarGraph displayMarkers={displayMarkers} />
         <Container fluid tag={ContainerStyle}>
           <Row tag={RowStyle}>
