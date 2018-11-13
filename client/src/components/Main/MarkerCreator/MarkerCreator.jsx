@@ -6,6 +6,8 @@ import { editRecord } from "../../../actions/editRecord";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { css } from "styled-components";
+const htmlToImage = require("html-to-image");
+const domtoimage = require("dom-to-image");
 
 const Wrapper = styled.div`
   background: #f2f2f2;
@@ -20,7 +22,12 @@ const Inner = styled.div`
   border: 1px solid #00b8e6;
 `;
 
-const Image = styled.img`
+const ImageInsideMarker = styled.img`
+  width: 25px;
+  height: 25px;
+`;
+
+const ImageWithoutMarker = styled.img`
   width: 50px;
   height: 50px;
   display: block;
@@ -42,6 +49,11 @@ const Label = css`
   cursor: pointer;
 `;
 
+const LabelColor = styled.label`
+  ${Label};
+  margin-left: 2px;
+`;
+
 const LabelFile = styled.label`
   ${Label};
 `;
@@ -58,7 +70,7 @@ const HideInput = styled.input`
   z-index: 99;
 `;
 
-const Input = css`
+const InputStyle = css`
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.25rem;
@@ -67,9 +79,7 @@ const Input = css`
 const InputName = css`
   display: block;
   width: 100%;
-  height: calc(2,25rem + 2px);
   padding: 0.375rem 0.75rem;
-  color: #495057
   border: 1px solid #ced4da;
 `;
 
@@ -89,13 +99,15 @@ const CrudButton = css`
   padding: 0.375rem 0.75rem;
 `;
 
-const FormItem = styled.input`
-  ${Input} ${InputName};
+const Input = styled.input`
+  ${InputStyle} ${InputName};
   z-index: -00;
+  background-color: #fff;
+  height: 40px;
 `;
 
 const InputFile = styled.span`
-  ${Input} ${Button}
+  ${InputStyle} ${Button}
   margin-right: 10px;
   margin-bottom: 0;
   border-color: #00b8e6;
@@ -106,36 +118,122 @@ const InputFile = styled.span`
 `;
 
 const SubmitBtn = styled.button`
-  ${Input} ${Button} ${CrudButton}
+  ${InputStyle};
+  ${Button};
+  ${CrudButton};
   margin-right: 10px;
   background-color: #6c757d;
   border-color: #6c757d;
 `;
 
 const RemoveBtn = styled.button`
-  ${Input} ${Button} ${CrudButton}
+  ${InputStyle};
+  ${Button};
+  ${CrudButton};
   background-color: #ff6666;
   border-color: #ff6666;
 `;
 
-const ImageBox = styled.div`
-  border: 1px solid #495057;
+const DownloadBtn = styled.button`
+  ${Button};
+  ${CrudButton} font-size: 1rem;
+  line-height: 1.5;
+  background-color: #cc00cc;
+  border-color: #cc00cc;
+  border-top-left-radius: ;
+`;
+
+const MarkerIcon = styled.div`
+position: absolute;
+border-radius: 50%;
+border: 8px solid ${props => props.background && props.background}
+width: 60px;
+height: 60px;
+top: 7px;
+background: ${props => props.background && props.background}
+display: flex;
+justify-content: center;
+align-items: center;
+
+&::after {
+  position: absolute;
+  content: "";
+  width: 0px;
+  height: 0px;
+  bottom: -45px;
+  left: 2px;
+  border: 20px solid transparent;
+  border-top: 25px solid ${props => props.background && props.background}
+}
+`;
+
+const UploadButton = styled.button`
+  ${Button};
+  ${CrudButton};
+  background-color: ${props => (!props.status ? "#B2CFE7" : "#509BD9")};
+  border-color: #509bd9;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+`;
+
+const CustomButton = styled.button`
+  ${Button};
+  ${CrudButton};
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: ${props => (props.status ? "#B2CFE7" : "#509BD9")};
+  border-color: #b2cfe7;
+  border-right: 1px solid #000;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+`;
+
+const imageWrapper = css`
   width: 100px;
   height: 100px;
   margin-left: auto;
   margin-right: auto;
+`;
+
+const ImageBox = styled.div`
+  ${imageWrapper};
+  border: 1px solid #495057;
+  position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
+`;
+
+const AdditionalWrapper = styled.div`
+  ${imageWrapper};
+  border: 1px solid #000;
+`;
+
+const MarkerIconBox = styled.div`
+  ${imageWrapper};
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ButtonGroup = styled.div`
+  margin-bottom: 40px;
+  display: flex;
   justify-content: center;
 `;
 
 class MarkerCreator extends Component {
   constructor(props) {
     super(props);
+    this.myRef = React.createRef();
+    this.textInput = React.createRef();
     this.state = {
       markerName: "",
       markerImageFile: "",
-      displaySelectedImage: "IMG-default.png"
+      displaySelectedImage: "IMG-default.png",
+      color: "#000",
+      uploadStatus: false
     };
   }
 
@@ -152,6 +250,9 @@ class MarkerCreator extends Component {
   onChange = event => {
     if (event.target.name === "markerName") {
       this.setState({ markerName: event.target.value });
+    } else if (event.target.name === "color") {
+      console.log(event.target, event.target.value);
+      this.setState({ color: event.target.value });
     } else {
       if (event.target.files[0]) {
         this.setState({
@@ -172,7 +273,7 @@ class MarkerCreator extends Component {
     const editRecord = this.props.editRecord;
 
     let fd = new FormData();
-
+    console.log(this.state.markerImageFile);
     fd.append("file", this.state.markerImageFile);
     fd.append("markerName", this.state.markerName);
 
@@ -202,6 +303,17 @@ class MarkerCreator extends Component {
     }
   };
 
+  downloadMarker = () => {
+    const node = this.myRef;
+    console.log(node);
+    domtoimage.toPng(node).then(dataUrl => {
+      var link = document.createElement("a");
+      link.download = `${this.state.markerName}.png`;
+      link.href = dataUrl;
+      link.click();
+    });
+  };
+
   removeRecord = () => {
     const removeRecord = this.props.removeRecord;
     const getSelectedMarker = this.props.getSelectedMarker;
@@ -220,24 +332,75 @@ class MarkerCreator extends Component {
     });
   };
 
+  handleUpload = status => {
+    this.setState({
+      uploadStatus: status
+    });
+  };
+
   render() {
-    console.log(this.props, this.state);
+    console.log(this.props, this.state, this.myRef);
     return (
       <Wrapper>
         <Inner>
-          <ImageBox>
-            <Image alt="" src={this.state.displaySelectedImage} />
-          </ImageBox>
+          <ButtonGroup>
+            <CustomButton
+              status={this.state.uploadStatus}
+              onClick={() => this.handleUpload(false)}
+            >
+              Custom Marker
+            </CustomButton>
+            <UploadButton
+              status={this.state.uploadStatus}
+              onClick={() => this.handleUpload(true)}
+            >
+              Upload Marker
+            </UploadButton>
+          </ButtonGroup>
+          {this.state.uploadStatus ? (
+            <ImageBox>
+              <ImageWithoutMarker
+                alt=""
+                src={this.state.displaySelectedImage}
+              />
+            </ImageBox>
+          ) : (
+            <AdditionalWrapper>
+              <MarkerIconBox
+                innerRef={div => {
+                  this.myRef = div;
+                }}
+              >
+                <MarkerIcon background={this.state.color}>
+                  <ImageInsideMarker src={this.state.displaySelectedImage} />
+                </MarkerIcon>
+              </MarkerIconBox>
+            </AdditionalWrapper>
+          )}
+
           <Form onSubmit={this.sendRecord}>
             <FormGroup>
               <LabelName htmlFor="exampleText">Name</LabelName>
-              <FormItem
+              <Input
                 type="text"
                 name="markerName"
                 value={this.state.markerName}
                 onChange={e => this.onChange(e)}
               />
             </FormGroup>
+            {!this.state.uploadStatus && (
+              <FormGroup>
+                <LabelColor htmlFor="exampleColor">Color</LabelColor>
+                <Input
+                  onChange={e => this.onChange(e)}
+                  type="color"
+                  name="color"
+                  id="exampleColor"
+                  value={this.state.color}
+                  placeholder="color placeholder"
+                />
+              </FormGroup>
+            )}
             <FormGroup>
               <LabelFile htmlFor="file">
                 <InputFile>Choose file to send</InputFile>{" "}
@@ -254,24 +417,29 @@ class MarkerCreator extends Component {
                 onChange={e => this.onChange(e)}
               />
             </FormGroup>
-            <SubmitBtn>
-              {this.props.selectedMarker.id &&
-              !this.props.selectedMarker.isDeleted
-                ? "Edit Marker"
-                : "Upload new marker"}
-            </SubmitBtn>
-            {this.props.selectedMarker.id &&
-            !this.props.selectedMarker.isDeleted ? (
-              <RemoveBtn
-                onClick={this.removeRecord}
-                type="button"
-                color="danger"
-                value="remove Marker"
-              >
-                Remove Marker
-              </RemoveBtn>
+            {this.state.uploadStatus ? (
+              <FormGroup>
+                <SubmitBtn>
+                  {this.props.selectedMarker.id &&
+                  !this.props.selectedMarker.isDeleted
+                    ? "Edit Marker"
+                    : "Upload new marker"}
+                </SubmitBtn>
+                {this.props.selectedMarker.id &&
+                !this.props.selectedMarker.isDeleted ? (
+                  <RemoveBtn onClick={this.removeRecord} type="button">
+                    Remove Marker
+                  </RemoveBtn>
+                ) : (
+                  ""
+                )}
+              </FormGroup>
             ) : (
-              ""
+              <FormGroup>
+                <DownloadBtn onClick={this.downloadMarker} type="button">
+                  Download
+                </DownloadBtn>
+              </FormGroup>
             )}
           </Form>
         </Inner>
