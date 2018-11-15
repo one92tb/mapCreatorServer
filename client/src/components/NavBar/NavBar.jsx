@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { NavLink as Link } from "react-router-dom";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { isNavSelect } from "../../actions/isNavSelect";
+import { getSelectedMarker } from "../../actions/getSelectedMarker";
 
 const Panel = styled.div`
   height: 100%;
@@ -83,6 +86,14 @@ const Icon = styled.img`
 `;
 
 class NavBar extends Component {
+  handleMap = () => {
+    this.props.getSelectedMarker("");
+  };
+
+  handleMapCreator = () => {
+    this.props.isNavSelect(true);
+  };
+
   render() {
     return (
       <Panel>
@@ -96,12 +107,21 @@ class NavBar extends Component {
         </User>
         <Nav>
           <NavItem>
-            <NavLink to="/" exact={true} activeClassName={activeClassName}>
+            <NavLink
+              onClick={this.handleMap}
+              to="/"
+              exact={true}
+              activeClassName={activeClassName}
+            >
               <Icon src={"map.png"} width={32} height={32} /> Map
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink to="/createMarker" activeClassName={activeClassName}>
+            <NavLink
+              onClick={this.handleMapCreator}
+              to="/createMarker"
+              activeClassName={activeClassName}
+            >
               <Icon src={"gps.png"} width={32} height={32} />Create Marker
             </NavLink>
           </NavItem>
@@ -121,4 +141,16 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+const mapDispatchToProps = {
+  isNavSelect,
+  getSelectedMarker
+};
+
+export default connect(
+  null,
+  mapDispatchToProps,
+  null,
+  {
+    pure: false
+  }
+)(NavBar);

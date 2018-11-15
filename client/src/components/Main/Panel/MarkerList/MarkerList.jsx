@@ -80,7 +80,6 @@ class MarkerList extends Component {
     }
     //wyzerowanie selected
     else if (marker.id === this.state.selectedId && isNavSelect) {
-      console.log("b");
       // UNSELECT
       id = "";
       this.setState({ selectedId: id });
@@ -90,11 +89,8 @@ class MarkerList extends Component {
         url: "IMG-default.png"
       });
     } else {
-      console.log("c");
-      // FILTER
       if (this.state.filteredMarkers.find(el => el.id === marker.id)) {
         // delete the same
-        console.log("y", this.state.filteredMarkers);
         this.setState(
           {
             filteredMarkers: this.state.filteredMarkers.filter(
@@ -102,12 +98,10 @@ class MarkerList extends Component {
             )
           },
           () => {
-            console.log(this.state.filteredMarkers);
             return disableMarkers(this.state.filteredMarkers);
           }
         );
       } else {
-        console.log("x", this.state.filteredMarkers);
         this.setState(
           {
             filteredMarkers: [...this.state.filteredMarkers, marker]

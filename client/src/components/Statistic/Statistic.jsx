@@ -62,7 +62,6 @@ class Statistic extends Component {
   };
 
   render() {
-    console.log(this.state);
     const displayMarkers = Object.entries(
       this.props.selectedMarkers
         .filter(marker => {

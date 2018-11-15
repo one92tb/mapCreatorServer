@@ -27,11 +27,6 @@ const Select = styled.select`
   text-align-last: center;
 `;
 
-const MarkerName = styled.span`
-  display: block;
-  text-align: center;
-`;
-
 const Input = styled.input`
   height: 40px;
   width: 200px;

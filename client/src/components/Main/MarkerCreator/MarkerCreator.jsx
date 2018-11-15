@@ -6,7 +6,6 @@ import { editRecord } from "../../../actions/editRecord";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { css } from "styled-components";
-const htmlToImage = require("html-to-image");
 const domtoimage = require("dom-to-image");
 
 const Wrapper = styled.div`
@@ -136,11 +135,10 @@ const RemoveBtn = styled.button`
 
 const DownloadBtn = styled.button`
   ${Button};
-  ${CrudButton} font-size: 1rem;
-  line-height: 1.5;
-  background-color: #cc00cc;
-  border-color: #cc00cc;
-  border-top-left-radius: ;
+  ${CrudButton};
+  ${InputStyle};
+  background-color: #6c757d;
+  border-color: #6c757d;
 `;
 
 const MarkerIcon = styled.div`
@@ -170,8 +168,8 @@ align-items: center;
 const UploadButton = styled.button`
   ${Button};
   ${CrudButton};
-  background-color: ${props => (!props.status ? "#B2CFE7" : "#509BD9")};
-  border-color: #509bd9;
+  background-color: ${props => (props.status ? "#00b8e6" : "#B2CFE7")};
+  border-color: #00b8e6;
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 `;
@@ -181,9 +179,9 @@ const CustomButton = styled.button`
   ${CrudButton};
   font-size: 1rem;
   line-height: 1.5;
-  background-color: ${props => (props.status ? "#B2CFE7" : "#509BD9")};
-  border-color: #b2cfe7;
-  border-right: 1px solid #000;
+  background-color: ${props => (!props.status ? "#00b8e6" : "#B2CFE7")};
+  border-color: #00b8e6;
+  border-right: 1px solid #00b8e6;
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
 `;

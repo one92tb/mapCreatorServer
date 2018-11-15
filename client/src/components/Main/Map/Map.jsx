@@ -18,7 +18,7 @@ const {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
-  Marker,
+  Marker
 } = require("react-google-maps");
 const {
   SearchBox
@@ -271,64 +271,64 @@ const MapWithAMakredInfoWindow = compose(
         )
         .map((marker, index) => {
           return (
-              <Marker
-                onClick={() => props.onToggleOpen(marker.id)}
-                key={index}
-                position={{
-                  lat: marker.lat,
-                  lng: marker.lng
-                }}
-                icon={{
-                  url: `http://localhost:8080/images/${marker.icon}`,
-                  scaledSize: {
-                    width: props.zoom < 14 ? 16 : 50,
-                    height: props.zoom < 14 ? 16 : 50
-                  }
-                }}
-                visible={!(props.zoom < 11)}
-              >
-                {props.isOpen &&
-                  props.id === marker.id && (
-                    <InfoBox
-                      defaultPosition={{
-                        lat: marker.lat,
-                        lng: marker.lng
-                      }}
-                      ref={props.onInfoBox}
-                      onCloseClick={props.onToggleOpen}
-                      closeBoxURL=""
-                      options={{
-                        boxStyle: {
-                          border: "none",
-                          fontSize: "12pt",
-                          overflow: "hidden",
-                          height: "250px",
-                          width: "250px",
-                          display: props.zoom < 11 ? "none" : "block"
-                        },
-                        closeBoxMargin: "5px 5px 2px 2px",
-                        alignBottom: true,
-                        isHidden: false,
-                        pixelOffset:
-                          props.zoom < 14
-                            ? new google.maps.Size(-125, -20)
-                            : new google.maps.Size(-125, -45),
-                        enableEventPropagation: true,
-                        infoBoxClearance: new google.maps.Size(1, 1)
-                      }}
-                    >
-                      <InfoBoxContainer>
-                        <InfoContent>{marker.name}</InfoContent>
-                        <InfoContent>{marker.street}</InfoContent>
-                        <InfoContent>{marker.city}</InfoContent>
-                        <InfoContent>{marker.country}</InfoContent>
-                        <InfoBtn onClick={() => props.removeMarker(marker.id)}>
-                          Remove Marker
-                        </InfoBtn>
-                      </InfoBoxContainer>
-                    </InfoBox>
-                  )}
-              </Marker>
+            <Marker
+              onClick={() => props.onToggleOpen(marker.id)}
+              key={index}
+              position={{
+                lat: marker.lat,
+                lng: marker.lng
+              }}
+              icon={{
+                url: `http://localhost:8080/images/${marker.icon}`,
+                scaledSize: {
+                  width: props.zoom < 14 ? 16 : 50,
+                  height: props.zoom < 14 ? 16 : 50
+                }
+              }}
+              visible={!(props.zoom < 11)}
+            >
+              {props.isOpen &&
+                props.id === marker.id && (
+                  <InfoBox
+                    defaultPosition={{
+                      lat: marker.lat,
+                      lng: marker.lng
+                    }}
+                    ref={props.onInfoBox}
+                    onCloseClick={props.onToggleOpen}
+                    closeBoxURL=""
+                    options={{
+                      boxStyle: {
+                        border: "none",
+                        fontSize: "12pt",
+                        overflow: "hidden",
+                        height: "250px",
+                        width: "250px",
+                        display: props.zoom < 11 ? "none" : "block"
+                      },
+                      closeBoxMargin: "5px 5px 2px 2px",
+                      alignBottom: true,
+                      isHidden: false,
+                      pixelOffset:
+                        props.zoom < 14
+                          ? new google.maps.Size(-125, -20)
+                          : new google.maps.Size(-125, -45),
+                      enableEventPropagation: true,
+                      infoBoxClearance: new google.maps.Size(1, 1)
+                    }}
+                  >
+                    <InfoBoxContainer>
+                      <InfoContent>{marker.name}</InfoContent>
+                      <InfoContent>{marker.street}</InfoContent>
+                      <InfoContent>{marker.city}</InfoContent>
+                      <InfoContent>{marker.country}</InfoContent>
+                      <InfoBtn onClick={() => props.removeMarker(marker.id)}>
+                        Remove Marker
+                      </InfoBtn>
+                    </InfoBoxContainer>
+                  </InfoBox>
+                )}
+            </Marker>
           );
         })}
 
