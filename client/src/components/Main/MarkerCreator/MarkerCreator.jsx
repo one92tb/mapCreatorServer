@@ -221,6 +221,13 @@ const ButtonGroup = styled.div`
   justify-content: center;
 `;
 
+const ErrorMessage = styled.span`
+  color: red;
+  font-size: 10px;
+  display: block;
+  margin-left: 2px;
+`;
+
 class MarkerCreator extends Component {
   constructor(props) {
     super(props);
@@ -231,7 +238,9 @@ class MarkerCreator extends Component {
       markerImageFile: "",
       displaySelectedImage: "IMG-default.png",
       color: "#000",
-      uploadStatus: false
+      uploadStatus: false,
+      markerNameError: "",
+      markerImageFileError: ""
     };
   }
 
@@ -248,25 +257,62 @@ class MarkerCreator extends Component {
   onChange = event => {
     if (event.target.name === "markerName") {
       this.setState({ markerName: event.target.value });
+      if (event.target.value.length > 2) {
+        this.setState({
+          markerNameError: ""
+        });
+      }
     } else if (event.target.name === "color") {
-      console.log(event.target, event.target.value);
       this.setState({ color: event.target.value });
     } else {
       if (event.target.files[0]) {
-        this.setState({
-          markerImageFile: event.target.files[0]
-        });
-      }
-      if (event.target.files[0]) {
-        this.setState({
-          displaySelectedImage: URL.createObjectURL(event.target.files[0])
-        });
+        this.setState(
+          {
+            markerImageFile: event.target.files[0],
+            displaySelectedImage: URL.createObjectURL(event.target.files[0])
+          },
+          () =>
+            /\.(png)$/i.test(this.state.markerImageFile.name) &&
+            this.setState({ markerImageFileError: "" })
+        );
       }
     }
   };
 
+  validate = () => {
+    let isError = false;
+    const errors = {
+      markerNameError: "",
+      markerImageFileError: ""
+    };
+
+    if (this.state.markerName.length < 3) {
+      isError = true;
+      errors.markerNameError = "Username needs to be atleast 3 characters long";
+    }
+    console.log(/\.(png)$/i.test(this.state.markerImageFile.name));
+    if (!/\.(png)$/i.test(this.state.markerImageFile.name)) {
+      isError = true;
+      errors.markerImageFileError = "format must be .png";
+    }
+
+    if (!this.state.markerImageFile) {
+      isError = true;
+      errors.markerImageFileError = "Input file cannot be empty";
+    }
+
+    this.setState({
+      ...this.state,
+      ...errors
+    });
+
+    return isError;
+  };
+
   sendRecord = event => {
     event.preventDefault();
+    const err = this.validate();
+
     const postRecord = this.props.postRecord;
     const editRecord = this.props.editRecord;
 
@@ -291,25 +337,30 @@ class MarkerCreator extends Component {
         editRecord(fd, this.props.selectedMarker.id);
       }
     } else {
-      postRecord(fd);
+      if (!err) {
+        postRecord(fd);
 
-      this.setState({
-        markerName: "",
-        markerImageFile: "",
-        displaySelectedImage: "IMG-default.png"
-      });
+        this.setState({
+          markerName: "",
+          markerImageFile: "",
+          displaySelectedImage: "IMG-default.png"
+        });
+      }
     }
   };
 
   downloadMarker = () => {
-    const node = this.myRef;
-    console.log(node);
-    domtoimage.toPng(node).then(dataUrl => {
-      var link = document.createElement("a");
-      link.download = `${this.state.markerName}.png`;
-      link.href = dataUrl;
-      link.click();
-    });
+    const err = this.validate();
+
+    if (!err) {
+      const node = this.myRef;
+      domtoimage.toPng(node).then(dataUrl => {
+        var link = document.createElement("a");
+        link.download = `${this.state.markerName}.png`;
+        link.href = dataUrl;
+        link.click();
+      });
+    }
   };
 
   removeRecord = () => {
@@ -385,6 +436,9 @@ class MarkerCreator extends Component {
                 value={this.state.markerName}
                 onChange={e => this.onChange(e)}
               />
+              {this.state.markerNameError && (
+                <ErrorMessage>{this.state.markerNameError}</ErrorMessage>
+              )}
             </FormGroup>
             {!this.state.uploadStatus && (
               <FormGroup>
@@ -414,6 +468,9 @@ class MarkerCreator extends Component {
                 name="markerImage"
                 onChange={e => this.onChange(e)}
               />
+              {this.state.markerImageFileError && (
+                <ErrorMessage>{this.state.markerImageFileError}</ErrorMessage>
+              )}
             </FormGroup>
             {this.state.uploadStatus ? (
               <FormGroup>
