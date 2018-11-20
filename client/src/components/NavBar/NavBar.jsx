@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { isNavSelect } from "../../actions/isNavSelect";
 import { getSelectedMarker } from "../../actions/getSelectedMarker";
+import { withRouter } from "react-router-dom";
+import { logout } from "../../actions/logout";
 
 const Panel = styled.div`
   height: 100%;
@@ -85,6 +87,27 @@ const Icon = styled.img`
   margin-right: 5px;
 `;
 
+const LogoutBtn = styled.button``;
+
+const Logout = withRouter(({ history, logOutFromApp }) => {
+  return (
+    <LogoutBtn
+      onClick={() => {
+        logOutFromApp({
+          userId: "",
+          userName: "",
+          error: "",
+          isAuthorized: false
+        });
+        localStorage.setItem("token", "");
+        history.push("/login");
+      }}
+    >
+      Sign out
+    </LogoutBtn>
+  );
+});
+
 class NavBar extends Component {
   handleMap = () => {
     this.props.getSelectedMarker("");
@@ -94,7 +117,13 @@ class NavBar extends Component {
     this.props.isNavSelect(true);
   };
 
+  /*logOut = ({history}) => {
+    console.log(this.props);
+    //this.props.history.push("/login");
+  };*/
+
   render() {
+    console.log(this.props);
     return (
       <Panel>
         <Header>
@@ -105,11 +134,12 @@ class NavBar extends Component {
           <LoginImg src={"user.png"} width={130} height={130} />
           <LoginName>UserNick</LoginName>
         </User>
+        <Logout logOutFromApp={this.props.logout} />
         <Nav>
           <NavItem>
             <NavLink
               onClick={this.handleMap}
-              to="/"
+              to="/map"
               exact={true}
               activeClassName={activeClassName}
             >
@@ -143,7 +173,8 @@ class NavBar extends Component {
 
 const mapDispatchToProps = {
   isNavSelect,
-  getSelectedMarker
+  getSelectedMarker,
+  logout
 };
 
 export default connect(

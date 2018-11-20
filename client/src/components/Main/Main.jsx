@@ -17,7 +17,7 @@ const ColStyle = styled.div`
 
 const routes = [
   {
-    path: "/",
+    path: "/map",
     exact: true,
     section: Map
   },
