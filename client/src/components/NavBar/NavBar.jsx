@@ -36,11 +36,11 @@ const LoginImg = styled.img`
 const LoginName = styled.span`
   display: block;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 20px;
 `;
 
 const Nav = styled.ul`
-  margin-top: 100px;
+  margin-top: 60px;
   padding-left: 0;
 `;
 
@@ -87,7 +87,22 @@ const Icon = styled.img`
   margin-right: 5px;
 `;
 
-const LogoutBtn = styled.button``;
+const LogoutBtn = styled.button`
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  background: #00b8e6;
+  cursor: pointer;
+  height: 40px;
+  width: 165px;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #00b8e6;
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+`;
 
 const Logout = withRouter(({ history, logOutFromApp }) => {
   return (
@@ -99,7 +114,7 @@ const Logout = withRouter(({ history, logOutFromApp }) => {
           error: "",
           isAuthorized: false
         });
-        localStorage.setItem("token", "");
+        localStorage.removeItem("token");
         history.push("/login");
       }}
     >
@@ -117,13 +132,7 @@ class NavBar extends Component {
     this.props.isNavSelect(true);
   };
 
-  /*logOut = ({history}) => {
-    console.log(this.props);
-    //this.props.history.push("/login");
-  };*/
-
   render() {
-    console.log(this.props);
     return (
       <Panel>
         <Header>
@@ -139,7 +148,7 @@ class NavBar extends Component {
           <NavItem>
             <NavLink
               onClick={this.handleMap}
-              to="/map"
+              to="/"
               exact={true}
               activeClassName={activeClassName}
             >

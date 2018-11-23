@@ -1,7 +1,7 @@
 const initialState = {
   userId: "",
   userName: "",
-  error: "",
+  error: null,
   isLoggingIn: false,
   isAuthorized: false
 };
@@ -26,7 +26,7 @@ const account = (state = initialState, action) => {
     case "LOGIN_ERROR":
       return {
         ...state,
-        error: action.errror
+        error: action.error
       };
     case "LOGOUT":
       return {

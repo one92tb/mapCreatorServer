@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm";
+import { User } from "./User";
 
 @Entity()
 export class SelectedMarker {
@@ -26,4 +27,10 @@ export class SelectedMarker {
 
     @Column()
     country: string;
+
+    @Column({ type: "int" })
+    public userId: number;
+
+    @ManyToOne(type => User, user => user.selectedMarkers)
+    user: User;
 }

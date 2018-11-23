@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { getManager } from "typeorm";
-import { Marker } from "../entity/Marker";
+import { Marker } from "../../entity/Marker";
 
 export const editMarker = async (request: Request, response: Response) => {
   const markerRepository = getManager().getRepository(Marker);
 
+  console.log(request.body, request.user.userData.userId);
   const marker = request.files
     ? {
         name: request.body.markerName,
@@ -19,6 +20,17 @@ export const editMarker = async (request: Request, response: Response) => {
 
   const editedMarker = await markerRepository
     .preload(marker)
-    .then(updatedMarker => markerRepository.save(updatedMarker));
-  return response.json(editedMarker);
+    .then(updatedMarker => {
+      if (updatedMarker.userId === request.user.userData.userId) {
+        markerRepository.save(updatedMarker);
+        return response.json(updatedMarker);
+      } else {
+        Promise.reject("Forbidden");
+      }
+    })
+    .catch(error =>
+      response.status(403).json({
+        errorMessage: "blablabla"
+      })
+    );
 };

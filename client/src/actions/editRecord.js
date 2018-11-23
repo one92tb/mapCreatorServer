@@ -15,7 +15,9 @@ export const editRecord = (record, id) => dispatch => {
   dispatch({ type: "EDITING_RECORD" });
   axios
     .create({ baseURL: "http://localhost:8080" })
-    .put(`/markers/${id}`, record)
+    .put(`/markers/${id}`, record, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    })
     .then(res => {
       dispatch(editedRecord(res.data));
     })

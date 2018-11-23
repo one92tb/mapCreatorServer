@@ -7,9 +7,10 @@ import styled from "styled-components";
 import { Container, Row, Col } from "reactstrap";
 import Login from "../Login/Login";
 import { connect } from "react-redux";
+import history from '../../history';
 
 import {
-  BrowserRouter as Router,
+ Router,
   Switch,
   Route,
   NavLink as Link,
@@ -34,11 +35,6 @@ const ColStyle = styled.div`
 const routes = [
   {
     path: "/",
-    exact: true,
-    section: Main
-  },
-  {
-    path: "/map",
     exact: true,
     section: Main
   },
@@ -114,23 +110,12 @@ const AppContent = () => {
 };
 
 const Auth = () => (
-  <Router className="mainComponent">
+  <Router history={history}>
     <Switch>
       <Route exact path="/login" render={props => <Login {...props} />} />
       <AuthRoute exact />
     </Switch>
   </Router>
 );
-
-const mapStateToProps = state => ({
-  isAuthorized: state.account.isAuthorized
-});
-
-const mapDispatchToProps = {};
-
-connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(checkAuth);
 
 export default Auth;

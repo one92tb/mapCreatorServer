@@ -15,6 +15,7 @@
     "react-dom": "^16.3.2",
     "react-geocode": "^0.1.2",
     "react-google-maps": "^9.4.5",
+    "react-password-mask": "^3.3.1",
     "react-popup": "^0.9.3",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",

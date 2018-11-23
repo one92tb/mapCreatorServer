@@ -1,18 +1,19 @@
 import {getHomePage} from '../controllers/homePage';
-import {getMarkers} from '../controllers/getMarkers';
-import {postMarker} from '../controllers/postMarker';
-import {getMarker} from '../controllers/getMarker';
-import {removeMarker} from '../controllers/removeMarker';
-import {editMarker} from '../controllers/editMarker';
 
-import {postSelectedMarker} from '../controllers/postSelectedMarker';
-import {getSelectedMarkers} from '../controllers/getSelectedMarkers';
-import {getSelectedMarker} from '../controllers/getSelectedMarker';
-import {removeSelectedMarker} from '../controllers/removeSelectedMarker';
+import {getMarkers} from '../controllers/markers/getMarkers';
+import {postMarker} from '../controllers/markers/postMarker';
+import {getMarker} from '../controllers/markers/getMarker';
+import {removeMarker} from '../controllers/markers/removeMarker';
+import {editMarker} from '../controllers/markers/editMarker';
 
-import {login} from '../controllers/login';
-import {postUser} from '../controllers/postUser';
-import {getUsers} from '../controllers/getUsers';
+import {postSelectedMarker} from '../controllers/selectedMarkers/postSelectedMarker';
+import {getSelectedMarkers} from '../controllers/selectedMarkers/getSelectedMarkers';
+import {getSelectedMarker} from '../controllers/selectedMarkers/getSelectedMarker';
+import {removeSelectedMarker} from '../controllers/selectedMarkers/removeSelectedMarker';
+
+import {login} from '../controllers/account/login';
+import {postUser} from '../controllers/account/postUser';
+import {getUsers} from '../controllers/account/getUsers';
 
 
 export const routes = [

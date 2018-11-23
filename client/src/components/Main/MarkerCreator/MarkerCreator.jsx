@@ -45,7 +45,6 @@ const FormGroup = styled.div`
 
 const Label = css`
   margin-bottom: 0;
-  cursor: pointer;
 `;
 
 const LabelColor = styled.label`
@@ -97,10 +96,10 @@ const CrudButton = css`
   -webkit-user-select: none;
   padding: 0.375rem 0.75rem;
 `;
-
+//z-index: -00;
 const Input = styled.input`
   ${InputStyle} ${InputName};
-  z-index: -00;
+
   background-color: #fff;
   height: 40px;
 `;
@@ -142,28 +141,27 @@ const DownloadBtn = styled.button`
 `;
 
 const MarkerIcon = styled.div`
-position: absolute;
-border-radius: 50%;
-border: 8px solid ${props => props.background && props.background}
-width: 60px;
-height: 60px;
-top: 7px;
-background: ${props => props.background && props.background}
-display: flex;
-justify-content: center;
-align-items: center;
-
-&::after {
   position: absolute;
-  content: "";
-  width: 0px;
-  height: 0px;
-  bottom: -45px;
-  left: 2px;
-  border: 20px solid transparent;
-  border-top: 25px solid ${props => props.background && props.background}
-}
-`;
+  border-radius: 50%;
+  border: 8px solid ${props => props.background && props.background}
+  width: 60px;
+  height: 60px;
+  top: 7px;
+  background: ${props => props.background && props.background}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &::after {
+    position: absolute;
+    content: "";
+    width: 0px;
+    height: 0px;
+    bottom: -45px;
+    left: 2px;
+    border: 20px solid transparent;
+    border-top: 25px solid ${props => props.background && props.background}
+  }`;
 
 const UploadButton = styled.button`
   ${Button};
@@ -291,12 +289,12 @@ class MarkerCreator extends Component {
       errors.markerNameError = "Username needs to be atleast 3 characters long";
     }
     console.log(/\.(png)$/i.test(this.state.markerImageFile.name));
-    if (!/\.(png)$/i.test(this.state.markerImageFile.name)) {
+    if (!/\.(png)$/i.test(this.state.markerImageFile.name) && this.state.markerImageFile) {
       isError = true;
       errors.markerImageFileError = "format must be .png";
     }
 
-    if (!this.state.markerImageFile) {
+    if (!this.state.markerImageFile && !this.props.selectedMarker.id) {
       isError = true;
       errors.markerImageFileError = "Input file cannot be empty";
     }
@@ -323,21 +321,24 @@ class MarkerCreator extends Component {
 
     console.log("fd", this.state.markerImageFile, this.state.markerName);
 
-    if (this.props.selectedMarker.id && !this.props.selectedMarker.isDeleted) {
-      if (this.state.markerImageFile === "") {
-        editRecord(
-          {
-            name: this.state.markerName,
-            icon: this.props.selectedMarker.icon
-          },
-          this.props.selectedMarker.id
-        );
+    if (!err) {
+      if (
+        this.props.selectedMarker.id &&
+        !this.props.selectedMarker.isDeleted
+      ) {
+        if (this.state.markerImageFile === "") {
+          editRecord(
+            {
+              name: this.state.markerName,
+              icon: this.props.selectedMarker.icon
+            },
+            this.props.selectedMarker.id
+          );
+        } else {
+          console.log("z pliku");
+          editRecord(fd, this.props.selectedMarker.id);
+        }
       } else {
-        console.log("z pliku");
-        editRecord(fd, this.props.selectedMarker.id);
-      }
-    } else {
-      if (!err) {
         postRecord(fd);
 
         this.setState({

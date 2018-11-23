@@ -12,7 +12,7 @@ const path = require("path");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
-const jwt = require('express-jwt');
+const jwt = require("express-jwt");
 
 import { routes } from "./routes/index";
 
@@ -55,26 +55,6 @@ const options: ConnectionOptions = {
   entities: ["src/entity/*.ts"]
 };
 
-function verifyToken(req, res, next) {
-  // Get auth header value
-  const bearerHeader = req.headers['authorization'];
-  // Check if bearer is undefined
-  if(typeof bearerHeader !== 'undefined') {
-    // Split at the space
-    const bearer = bearerHeader.split(' ');
-    // Get token from array
-    const bearerToken = bearer[1];
-    // Set the token
-    req.token = bearerToken;
-    // Next middleware
-    next();
-  } else {
-    // Forbidden
-    res.sendStatus(403);
-  }
-
-}
-
 createConnection(options).then(async connection => {
   routes.forEach(route => {
     const args =
@@ -82,15 +62,29 @@ createConnection(options).then(async connection => {
       (route.method === "put" && route.path === "/markers/:id")
         ? [route.path, upload.any()]
         : [route.path];
-    app[route.method](
-      ...args,
-      (request: Request, response: Response, next: Function) => {
-        route
-          .action(request, response)
-          .then(() => next)
-          .catch(err => next(err));
-      }
-    );
+
+    if (route.method === "post" && route.path === "/login" || route.method === "post" && route.path === "/users" ) {
+      app[route.method](
+        ...args,
+        (request: Request, response: Response, next: Function) => {
+          route
+            .action(request, response)
+            .then(() => next)
+            .catch(err => next(err));
+        }
+      );
+    } else {
+      app[route.method](
+        ...args,
+        jwt({ secret: "secretkey-1992" }),
+        (request: Request, response: Response, next: Function) => {
+          route
+            .action(request, response)
+            .then(() => next)
+            .catch(err => next(err));
+        }
+      );
+    }
   });
 });
 

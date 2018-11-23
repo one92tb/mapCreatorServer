@@ -14,7 +14,9 @@ export const fetchSelectedMarkers = () => dispatch => {
   dispatch({ type: "FETCHING_MARKERS" });
   axios
     .create({ baseURL: "http://localhost:8080" })
-    .get("/selectedMarkers")
+    .get("/selectedMarkers", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    })
     .then(res => {
       console.log(res);
       dispatch(fetchedSelectedMarkers(res.data));

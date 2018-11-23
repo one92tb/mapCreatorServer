@@ -19,7 +19,7 @@ export const createUser = user => dispatch => {
       console.log(res.data);
       dispatch(createUserSuccess(res.data));
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch(createdUserError(error));
     });
 };

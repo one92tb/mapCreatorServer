@@ -14,7 +14,9 @@ export const postRecord = record => dispatch => {
   dispatch({ type: "POSTING_RECORD" });
   axios
     .create({ baseURL: "http://localhost:8080" })
-    .post("/markers", record)
+    .post("/markers", record, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    })
     .then(res => {
       console.log(res);
       dispatch(postedRecord(res.data));

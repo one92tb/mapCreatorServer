@@ -1,6 +1,6 @@
 const initialState = {
   users: [],
-  errorr: null,
+  error: null,
   fetching: false,
   fetched: false,
   posting: false,
@@ -45,7 +45,7 @@ const user = (state = initialState, action) => {
         posted: true,
         users: [...state.users, action.user]
       };
-    case "POSTED_USER_ERRROR":
+    case "POSTED_USER_ERROR":
       return {
         ...state,
         posting: false,

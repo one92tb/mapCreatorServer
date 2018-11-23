@@ -1,15 +1,17 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { User } from "./User";
 
 @Entity()
 export class Marker {
+  @PrimaryGeneratedColumn() id: number;
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Column() name: string;
 
-    @Column()
-    name: string;
+  @Column() icon: string;
 
-    @Column()
-    icon: string;
+  @Column({ type: "int" })
+  public userId: number;
 
+  @ManyToOne(type => User, user => user.markers)
+  user: User;
 }

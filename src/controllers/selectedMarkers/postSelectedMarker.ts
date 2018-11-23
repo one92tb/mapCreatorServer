@@ -1,8 +1,8 @@
-import {Request, Response} from "express";
-import {getManager} from "typeorm";
-import {SelectedMarker} from '../entity/SelectedMarker';
+import { Request, Response } from "express";
+import { getManager } from "typeorm";
+import { SelectedMarker } from "../../entity/SelectedMarker";
 
-export async function postSelectedMarker (request: Request, response: Response) {
+export async function postSelectedMarker(request: Request, response: Response) {
   const selectedMarkerRepository = getManager().getRepository(SelectedMarker);
 
   const marker = {
@@ -12,8 +12,9 @@ export async function postSelectedMarker (request: Request, response: Response) 
     lng: request.body.lng,
     street: request.body.street,
     city: request.body.city,
-    country: request.body.country
-  }
+    country: request.body.country,
+    userId: request.user.userData.userId
+  };
 
   const newSelectedMarker = await selectedMarkerRepository.save(marker);
   return response.json(marker);

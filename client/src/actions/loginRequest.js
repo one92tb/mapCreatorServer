@@ -1,4 +1,5 @@
 import axios from "axios";
+import history from "../history";
 
 const loginSuccess = userData => ({
   type: "LOGIN_SUCCESS",
@@ -16,11 +17,12 @@ export const loginRequest = userData => dispatch => {
     .create({ baseURL: "http://localhost:8080" })
     .post("/login", userData)
     .then(res => {
-      console.log(res.data);
-      dispatch(loginSuccess(res.data));
       localStorage.setItem("token", res.data.token);
+      dispatch(loginSuccess(res.data));
+      history.push("./");
     })
     .catch(error => {
+      console.log(error);
       dispatch(loginError(error));
     });
 };
