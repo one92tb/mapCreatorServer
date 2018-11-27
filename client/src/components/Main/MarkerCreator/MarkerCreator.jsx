@@ -243,16 +243,19 @@ class MarkerCreator extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.selectedMarker.id !== prevProps.selectedMarker.id) {
+    const { selectedMarker } = this.props;
+    if (selectedMarker.id !== prevProps.selectedMarker.id) {
       this.setState({
-        markerName: this.props.selectedMarker.name,
-        displaySelectedImage: this.props.selectedMarker.url,
+        markerName: selectedMarker.name,
+        displaySelectedImage: selectedMarker.url,
         markerImageFile: ""
       });
     }
   }
 
   onChange = event => {
+    const { markerImageFile } = this.state;
+
     if (event.target.name === "markerName") {
       this.setState({ markerName: event.target.value });
       if (event.target.value.length > 2) {
@@ -270,7 +273,7 @@ class MarkerCreator extends Component {
             displaySelectedImage: URL.createObjectURL(event.target.files[0])
           },
           () =>
-            /\.(png)$/i.test(this.state.markerImageFile.name) &&
+            /\.(png)$/i.test(markerImageFile.name) &&
             this.setState({ markerImageFileError: "" })
         );
       }
@@ -278,26 +281,39 @@ class MarkerCreator extends Component {
   };
 
   validate = () => {
+    const { markerName, markerImageFile } = this.state;
+    const { selectedMarker } = this.props;
+
     let isError = false;
     const errors = {
       markerNameError: "",
       markerImageFileError: ""
     };
 
-    if (this.state.markerName.length < 3) {
-      isError = true;
-      errors.markerNameError = "Username needs to be atleast 3 characters long";
-    }
-    console.log(/\.(png)$/i.test(this.state.markerImageFile.name));
-    if (!/\.(png)$/i.test(this.state.markerImageFile.name) && this.state.markerImageFile) {
-      isError = true;
-      errors.markerImageFileError = "format must be .png";
-    }
+    const validateArray = [
+      {
+        condition: markerName.length < 3,
+        nameOfErrorProperty: "markerNameError",
+        messageError: "Username needs to be atleast 3 characters long"
+      },
+      {
+        condition: !/\.(png)$/i.test(markerImageFile.name) && markerImageFile,
+        nameOfErrorProperty: "markerImageFileError",
+        messageError: "format must be .png"
+      },
+      {
+        condition: !markerImageFile && !selectedMarker.id,
+        nameOfErrorProperty: "markerImageFileError",
+        messageError: "Input file cannot be empty"
+      }
+    ];
 
-    if (!this.state.markerImageFile && !this.props.selectedMarker.id) {
-      isError = true;
-      errors.markerImageFileError = "Input file cannot be empty";
-    }
+    validateArray.forEach(validate => {
+      if (validate.condition) {
+        isError = true;
+        errors[validate.nameOfErrorProperty] = validate.messageError;
+      }
+    });
 
     this.setState({
       ...this.state,
@@ -309,34 +325,28 @@ class MarkerCreator extends Component {
 
   sendRecord = event => {
     event.preventDefault();
+    const { postRecord, editRecord, selectedMarker } = this.props;
+    const { markerImageFile, markerName } = this.state;
     const err = this.validate();
 
-    const postRecord = this.props.postRecord;
-    const editRecord = this.props.editRecord;
-
     let fd = new FormData();
-    console.log(this.state.markerImageFile);
-    fd.append("file", this.state.markerImageFile);
-    fd.append("markerName", this.state.markerName);
 
-    console.log("fd", this.state.markerImageFile, this.state.markerName);
+    fd.append("file", markerImageFile);
+    fd.append("markerName", markerName);
 
     if (!err) {
-      if (
-        this.props.selectedMarker.id &&
-        !this.props.selectedMarker.isDeleted
-      ) {
-        if (this.state.markerImageFile === "") {
+      if (selectedMarker.id && !selectedMarker.isDeleted) {
+        if (markerImageFile === "") {
           editRecord(
             {
-              name: this.state.markerName,
-              icon: this.props.selectedMarker.icon
+              name: markerName,
+              icon: selectedMarker.icon
             },
-            this.props.selectedMarker.id
+            selectedMarker.id
           );
         } else {
           console.log("z pliku");
-          editRecord(fd, this.props.selectedMarker.id);
+          editRecord(fd, selectedMarker.id);
         }
       } else {
         postRecord(fd);
@@ -351,13 +361,14 @@ class MarkerCreator extends Component {
   };
 
   downloadMarker = () => {
+    const { markerName } = this.state;
     const err = this.validate();
 
     if (!err) {
       const node = this.myRef;
       domtoimage.toPng(node).then(dataUrl => {
         var link = document.createElement("a");
-        link.download = `${this.state.markerName}.png`;
+        link.download = `${markerName}.png`;
         link.href = dataUrl;
         link.click();
       });
@@ -365,8 +376,7 @@ class MarkerCreator extends Component {
   };
 
   removeRecord = () => {
-    const removeRecord = this.props.removeRecord;
-    const getSelectedMarker = this.props.getSelectedMarker;
+    const { removeRecord, getSelectedMarker, selectedMarker } = this.props;
 
     this.setState({
       markerName: "",
@@ -374,10 +384,10 @@ class MarkerCreator extends Component {
       displaySelectedImage: "IMG-default.png"
     });
 
-    removeRecord(this.props.selectedMarker.id);
+    removeRecord(selectedMarker.id);
 
     getSelectedMarker({
-      ...this.props.selectedMarker,
+      ...selectedMarker,
       isDeleted: true
     });
   };
@@ -389,30 +399,37 @@ class MarkerCreator extends Component {
   };
 
   render() {
-    console.log(this.props, this.state, this.myRef);
+    const {
+      uploadStatus,
+      displaySelectedImage,
+      color,
+      markerName,
+      markerImageFile,
+      markerNameError,
+      markerImageFileError
+    } = this.state;
+    const { selectedMarker } = this.props;
+
     return (
       <Wrapper>
         <Inner>
           <ButtonGroup>
             <CustomButton
-              status={this.state.uploadStatus}
+              status={uploadStatus}
               onClick={() => this.handleUpload(false)}
             >
               Custom Marker
             </CustomButton>
             <UploadButton
-              status={this.state.uploadStatus}
+              status={uploadStatus}
               onClick={() => this.handleUpload(true)}
             >
               Upload Marker
             </UploadButton>
           </ButtonGroup>
-          {this.state.uploadStatus ? (
+          {uploadStatus ? (
             <ImageBox>
-              <ImageWithoutMarker
-                alt=""
-                src={this.state.displaySelectedImage}
-              />
+              <ImageWithoutMarker alt="" src={displaySelectedImage} />
             </ImageBox>
           ) : (
             <AdditionalWrapper>
@@ -421,8 +438,8 @@ class MarkerCreator extends Component {
                   this.myRef = div;
                 }}
               >
-                <MarkerIcon background={this.state.color}>
-                  <ImageInsideMarker src={this.state.displaySelectedImage} />
+                <MarkerIcon background={color}>
+                  <ImageInsideMarker src={displaySelectedImage} />
                 </MarkerIcon>
               </MarkerIconBox>
             </AdditionalWrapper>
@@ -434,14 +451,14 @@ class MarkerCreator extends Component {
               <Input
                 type="text"
                 name="markerName"
-                value={this.state.markerName}
+                value={markerName}
                 onChange={e => this.onChange(e)}
               />
-              {this.state.markerNameError && (
-                <ErrorMessage>{this.state.markerNameError}</ErrorMessage>
+              {markerNameError && (
+                <ErrorMessage>{markerNameError}</ErrorMessage>
               )}
             </FormGroup>
-            {!this.state.uploadStatus && (
+            {!uploadStatus && (
               <FormGroup>
                 <LabelColor htmlFor="exampleColor">Color</LabelColor>
                 <Input
@@ -449,7 +466,7 @@ class MarkerCreator extends Component {
                   type="color"
                   name="color"
                   id="exampleColor"
-                  value={this.state.color}
+                  value={color}
                   placeholder="color placeholder"
                 />
               </FormGroup>
@@ -457,11 +474,11 @@ class MarkerCreator extends Component {
             <FormGroup>
               <LabelFile htmlFor="file">
                 <InputFile>Choose file to send</InputFile>{" "}
-                {this.state.displaySelectedImage === "IMG-default.png"
+                {displaySelectedImage === "IMG-default.png"
                   ? "Not file detected"
-                  : this.state.markerImageFile === ""
-                    ? `${this.state.markerName}.png`
-                    : this.state.markerImageFile.name}
+                  : markerImageFile === ""
+                    ? `${markerName}.png`
+                    : markerImageFile.name}
               </LabelFile>
               <HideInput
                 type="file"
@@ -469,20 +486,18 @@ class MarkerCreator extends Component {
                 name="markerImage"
                 onChange={e => this.onChange(e)}
               />
-              {this.state.markerImageFileError && (
-                <ErrorMessage>{this.state.markerImageFileError}</ErrorMessage>
+              {markerImageFileError && (
+                <ErrorMessage>{markerImageFileError}</ErrorMessage>
               )}
             </FormGroup>
-            {this.state.uploadStatus ? (
+            {uploadStatus ? (
               <FormGroup>
                 <SubmitBtn>
-                  {this.props.selectedMarker.id &&
-                  !this.props.selectedMarker.isDeleted
+                  {selectedMarker.id && !selectedMarker.isDeleted
                     ? "Edit Marker"
                     : "Upload new marker"}
                 </SubmitBtn>
-                {this.props.selectedMarker.id &&
-                !this.props.selectedMarker.isDeleted ? (
+                {selectedMarker.id && !selectedMarker.isDeleted ? (
                   <RemoveBtn onClick={this.removeRecord} type="button">
                     Remove Marker
                   </RemoveBtn>

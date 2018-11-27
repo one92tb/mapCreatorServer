@@ -109,8 +109,10 @@ class List extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchSelectedMarkers();
-    this.props.fetchRecords();
+    const { fetchSelectedMarkers, fetchRecords } = this.props;
+
+    fetchSelectedMarkers();
+    fetchRecords();
   }
 
   handleChange = e => {
@@ -123,13 +125,17 @@ class List extends Component {
 
   render() {
     console.log(this.state, this.props);
+
+    const { markers, selectedMarkers } = this.props;
+    const { markerName, city } = this.state;
+
     return (
       <Wrapper>
         <Form>
           <Label>
             <Select onChange={this.handleChange}>
               <option>All</option>
-              {this.props.markers.map((marker, id, arr) => (
+              {markers.map((marker, id, arr) => (
                 <option key={id}>{marker.name}</option>
               ))};
             </Select>
@@ -155,22 +161,19 @@ class List extends Component {
               </tr>
             </Thead>
             <Tbody>
-              {this.props.selectedMarkers
+              {selectedMarkers
                 .filter(marker => {
-                  return (this.state.markerName === "All" &&
-                    this.state.city === "") ||
-                    (this.state.markerName === "All" &&
-                      marker.city
-                        .toLowerCase()
-                        .search(this.state.city.toLowerCase()) !== -1)
+                  return (markerName === "All" && city === "") ||
+                    (markerName === "All" &&
+                      marker.city.toLowerCase().search(city.toLowerCase()) !==
+                        -1)
                     ? marker
-                    : this.state.markerName === marker.name &&
-                      this.state.markerName === "All"
+                    : markerName === marker.name && markerName === "All"
                       ? marker
-                      : this.state.markerName === marker.name &&
-                        marker.city
-                          .toLowerCase()
-                          .search(this.state.city.toLowerCase()) !== -1 && marker;
+                      : markerName === marker.name &&
+                        marker.city.toLowerCase().search(city.toLowerCase()) !==
+                          -1 &&
+                        marker;
                 })
                 .map((marker, id) => (
                   <Tr key={marker.id}>

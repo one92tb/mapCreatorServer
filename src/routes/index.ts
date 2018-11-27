@@ -11,9 +11,9 @@ import {getSelectedMarkers} from '../controllers/selectedMarkers/getSelectedMark
 import {getSelectedMarker} from '../controllers/selectedMarkers/getSelectedMarker';
 import {removeSelectedMarker} from '../controllers/selectedMarkers/removeSelectedMarker';
 
-import {login} from '../controllers/account/login';
-import {postUser} from '../controllers/account/postUser';
-import {getUsers} from '../controllers/account/getUsers';
+import {login} from '../controllers/user/login';
+import {postUser} from '../controllers/user/postUser';
+import {getUsers} from '../controllers/user/getUsers';
 
 
 export const routes = [

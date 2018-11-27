@@ -8,7 +8,7 @@ export async function removeSelectedMarker(
 ) {
   const markerRepository = getManager().getRepository(SelectedMarker);
   const markerToDelete = await markerRepository.findOne(request.params.id);
-  if (markerToDelete.userId !== request.user.userData.userId) {
+  if (markerToDelete.userId === request.user.userData.userId) {
     markerRepository.remove(markerToDelete);
     return response.json(markerToDelete);
   } else {

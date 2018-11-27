@@ -62,23 +62,26 @@ class Statistic extends Component {
   };
 
   render() {
+    const { selectedMarkers } = this.props;
+    const { city } = this.state;
+
     const displayMarkers = Object.entries(
-      this.props.selectedMarkers
-        .filter(marker => {
-          if (
-            this.state.city === "" ||
-            marker.city.toLowerCase().search(this.state.city.toLowerCase()) !==
-              -1
-          ) {
-            return marker;
-          }
+      selectedMarkers
+        .filter((marker, id, arr) => {
+          return (
+            (city === "" ||
+              marker.city.toLowerCase().search(city.toLowerCase()) !== -1) &&
+            marker
+          );
         })
         .reduce((obj, el, id) => {
           obj[el.name] = obj[el.name] ? ++obj[el.name] : 1;
+          console.log(obj);
           return obj;
         }, {})
     );
-    const displaySumMarkers = [["markers", this.props.selectedMarkers.length]];
+
+    const displaySumMarkers = [["All markers", selectedMarkers.length]];
 
     return (
       <Wrapper>
@@ -122,16 +125,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Statistic);
-
-/*{Object.entries(
-  state.selectedMarker.selectedMarkers.reduce((obj, el, id) => {
-    obj[el.name] = obj[el.name] ? ++obj[el.name] : 1;
-    return obj;
-  }, {})
-).map(el => {
-  console.log(el);
-  return {
-    name: el[0],
-    value: el[1]
-  };
-})}*/

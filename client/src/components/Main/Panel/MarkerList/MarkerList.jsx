@@ -60,17 +60,17 @@ class MarkerList extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchRecords();
+    const { fetchRecords } = this.props;
+    fetchRecords();
   }
 
   onSelect = (marker, id) => {
     console.log(marker);
-    const getSelectedMarker = this.props.getSelectedMarker;
-    const isNavSelect = this.props.isNavSelect;
-    const disableMarkers = this.props.disableMarkers;
 
-    if (marker.id !== this.state.selectedId && isNavSelect) {
-      console.log("a");
+    const { getSelectedMarker, isNavSelect, disableMarkers } = this.props;
+    const { selectedId, filteredMarkers } = this.state;
+
+    if (marker.id !== selectedId && isNavSelect) {
       // SELECT
       this.setState({ selectedId: id });
       getSelectedMarker({
@@ -79,7 +79,7 @@ class MarkerList extends Component {
       });
     }
     //wyzerowanie selected
-    else if (marker.id === this.state.selectedId && isNavSelect) {
+    else if (marker.id === selectedId && isNavSelect) {
       // UNSELECT
       id = "";
       this.setState({ selectedId: id });
@@ -89,42 +89,39 @@ class MarkerList extends Component {
         url: "IMG-default.png"
       });
     } else {
-      if (this.state.filteredMarkers.find(el => el.id === marker.id)) {
+      if (filteredMarkers.find(el => el.id === marker.id)) {
         // delete the same
         this.setState(
           {
-            filteredMarkers: this.state.filteredMarkers.filter(
-              el => el.id !== marker.id
-            )
+            filteredMarkers: filteredMarkers.filter(el => el.id !== marker.id)
           },
           () => {
-            return disableMarkers(this.state.filteredMarkers);
+            return disableMarkers(filteredMarkers);
           }
         );
       } else {
         this.setState(
           {
-            filteredMarkers: [...this.state.filteredMarkers, marker]
+            filteredMarkers: [...filteredMarkers, marker]
           },
-          () => disableMarkers(this.state.filteredMarkers)
+          () => disableMarkers(filteredMarkers)
         );
       }
     }
   };
 
   render() {
-    console.log(this.state, this.props);
-    const isNavSelect = this.props.isNavSelect;
-    const selectedId = this.state.selectedId;
+    const { isNavSelect, records } = this.props;
+    const { selectedId, filteredMarkers } = this.state;
+
     return (
       <List>
-        {this.props.records.map((marker, id) => (
+        {records.map((marker, id) => (
           <Marker
             key={marker.id}
             isSelected={selectedId === marker.id && isNavSelect}
             isFiltered={
-              this.state.filteredMarkers.find(el => el.id === marker.id) &&
-              !isNavSelect
+              filteredMarkers.find(el => el.id === marker.id) && !isNavSelect
             }
             onClick={() => this.onSelect(marker, marker.id)}
           >

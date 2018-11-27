@@ -346,17 +346,15 @@ const MapWithAMakredInfoWindow = compose(
 
 class Map extends Component {
   componentDidMount() {
-    this.props.fetchSelectedMarkers();
+    const { fetchSelectedMarkers } = this.props;
+
+    fetchSelectedMarkers();
   }
 
   addMarker = (event, geocode) => {
-    console.log(this.props);
-    const selectedMarker = this.props.selectedMarker;
-    const postSelectedMarker = this.props.postSelectedMarker;
-    const isNavSelect = this.props.isNavSelect;
+    const { selectedMarker, postSelectedMarker, isNavSelect } = this.props;
 
     if (selectedMarker.id && !selectedMarker.isDeleted && isNavSelect) {
-      console.log(this.props.isNavSelect);
       const marker = {
         name: selectedMarker.name,
         icon: selectedMarker.icon,
@@ -373,12 +371,12 @@ class Map extends Component {
   };
 
   render() {
-    console.log(this.props, this.state);
+    const { markers, selectedMarker } = this.props;
     return (
       <Wrapper>
         <MapWithAMakredInfoWindow
-          markers={this.props.markers}
-          selectedMarker={this.props.selectedMarker}
+          markers={markers}
+          selectedMarker={selectedMarker}
           addMarker={this.addMarker}
           removeMarker={this.removeMarker}
           disableMarkers={this.props.disableMarkers}

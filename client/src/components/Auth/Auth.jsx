@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from "react";
+import React from "react";
 import NavBar from "../NavBar/NavBar";
 import Main from "../Main/Main";
 import Statistic from "../Statistic/Statistic";
@@ -6,16 +6,9 @@ import List from "../List/List";
 import styled from "styled-components";
 import { Container, Row, Col } from "reactstrap";
 import Login from "../Login/Login";
-import { connect } from "react-redux";
-import history from '../../history';
+import history from "../../history";
 
-import {
- Router,
-  Switch,
-  Route,
-  NavLink as Link,
-  Redirect
-} from "react-router-dom";
+import { Router, Switch, Route, Redirect } from "react-router-dom";
 import decode from "jwt-decode";
 
 const ContainerStyle = styled.div`

@@ -1,13 +1,15 @@
 const initialState = {
   users: [],
   error: null,
+  userId: "",
+  userName: "",
   fetching: false,
   fetched: false,
   posting: false,
   posted: false,
   postingLogin: false,
   postedLogin: false,
-  isAuthorized: false,
+  isLoggingIn: false
 };
 
 const user = (state = initialState, action) => {
@@ -36,7 +38,8 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         posting: true,
-        posted: false
+        posted: false,
+        error: null
       };
     case "POSTED_USER_SUCCES":
       return {
@@ -51,6 +54,11 @@ const user = (state = initialState, action) => {
         posting: false,
         posted: false,
         error: action.error
+      };
+    case "RESET_REGISTER_ERROR":
+      return {
+        ...state,
+        error: null
       };
     default:
       return state;

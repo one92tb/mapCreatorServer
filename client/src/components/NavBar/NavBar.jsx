@@ -125,14 +125,17 @@ const Logout = withRouter(({ history, logOutFromApp }) => {
 
 class NavBar extends Component {
   handleMap = () => {
-    this.props.getSelectedMarker("");
+    const { getSelectedMarker } = this.props;
+    getSelectedMarker("");
   };
 
   handleMapCreator = () => {
-    this.props.isNavSelect(true);
+    const { isNavSelect } = this.props;
+    isNavSelect(true);
   };
 
   render() {
+    const { logout } = this.props;
     return (
       <Panel>
         <Header>
@@ -143,7 +146,7 @@ class NavBar extends Component {
           <LoginImg src={"user.png"} width={130} height={130} />
           <LoginName>UserNick</LoginName>
         </User>
-        <Logout logOutFromApp={this.props.logout} />
+        <Logout logOutFromApp={logout} />
         <Nav>
           <NavItem>
             <NavLink

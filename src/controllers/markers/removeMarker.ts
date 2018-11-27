@@ -5,8 +5,8 @@ import { Marker } from "../../entity/Marker";
 export const removeMarker = async (request: Request, response: Response) => {
   const markerRepository = getManager().getRepository(Marker);
   const markerToDelete = await markerRepository.findOne(request.params.id);
-
-  if (markerToDelete.userId !== request.user.userData.userId) {
+  console.log(markerToDelete, request.user.userData);
+  if (markerToDelete.userId === request.user.userData.userId) {
     markerRepository.remove(markerToDelete);
     return response.json(markerToDelete);
   } else {

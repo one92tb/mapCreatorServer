@@ -22,7 +22,6 @@ export const loginRequest = userData => dispatch => {
       history.push("./");
     })
     .catch(error => {
-      console.log(error);
       dispatch(loginError(error));
     });
 };

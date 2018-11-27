@@ -16,10 +16,9 @@ export const createUser = user => dispatch => {
     .create({ baseURL: "http://localhost:8080" })
     .post("/users", user)
     .then(res => {
-      console.log(res.data);
       dispatch(createUserSuccess(res.data));
     })
-    .catch((error) => {
+    .catch(error => {
       dispatch(createdUserError(error));
     });
 };

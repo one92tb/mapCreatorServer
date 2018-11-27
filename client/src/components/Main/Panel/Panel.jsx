@@ -80,24 +80,18 @@ class Panel extends Component {
     };
   }
 
-  switchToSelect = () => {
+  switch = bool => {
+    const { isSelected } = this.props;
     this.setState({
-      isSelected: true
+      isSelected: bool
     });
 
-    this.props.isNavSelect(true);
-  };
-
-  switchToFilter = () => {
-    this.setState({
-      isSelected: false
-    });
-
-    this.props.isNavSelect(false);
+    isNavSelect(isSelected);
   };
 
   render() {
-    console.log(this.state, this.props);
+    const { isSelected } = this.state;
+
     return (
       <Wrapper>
         <Card>
@@ -105,8 +99,8 @@ class Panel extends Component {
             <Nav>
               <NavItem>
                 <SelectLink
-                  isSelected={this.state.isSelected}
-                  onClick={this.switchToSelect}
+                  isSelected={isSelected}
+                  onClick={() => this.switch(true)}
                 >
                   Select marker
                 </SelectLink>
@@ -114,8 +108,8 @@ class Panel extends Component {
               /
               <NavItem>
                 <FilterLink
-                  isSelected={this.state.isSelected}
-                  onClick={this.switchToFilter}
+                  isSelected={isSelected}
+                  onClick={() => this.switch(false)}
                 >
                   Filter marker
                 </FilterLink>
@@ -123,7 +117,7 @@ class Panel extends Component {
             </Nav>
           </CardHeader>
           <CardBody className="scroll">
-            <MarkerList isNavSelect={this.state.isSelected} />
+            <MarkerList isNavSelect={isSelected} />
           </CardBody>
         </Card>
       </Wrapper>
@@ -132,7 +126,7 @@ class Panel extends Component {
 }
 
 const mapDispatchToProps = {
-  isNavSelect,
+  isNavSelect
 };
 
 export default connect(

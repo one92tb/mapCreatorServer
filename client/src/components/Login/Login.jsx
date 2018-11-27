@@ -1,17 +1,11 @@
 import React from "react";
-import axios from "axios";
 import { connect } from "react-redux";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect,
-  withRouter
-} from "react-router-dom";
 import { createUser } from "../../actions/createUser";
 import { loginRequest } from "../../actions/loginRequest";
 import styled from "styled-components";
 import { css } from "styled-components";
+import { errors, registerValidationDetails } from "../../schema/registerSchema";
+import validate from "../../validate.js";
 
 const Wrapper = styled.div`
   background: #f2f2f2;
@@ -105,9 +99,9 @@ class Login extends React.Component {
     super(props);
     this.state = {
       login: "",
+      loginError: "",
       password: "",
       passwordError: "",
-      userNameError: "",
       loginStatus: false
     };
   }
@@ -119,139 +113,67 @@ class Login extends React.Component {
   };
 
   onSubmit = e => {
-    e.preventDefault();
-    const err = this.validate();
-    const createUser = this.props.createUser;
-    const loginRequest = this.props.loginRequest;
-
-    const user = {
-      login: this.state.login,
-      password: this.state.password
+    const { login, password, loginStatus } = this.state;
+    const { createUser, loginRequest } = this.props;
+    const data = {
+      login,
+      password,
+      loginStatus
     };
+    const validationResult = validate(errors, registerValidationDetails, data);
+    const err = validationResult.isError;
+    const user = {
+      login,
+      password
+    };
+
+    e.preventDefault();
+
     if (!err) {
-      if (!this.state.loginStatus) {
+      if (!loginStatus) {
         createUser(user);
-        this.setState({
-          login: "",
-          password: ""
-        });
       } else {
         loginRequest(user);
       }
     }
-  };
-
-  validate = () => {
-    const registerError = this.props.registerError;
-    const loginError = this.props.loginError;
-
-    console.log(registerError);
-    let isError = false;
-    const errors = {
-      loginError: "",
-      userName: "",
-      passwordError: "",
-      userNameError: ""
-    };
-
-    const validateArray = [
-      {
-        condition: new RegExp("^(?=.*[A-Z])"),
-        messageError:
-          "The password must contain at least 1 uppercase alphabetical character"
-      },
-      {
-        condition: new RegExp("(?=.*[0-9])"),
-        messageError: "The password must contain at least 1 numeric character"
-      },
-      {
-        condition: new RegExp("^(?=.*[a-z])"),
-        messageError:
-          "The password must contain at least 1 lowercase alphabetical character"
-      },
-      {
-        condition: new RegExp("(?=.{8,})"),
-        messageError: "The password must be minimum 8 characters or longer"
-      }
-    ];
-
-    //REGISTER - Username
-    if (registerError) {
-      console.log(!this.state.loginStatus, registerError.response.status);
-    }
-
-    if (
-      !this.state.loginStatus &&
-      registerError &&
-      registerError.response.status === 409
-    ) {
-      isError = true;
-      errors.loginError = registerError.response.data.errorMessage;
-    }
-
-    console.log(!new RegExp("(?=.{4,})").test(this.state.login));
-    if (
-      !this.state.loginStatus &&
-      !new RegExp("(?=.{4,})").test(this.state.login)
-    ) {
-      isError = true;
-      errors.userNameError = "The login must be minimum 4 characters or longer";
-    }
-
-    //PASSWORD - REGISTER
-    if (!this.state.loginStatus) {
-      validateArray.forEach(validate => {
-        if (!validate.condition.test(this.state.password)) {
-          isError = true;
-          errors.passwordError = validate.messageError;
-        }
-      });
-    }
-
-    //LOGIN - LogIn
-    if (
-      this.state.loginStatus &&
-      loginError &&
-      loginError.response.status === 401
-    ) {
-      isError = true;
-      errors.loginError = loginError.response.data.errorMessage;
-    }
 
     this.setState({
-      ...this.state,
-      ...errors
+      ...validationResult.errors
     });
-
-    return isError;
   };
 
   isLogin = status => {
     this.setState({
       loginStatus: status,
       login: "",
+      loginError: "",
       password: "",
-      passwordError: "",
-      userNameError: ""
+      passwordError: ""
     });
   };
 
   render() {
-    console.log(this.state, this.props);
+    console.log(this.state);
+    const {
+      login,
+      password,
+      loginStatus,
+      loginError,
+      passwordError
+    } = this.state;
+    const { registerError, authError } = this.props;
+
     return (
       <Wrapper>
         <Inner>
           <ButtonWrapper>
             <RegisterBtn
-              status={this.state.loginStatus}
+              status={loginStatus}
               onClick={() => this.isLogin(false)}
             >
               Register
             </RegisterBtn>
-            <LoginBtn
-              status={this.state.loginStatus}
-              onClick={() => this.isLogin(true)}
-            >
+            <LoginBtn status={loginStatus} onClick={() => this.isLogin(true)}>
               Login
             </LoginBtn>
           </ButtonWrapper>
@@ -262,15 +184,16 @@ class Login extends React.Component {
                 type="text"
                 name="login"
                 onChange={e => this.onChange(e)}
-                value={this.state.login}
+                value={login}
+                autocomplete="login"
               />
-              {!this.state.loginStatus &&
-                this.state.userNameError && (
-                  <ErrorMessage>{this.state.userNameError}</ErrorMessage>
-                )}
-              {!this.state.loginStatus &&
-                this.props.registerError && (
-                  <ErrorMessage>{this.props.registerError.response.data.errorMessage}</ErrorMessage>
+              {!loginStatus &&
+                loginError && <ErrorMessage>{loginError}</ErrorMessage>}
+              {!loginStatus &&
+                registerError && (
+                  <ErrorMessage>
+                    {registerError.response.data.errorMessage}
+                  </ErrorMessage>
                 )}
             </FormGroup>
             <FormGroup>
@@ -279,22 +202,22 @@ class Login extends React.Component {
                 type="password"
                 name="password"
                 onChange={e => this.onChange(e)}
-                value={this.state.password}
+                value={password}
+                autocomplete={loginStatus ? "current password" : "new-password"}
               />
-              {this.state.passwordError &&
-                !this.state.loginStatus && (
-                  <ErrorMessage>{this.state.passwordError}</ErrorMessage>
-                )}
-              {this.props.loginError &&
-                this.state.loginStatus && (
+
+              {passwordError &&
+                !loginStatus && <ErrorMessage>{passwordError}</ErrorMessage>}
+              {authError &&
+                loginStatus && (
                   <ErrorMessage>
-                    {this.props.loginError.response.data.errorMessage}
+                    {authError.response.data.errorMessage}
                   </ErrorMessage>
                 )}
             </FormGroup>
             <FormGroup>
               <SubmitBtn onClick={e => this.onSubmit(e)}>
-                {this.state.loginStatus ? "Authorization" : "Create Account"}
+                {loginStatus ? "Authorization" : "Create Account"}
               </SubmitBtn>
             </FormGroup>
           </Form>
@@ -313,7 +236,7 @@ const mapStateToProps = state => ({
   isAuthorized: state.account.isAuthorized,
   userId: state.account.userId,
   registerError: state.user.error,
-  loginError: state.account.error
+  authError: state.account.error
 });
 
 export default connect(

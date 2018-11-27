@@ -21,7 +21,7 @@ const account = (state = initialState, action) => {
         isAuthorized: action.userData.isAuthorized,
         userName: action.userData.userName,
         userId: action.userData.userId,
-        error: action.userData.error
+        error: null
       };
     case "LOGIN_ERROR":
       return {
@@ -35,6 +35,11 @@ const account = (state = initialState, action) => {
         userName: action.userData.userName,
         userId: action.userData.userId,
         error: action.userData.error
+      };
+    case "RESET_REGISTER_ERROR":
+      return {
+        ...state,
+        error: null
       };
     default:
       return state;
