@@ -5,7 +5,14 @@ import { postSelectedMarker } from "../../../actions/postSelectedMarker";
 import { fetchSelectedMarkers } from "../../../actions/fetchSelectedMarkers";
 import { removeSelectedMarker } from "../../../actions/removeSelectedMarker";
 import apiKey from "./apiKey";
-import styled from "styled-components";
+import {
+  Wrapper,
+  SearchBoxInput,
+  InfoBoxContainer,
+  InfoBtn,
+  InfoContent
+} from "./style";
+
 const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
 const {
   compose,
@@ -23,99 +30,6 @@ const {
 const {
   SearchBox
 } = require("react-google-maps/lib/components/places/SearchBox");
-
-const Wrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  padding: 40px 20px 40px 10px;
-  background: #f2f2f2;
-`;
-
-const SearchBoxInput = styled.input`
-  box-sizing: border-box;
-  border: 1px solid transparent;
-  width: 240px;
-  height: 40px;
-  margin-top: 10px;
-  padding: 0 12px;
-  border-radius: 3px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  outline: none;
-`;
-
-const InfoBoxContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  background: #4ddbff;
-  opacity: 0.9;
-  height: 200px;
-  width: 250px;
-  border: 5px solid #00b8e6;
-  border-radius: 5px;
-
-  &:before {
-    top: 100%;
-    left: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-color: rgba(255, 31, 150, 0);
-    border-top-color: #00b8e6;
-    border-width: 25px;
-    margin-left: -25px;
-  }
-  &:after {
-    top: 100%;
-    left: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-color: rgba(136, 183, 213, 0);
-    border-top-color: #00b8e6;
-    border-width: 20px;
-    margin-left: -20px;
-  }
-`;
-
-const InfoBtn = styled.button`
-  margin-top: 10px;
-  width: 160px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  background: #4ddbff;
-  color: #003d4d;
-  border: 0;
-  padding: 5px;
-  border-radius: 2px;
-  border: 2px solid #00b8e6;
-  font-weight: bold;
-
-  &:hover {
-    cursor: pointer;
-    color: #fff;
-    background-color: #ff1a1a;
-  }
-`;
-
-const InfoContent = styled.span`
-  font-size: 15px;
-  color: #003d4d;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: uppercase;
-  border-bottom: 2px solid #00b8e6;
-  font-weight: bold;
-`;
 
 const onToggleOpen = ({ isOpen, id }) => id =>
   id && !isOpen

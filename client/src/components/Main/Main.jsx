@@ -1,19 +1,10 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 import { Row, Col } from "reactstrap";
+import { RowStyle, ColStyle } from "./style";
 import Panel from "./Panel/Panel";
 import Map from "./Map/Map";
 import CreateMarker from "./MarkerCreator/MarkerCreator";
 import { Switch, Route } from "react-router-dom";
-
-const RowStyle = styled.div`
-  height: 100%;
-  margin: 0 !important;
-`;
-const ColStyle = styled.div`
-  padding: 0!important
-  height: 100%;
-`;
 
 const routes = [
   {
