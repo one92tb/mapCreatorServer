@@ -1,9 +1,12 @@
 import React, { Component } from "react";
-import { postRecord } from "../../../actions/postRecord";
-import { getSelectedMarker } from "../../../actions/getSelectedMarker";
-import { removeRecord } from "../../../actions/removeRecord";
-import { editRecord } from "../../../actions/editRecord";
+import { getSelectedMarker } from "../../../actions/marker/getSelectedMarker";
+import { postMarker } from "../../../actions/marker/postMarker";
+import { removeMarker } from "../../../actions/marker/removeMarker";
+import { editMarker } from "../../../actions/marker/editMarker";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import validate from "../../../validate";
+import { errors, markerValidationDetails } from "../../../schema/markerSchema";
 import {
   Wrapper,
   Inner,
@@ -30,7 +33,6 @@ import {
   ErrorMessage
 } from "./style";
 
-
 const domtoimage = require("dom-to-image");
 
 class MarkerCreator extends Component {
@@ -43,7 +45,7 @@ class MarkerCreator extends Component {
       markerImageFile: "",
       displaySelectedImage: "IMG-default.png",
       color: "#000",
-      uploadStatus: false,
+      uploadStatus: true,
       markerNameError: "",
       markerImageFileError: ""
     };
@@ -87,64 +89,27 @@ class MarkerCreator extends Component {
     }
   };
 
-  validate = () => {
-    const { markerName, markerImageFile } = this.state;
-    const { selectedMarker } = this.props;
-
-    let isError = false;
-    const errors = {
-      markerNameError: "",
-      markerImageFileError: ""
-    };
-
-    const validateArray = [
-      {
-        condition: markerName.length < 3,
-        nameOfErrorProperty: "markerNameError",
-        messageError: "Username needs to be atleast 3 characters long"
-      },
-      {
-        condition: !/\.(png)$/i.test(markerImageFile.name) && markerImageFile,
-        nameOfErrorProperty: "markerImageFileError",
-        messageError: "format must be .png"
-      },
-      {
-        condition: !markerImageFile && !selectedMarker.id,
-        nameOfErrorProperty: "markerImageFileError",
-        messageError: "Input file cannot be empty"
-      }
-    ];
-
-    validateArray.forEach(validate => {
-      if (validate.condition) {
-        isError = true;
-        errors[validate.nameOfErrorProperty] = validate.messageError;
-      }
-    });
-
-    this.setState({
-      ...this.state,
-      ...errors
-    });
-
-    return isError;
-  };
-
   sendRecord = event => {
     event.preventDefault();
-    const { postRecord, editRecord, selectedMarker } = this.props;
+    const { postMarker, editMarker, selectedMarker } = this.props;
     const { markerImageFile, markerName } = this.state;
-    const err = this.validate();
+    const data = {
+      markerName,
+      markerImageFile,
+      selectedMarker
+    };
+
+    const validationResult = validate(errors, markerValidationDetails, data);
 
     let fd = new FormData();
 
     fd.append("file", markerImageFile);
     fd.append("markerName", markerName);
 
-    if (!err) {
+    if (!validationResult.isError) {
       if (selectedMarker.id && !selectedMarker.isDeleted) {
         if (markerImageFile === "") {
-          editRecord(
+          editMarker(
             {
               name: markerName,
               icon: selectedMarker.icon
@@ -152,11 +117,10 @@ class MarkerCreator extends Component {
             selectedMarker.id
           );
         } else {
-          console.log("z pliku");
-          editRecord(fd, selectedMarker.id);
+          editMarker(fd, selectedMarker.id);
         }
       } else {
-        postRecord(fd);
+        postMarker(fd);
 
         this.setState({
           markerName: "",
@@ -165,25 +129,40 @@ class MarkerCreator extends Component {
         });
       }
     }
+
+    this.setState({
+      ...validationResult.errors
+    });
   };
 
   downloadMarker = () => {
-    const { markerName } = this.state;
-    const err = this.validate();
+    const { markerName, markerImageFile } = this.state;
+    const { selectedMarker } = this.props;
+    const data = {
+      markerName,
+      markerImageFile,
+      selectedMarker
+    };
+    console.log(data);
+    const validationResult = validate(errors, markerValidationDetails, data);
 
-    if (!err) {
+    if (!validationResult.isError) {
       const node = this.myRef;
       domtoimage.toPng(node).then(dataUrl => {
-        var link = document.createElement("a");
+        const link = document.createElement("a");
         link.download = `${markerName}.png`;
         link.href = dataUrl;
         link.click();
       });
     }
+    console.log(validationResult.errors);
+    this.setState({
+      ...validationResult.errors
+    });
   };
 
   removeRecord = () => {
-    const { removeRecord, getSelectedMarker, selectedMarker } = this.props;
+    const { removeMarker, getSelectedMarker, selectedMarker } = this.props;
 
     this.setState({
       markerName: "",
@@ -191,7 +170,7 @@ class MarkerCreator extends Component {
       displaySelectedImage: "IMG-default.png"
     });
 
-    removeRecord(selectedMarker.id);
+    removeMarker(selectedMarker.id);
 
     getSelectedMarker({
       ...selectedMarker,
@@ -201,7 +180,9 @@ class MarkerCreator extends Component {
 
   handleUpload = status => {
     this.setState({
-      uploadStatus: status
+      uploadStatus: status,
+      markerNameError: "",
+      markerImageFileError: ""
     });
   };
 
@@ -327,17 +308,28 @@ class MarkerCreator extends Component {
 }
 
 const mapDispatchToProps = {
-  postRecord,
-  removeRecord,
-  editRecord,
+  postMarker,
+  removeMarker,
+  editMarker,
   getSelectedMarker
 };
 
 const mapStateToProps = state => ({
-  selectedMarker: state.selectedMarker.selectedMarker
+  selectedMarker: state.marker.selectedMarker
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(MarkerCreator);
+
+MarkerCreator.propTypes = {
+  postMarker: PropTypes.func.isRequired,
+  removeMarker: PropTypes.func.isRequired,
+  editMarker: PropTypes.func.isRequired,
+  getSelectedMarker: PropTypes.func.isRequired
+};
+
+MarkerCreator.defaultProps = {
+  selectedMarker: {}
+};

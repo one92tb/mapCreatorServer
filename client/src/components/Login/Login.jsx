@@ -1,9 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { createUser } from "../../actions/createUser";
-import { loginRequest } from "../../actions/loginRequest";
+import { createUser } from "../../actions/user/createUser";
+import { resetRegisterError } from "../../actions/user/resetRegisterError";
+import { loginRequest } from "../../actions/signIn/loginRequest";
+import { resetLoginError } from "../../actions/signIn/resetLoginError";
 import { errors, registerValidationDetails } from "../../schema/registerSchema";
 import validate from "../../validate.js";
+import PropTypes from "prop-types";
 import {
   Wrapper,
   Inner,
@@ -26,7 +29,7 @@ class Login extends React.Component {
       loginError: "",
       password: "",
       passwordError: "",
-      loginStatus: false
+      loginStatus: true
     };
   }
 
@@ -38,28 +41,31 @@ class Login extends React.Component {
 
   onSubmit = e => {
     const { login, password, loginStatus } = this.state;
-    const { createUser, loginRequest } = this.props;
+    const {
+      createUser,
+      loginRequest,
+      resetRegisterError,
+      resetLoginError
+    } = this.props;
     const data = {
       login,
       password,
       loginStatus
     };
     const validationResult = validate(errors, registerValidationDetails, data);
-    const err = validationResult.isError;
+
     const user = {
       login,
       password
     };
 
     e.preventDefault();
+    resetRegisterError();
+    resetLoginError();
 
-    if (!err) {
-      if (!loginStatus) {
-        createUser(user);
-      } else {
-        loginRequest(user);
-      }
-    }
+    !validationResult.isError && !loginStatus
+      ? createUser(user)
+      : loginRequest(user);
 
     this.setState({
       ...validationResult.errors
@@ -67,6 +73,7 @@ class Login extends React.Component {
   };
 
   isLogin = status => {
+    const { resetRegisterError, resetLoginError } = this.props;
     this.setState({
       loginStatus: status,
       login: "",
@@ -74,10 +81,12 @@ class Login extends React.Component {
       password: "",
       passwordError: ""
     });
+
+    resetRegisterError();
+    resetLoginError();
   };
 
   render() {
-    console.log(this.state);
     const {
       login,
       password,
@@ -91,15 +100,15 @@ class Login extends React.Component {
       <Wrapper>
         <Inner>
           <ButtonWrapper>
+            <LoginBtn status={loginStatus} onClick={() => this.isLogin(true)}>
+              Login
+            </LoginBtn>
             <RegisterBtn
               status={loginStatus}
               onClick={() => this.isLogin(false)}
             >
               Register
             </RegisterBtn>
-            <LoginBtn status={loginStatus} onClick={() => this.isLogin(true)}>
-              Login
-            </LoginBtn>
           </ButtonWrapper>
           <Form>
             <FormGroup>
@@ -153,12 +162,13 @@ class Login extends React.Component {
 
 const mapDispatchToProps = {
   createUser,
-  loginRequest
+  loginRequest,
+  resetLoginError,
+  resetRegisterError
 };
 
 const mapStateToProps = state => ({
   isAuthorized: state.account.isAuthorized,
-  userId: state.account.userId,
   registerError: state.user.error,
   authError: state.account.error
 });
@@ -167,3 +177,16 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Login);
+
+Login.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
+  createUser: PropTypes.func.isRequired,
+  loginRequest: PropTypes.func.isRequired,
+  resetLoginError: PropTypes.func.isRequired,
+  resetRegisterError: PropTypes.func.isRequired
+};
+
+Login.defaultProps = {
+  registerError: {},
+  authError: {}
+};

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Marker } from "./Marker";
-import { SelectedMarker } from "./SelectedMarker";
+import { Indicator } from "./Indicator";
 
 @Entity()
 export class User {
@@ -10,8 +10,8 @@ export class User {
 
   @Column() password: string;
 
-  @OneToMany(type => SelectedMarker, selectedMarker => selectedMarker.user)
-  selectedMarkers: SelectedMarker[];
+  @OneToMany(type => Indicator, indicators => indicators.user)
+  indicators: Indicator[];
 
   @OneToMany(type => Marker, marker => marker.user)
   markers: Marker[];

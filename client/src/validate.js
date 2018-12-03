@@ -1,11 +1,15 @@
-const validate = (errors, registerValidationDetails, data) => {
+const validate = (errors, ValidationDetails, data) => {
+  console.log(errors);
   let isError = false;
 
-  registerValidationDetails(data).forEach(validate => {
+  ValidationDetails(data).forEach((validate, id) => {
     if (validate.condition) {
       isError = true;
       errors[validate.nameOfErrorProperty] = validate.messageError;
-    } else {
+    } else if (
+      !validate.condition &&
+      validate.messageError === errors[validate.nameOfErrorProperty]
+    ) {
       errors[validate.nameOfErrorProperty] = "";
     }
   });

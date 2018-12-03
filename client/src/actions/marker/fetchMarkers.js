@@ -1,27 +1,26 @@
 import axios from "axios";
 
-const fetchedSelectedMarkers = markers => ({
+const fetchedMarkersSuccess = markers => ({
   type: "FETCHED_MARKERS_SUCCESS",
   markers
 });
 
-const fetchedSelectedError = error => ({
+const fetchedMarkersError = error => ({
   type: "FETCHED_MARKERS_ERROR",
   error
 });
 
-export const fetchSelectedMarkers = () => dispatch => {
+export const fetchMarkers = () => dispatch => {
   dispatch({ type: "FETCHING_MARKERS" });
   axios
     .create({ baseURL: "http://localhost:8080" })
-    .get("/selectedMarkers", {
+    .get("/markers", {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => {
-      console.log(res);
-      dispatch(fetchedSelectedMarkers(res.data));
+      dispatch(fetchedMarkersSuccess(res.data));
     })
     .catch(error => {
-      dispatch(fetchedSelectedError(error));
+      dispatch(fetchedMarkersError(error));
     });
 };

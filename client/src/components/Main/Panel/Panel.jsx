@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import MarkerList from "./MarkerList/MarkerList";
 import { isNavSelect } from "../../../actions/isNavSelect";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import {
   Wrapper,
   FilterLink,
@@ -32,7 +33,6 @@ class Panel extends Component {
 
   render() {
     const { isSelected } = this.state;
-
     return (
       <Wrapper>
         <Card>
@@ -74,3 +74,7 @@ export default connect(
   null,
   mapDispatchToProps
 )(Panel);
+
+Panel.propTypes = {
+  isNavSelect: PropTypes.func.isRequired
+};

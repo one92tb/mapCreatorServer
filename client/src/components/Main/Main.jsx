@@ -3,7 +3,7 @@ import { Row, Col } from "reactstrap";
 import { RowStyle, ColStyle } from "./style";
 import Panel from "./Panel/Panel";
 import Map from "./Map/Map";
-import CreateMarker from "./MarkerCreator/MarkerCreator";
+import MarkerCreator from "./MarkerCreator/MarkerCreator";
 import { Switch, Route } from "react-router-dom";
 
 const routes = [
@@ -14,7 +14,7 @@ const routes = [
   },
   {
     path: "/createMarker",
-    section: CreateMarker
+    section: MarkerCreator
   }
 ];
 

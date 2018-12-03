@@ -3,11 +3,13 @@ import NavBar from "../NavBar/NavBar";
 import Main from "../Main/Main";
 import Statistic from "../Statistic/Statistic";
 import List from "../List/List";
+import Login from "../Login/Login";
+
 import { Container, Row, Col } from "reactstrap";
 import { ContainerStyle, RowStyle, ColStyle } from "./style";
-import Login from "../Login/Login";
-import history from "../../history";
 import { Router, Switch, Route, Redirect } from "react-router-dom";
+
+import history from "../../history";
 import decode from "jwt-decode";
 
 const routes = [
@@ -35,8 +37,6 @@ const checkAuth = () => {
 
   if (!token) {
     return false;
-  } else {
-    console.log(token);
   }
 
   try {
@@ -63,7 +63,6 @@ const AuthRoute = ({ ...rest }) => {
 };
 
 const AppContent = () => {
-  console.log(this.props);
   return (
     <Container fluid tag={ContainerStyle}>
       <Row tag={RowStyle}>

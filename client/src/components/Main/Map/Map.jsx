@@ -1,9 +1,10 @@
 /*global google*/
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { postSelectedMarker } from "../../../actions/postSelectedMarker";
-import { fetchSelectedMarkers } from "../../../actions/fetchSelectedMarkers";
-import { removeSelectedMarker } from "../../../actions/removeSelectedMarker";
+import { postIndicator } from "../../../actions/mapIndicator/postIndicator";
+import { fetchIndicators } from "../../../actions/mapIndicator/fetchIndicators";
+import { removeIndicator } from "../../../actions/mapIndicator/removeIndicator";
+import PropTypes from "prop-types";
 import apiKey from "./apiKey";
 import {
   Wrapper,
@@ -39,29 +40,28 @@ const onToggleOpen = ({ isOpen, id }) => id =>
       }
     : { id };
 
-const geocode = (marker, postSelectedMarker) => {
+const geocode = (indicator, postIndicator) => {
   let geocoder = new window.google.maps.Geocoder();
   geocoder.geocode(
     {
       location: {
-        lat: marker.lat,
-        lng: marker.lng
+        lat: indicator.lat,
+        lng: indicator.lng
       }
     },
     (results, status) => {
       console.log(results);
       if (status === "OK") {
-        const markerToPost = {
-          name: marker.name,
-          lat: marker.lat,
-          lng: marker.lng,
-          icon: marker.icon,
+        const mapIndicator = {
+          name: indicator.name,
+          lat: indicator.lat,
+          lng: indicator.lng,
+          icon: indicator.icon,
           street: results[0].formatted_address.split(",")[0],
           city: results[0].formatted_address.split(",")[1],
           country: results[0].formatted_address.split(",")[2]
         };
-
-        postSelectedMarker(markerToPost);
+        postIndicator(mapIndicator);
       } else if (status === "OVER_QUERY_LIMIT") {
         console.log(
           "Geocode was not successful for the following reason: " + status
@@ -121,7 +121,6 @@ const MapWithAMakredInfoWindow = compose(
 
       this.setState({
         onMapMounted: ref => {
-          console.log(ref);
           refs.map = ref;
         },
         onBoundsChanged: () => {
@@ -137,8 +136,6 @@ const MapWithAMakredInfoWindow = compose(
         onPlacesChanged: () => {
           const places = refs.searchBox.getPlaces();
           const bounds = new google.maps.LatLngBounds();
-
-          console.log(places, bounds);
 
           places.forEach(
             place =>
@@ -172,28 +169,28 @@ const MapWithAMakredInfoWindow = compose(
       onMouseOver={props.onMouseOver}
       defaultZoom={props.zoom}
       onZoomChanged={props.onZoomChanged}
-      onClick={e => props.addMarker(e, geocode, postSelectedMarker)}
+      onClick={e => props.addIndicator(e, geocode, postIndicator)}
       defaultCenter={props.center}
       defaultCursor={props.cursor}
     >
-      {props.markers
+      {props.indicators
         .filter(
-          marker =>
+          indicator =>
             !props.disableMarkers.find(
-              disableItem => disableItem.name === marker.name
+              disableItem => disableItem.name === indicator.name
             )
         )
-        .map((marker, index) => {
+        .map((indicator, index) => {
           return (
             <Marker
-              onClick={() => props.onToggleOpen(marker.id)}
+              onClick={() => props.onToggleOpen(indicator.id)}
               key={index}
               position={{
-                lat: marker.lat,
-                lng: marker.lng
+                lat: indicator.lat,
+                lng: indicator.lng
               }}
               icon={{
-                url: `http://localhost:8080/images/${marker.icon}`,
+                url: `http://localhost:8080/images/${indicator.icon}`,
                 scaledSize: {
                   width: props.zoom < 14 ? 16 : 50,
                   height: props.zoom < 14 ? 16 : 50
@@ -202,11 +199,11 @@ const MapWithAMakredInfoWindow = compose(
               visible={!(props.zoom < 11)}
             >
               {props.isOpen &&
-                props.id === marker.id && (
+                props.id === indicator.id && (
                   <InfoBox
                     defaultPosition={{
-                      lat: marker.lat,
-                      lng: marker.lng
+                      lat: indicator.lat,
+                      lng: indicator.lng
                     }}
                     ref={props.onInfoBox}
                     onCloseClick={props.onToggleOpen}
@@ -232,11 +229,11 @@ const MapWithAMakredInfoWindow = compose(
                     }}
                   >
                     <InfoBoxContainer>
-                      <InfoContent>{marker.name}</InfoContent>
-                      <InfoContent>{marker.street}</InfoContent>
-                      <InfoContent>{marker.city}</InfoContent>
-                      <InfoContent>{marker.country}</InfoContent>
-                      <InfoBtn onClick={() => props.removeMarker(marker.id)}>
+                      <InfoContent>{indicator.name}</InfoContent>
+                      <InfoContent>{indicator.street}</InfoContent>
+                      <InfoContent>{indicator.city}</InfoContent>
+                      <InfoContent>{indicator.country}</InfoContent>
+                      <InfoBtn onClick={() => props.removeMarker(indicator.id)}>
                         Remove Marker
                       </InfoBtn>
                     </InfoBoxContainer>
@@ -260,38 +257,40 @@ const MapWithAMakredInfoWindow = compose(
 
 class Map extends Component {
   componentDidMount() {
-    const { fetchSelectedMarkers } = this.props;
+    const { fetchIndicators } = this.props;
 
-    fetchSelectedMarkers();
+    fetchIndicators();
   }
 
-  addMarker = (event, geocode) => {
-    const { selectedMarker, postSelectedMarker, isNavSelect } = this.props;
+  addIndicator = (event, geocode) => {
+    const { selectedMarker, postIndicator, isNavSelect } = this.props;
 
     if (selectedMarker.id && !selectedMarker.isDeleted && isNavSelect) {
-      const marker = {
+      const indicator = {
         name: selectedMarker.name,
         icon: selectedMarker.icon,
         lat: event.latLng.lat(),
         lng: event.latLng.lng()
       };
 
-      geocode(marker, postSelectedMarker);
+      geocode(indicator, postIndicator);
     }
   };
 
   removeMarker = id => {
-    this.props.removeSelectedMarker(id);
+    const { removeIndicator } = this.props;
+
+    removeIndicator(id);
   };
 
   render() {
-    const { markers, selectedMarker } = this.props;
+    const { indicators, selectedMarker } = this.props;
     return (
       <Wrapper>
         <MapWithAMakredInfoWindow
-          markers={markers}
+          indicators={indicators}
           selectedMarker={selectedMarker}
-          addMarker={this.addMarker}
+          addIndicator={this.addIndicator}
           removeMarker={this.removeMarker}
           disableMarkers={this.props.disableMarkers}
         />
@@ -301,19 +300,44 @@ class Map extends Component {
 }
 
 const mapStateToProps = state => ({
-  selectedMarker: state.selectedMarker.selectedMarker,
-  markers: state.selectedMarker.selectedMarkers,
-  isNavSelect: state.selectedMarker.isNavSelect,
-  disableMarkers: state.selectedMarker.disableMarkers
+  indicators: state.mapIndicator.indicators,
+  isNavSelect: state.mapIndicator.isNavSelect,
+  selectedMarker: state.marker.selectedMarker,
+  disableMarkers: state.marker.disableMarkers
 });
 
 const mapDispatchToProps = {
-  postSelectedMarker,
-  fetchSelectedMarkers,
-  removeSelectedMarker
+  fetchIndicators,
+  postIndicator,
+  removeIndicator
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Map);
+
+Map.propTypes = {
+  postIndicator: PropTypes.func.isRequired,
+  fetchIndicators: PropTypes.func.isRequired,
+  removeIndicator: PropTypes.func.isRequired,
+  isNavSelect: PropTypes.bool.isRequired,
+  indicators: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      icon: PropTypes.string.isRequired,
+      lat: PropTypes.number.isRequired,
+      lng: PropTypes.number.isRequired,
+      street: PropTypes.string,
+      city: PropTypes.string,
+      country: PropTypes.string,
+      userId: PropTypes.number.isRequired
+    })
+  ).isRequired
+};
+
+Map.defaultProps = {
+  selectedMarker: {},
+  disableMarkers: []
+};

@@ -1,8 +1,6 @@
 const initialState = {
-  selectedMarker: "",
-  markerToGeocode: "",
-  selectedMarkers: [],
-  disableMarkers: [],
+  indicatorToGeocode: "",
+  indicators: [],
   isNavSelect: true,
   posting: false,
   posted: false,
@@ -13,77 +11,67 @@ const initialState = {
   error: null
 };
 
-const selectedMarker = (state = initialState, action) => {
+const mapIndicator = (state = initialState, action) => {
   switch (action.type) {
-    case "MARKERS_TO_DISABLE":
-      return {
-        ...state,
-        disableMarkers: action.markers
-      };
     case "IS_SELECT":
       return {
         ...state,
         isNavSelect: action.bool
       };
-    case "GET_SELECTED_MARKER":
-      return {
-        ...state,
-        selectedMarker: action.marker
-      };
-    case "FETCHING_MARKERS":
+    case "FETCHING_INDICATORS":
       return {
         ...state,
         fetching: true,
         fetched: false
       };
-    case "FETCHED_MARKERS_SUCCESS":
+    case "FETCHED_INDICATORS_SUCCESS":
       return {
         ...state,
         fetching: false,
         fetched: true,
-        selectedMarkers: action.markers
+        indicators: action.indicators
       };
-    case "FETCHED_MARKERS_ERROR":
+    case "FETCHED_INDICATORS_ERROR":
       return {
         ...state,
         fetching: false,
         fetched: false,
         error: action.error
       };
-    case "POSTING_SELECTED_MARKER":
+    case "POSTING_INDICATOR":
       return {
         ...state,
         posting: true,
         posted: false
       };
-    case "POSTED_SELECTED_MARKER_SUCCESS":
+    case "POSTED_INDICATOR_SUCCESS":
       return {
         ...state,
         posting: false,
         posted: true,
-        selectedMarkers: [...state.selectedMarkers, action.marker]
+        indicators: [...state.indicators, action.indicator]
       };
-    case "POSTED_SELECTED_ERROR":
+    case "POSTED_INDICATOR_ERROR":
       return {
         ...state,
         posting: false,
         posted: false,
         error: action.error
       };
-    case "REMOVING_SELECTED_MARKER":
+    case "REMOVING_INDICATOR":
       return {
         ...state,
         removing: true,
         removed: false
       };
-    case "REMOVED_SELECTED_MARKER_SUCCESS":
+    case "REMOVED_INDICATOR_SUCCESS":
       return {
         ...state,
         removing: false,
         removed: true,
-        selectedMarkers: state.selectedMarkers.filter(el => el.id !== action.id)
+        indicators: state.indicators.filter(el => el.id !== action.id)
       };
-    case "REMOVED_SELECTED_MARKER_ERROR":
+    case "REMOVED_INDICATOR_ERROR":
       return {
         ...state,
         removing: false,
@@ -95,4 +83,4 @@ const selectedMarker = (state = initialState, action) => {
   }
 };
 
-export default selectedMarker;
+export default mapIndicator;

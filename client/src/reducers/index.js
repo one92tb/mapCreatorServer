@@ -1,12 +1,12 @@
-import {combineReducers} from 'redux';
-import marker from './marker';
-import selectedMarker from './selectedMarker';
-import user from './user';
-import account from './account';
+import { combineReducers } from "redux";
+import marker from "./marker";
+import mapIndicator from "./mapIndicator";
+import user from "./user";
+import account from "./account";
 
-export default combineReducers ({
+export default combineReducers({
   marker,
-  selectedMarker,
+  mapIndicator,
   user,
   account
-})
+});

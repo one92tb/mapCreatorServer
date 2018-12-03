@@ -32,7 +32,3 @@ const BarGraph = ({ displayMarkers }) => (
 );
 
 export default BarGraph;
-
-/*
-        fill={"#" + (((1 << 24) * Math.random()) | 0).toString(16)}
-*/

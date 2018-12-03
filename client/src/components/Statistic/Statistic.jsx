@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchSelectedMarkers } from "../../actions/fetchSelectedMarkers";
-import { fetchRecords } from "../../actions/fetchRecords";
+import { fetchIndicators } from "../../actions/mapIndicator/fetchIndicators";
+import { fetchMarkers } from "../../actions/marker/fetchMarkers";
 import BarGraph from "./BarGraph/BarGraph";
 import PieGraph from "./PieChart/PieGraph";
 import { Container, Row, Col } from "reactstrap";
+import PropTypes from "prop-types";
 import {
   ContainerStyle,
   RowStyle,
@@ -23,8 +24,9 @@ class Statistic extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchSelectedMarkers();
-    this.props.fetchRecords();
+    const { fetchIndicators, fetchMarkers } = this.props;
+    fetchIndicators();
+    fetchMarkers();
   }
 
   handleChange = e => {
@@ -34,26 +36,25 @@ class Statistic extends Component {
   };
 
   render() {
-    const { selectedMarkers } = this.props;
+    const { indicators } = this.props;
     const { city } = this.state;
 
     const displayMarkers = Object.entries(
-      selectedMarkers
-        .filter((marker, id, arr) => {
+      indicators
+        .filter((indicator, id, arr) => {
           return (
             (city === "" ||
-              marker.city.toLowerCase().search(city.toLowerCase()) !== -1) &&
-            marker
+              indicator.city.toLowerCase().search(city.toLowerCase()) !== -1) &&
+            indicator
           );
         })
         .reduce((obj, el, id) => {
           obj[el.name] = obj[el.name] ? ++obj[el.name] : 1;
-          console.log(obj);
           return obj;
         }, {})
     );
 
-    const displaySumMarkers = [["All markers", selectedMarkers.length]];
+    const displaySumMarkers = [["All markers", indicators.length]];
 
     return (
       <Wrapper>
@@ -84,16 +85,42 @@ class Statistic extends Component {
 }
 
 const mapStateToProps = state => ({
-  selectedMarkers: state.selectedMarker.selectedMarkers,
-  markers: state.marker.records
+  indicators: state.mapIndicator.indicators,
+  markers: state.marker.markers
 });
 
 const mapDispatchToProps = {
-  fetchSelectedMarkers,
-  fetchRecords
+  fetchIndicators,
+  fetchMarkers
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Statistic);
+
+Statistic.propTypes = {
+  fetchIndicators: PropTypes.func.isRequired,
+  fetchMarkers: PropTypes.func.isRequired,
+  indicators: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      icon: PropTypes.string.isRequired,
+      lat: PropTypes.number.isRequired,
+      lng: PropTypes.number.isRequired,
+      street: PropTypes.string,
+      city: PropTypes.string,
+      country: PropTypes.string,
+      userId: PropTypes.number.isRequired
+    })
+  ).isRequired,
+  markers: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      icon: PropTypes.string.isRequired,
+      userId: PropTypes.number.isRequired
+    })
+  ).isRequired
+};

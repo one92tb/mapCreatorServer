@@ -36,7 +36,7 @@ const account = (state = initialState, action) => {
         userId: action.userData.userId,
         error: action.userData.error
       };
-    case "RESET_REGISTER_ERROR":
+    case "RESET_LOGIN_ERROR":
       return {
         ...state,
         error: null

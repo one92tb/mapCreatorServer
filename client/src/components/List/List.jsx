@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchSelectedMarkers } from "../../actions/fetchSelectedMarkers";
-import { fetchRecords } from "../../actions/fetchRecords";
+import { fetchIndicators } from "../../actions/mapIndicator/fetchIndicators";
+import { fetchMarkers } from "../../actions/marker/fetchMarkers";
+import PropTypes from "prop-types";
 import {
   Wrapper,
   Label,
@@ -27,10 +28,10 @@ class List extends Component {
   }
 
   componentDidMount() {
-    const { fetchSelectedMarkers, fetchRecords } = this.props;
+    const { fetchIndicators, fetchMarkers } = this.props;
 
-    fetchSelectedMarkers();
-    fetchRecords();
+    fetchIndicators();
+    fetchMarkers();
   }
 
   handleChange = e => {
@@ -42,9 +43,7 @@ class List extends Component {
   };
 
   render() {
-    console.log(this.state, this.props);
-
-    const { markers, selectedMarkers } = this.props;
+    const { markers, indicators } = this.props;
     const { markerName, city } = this.state;
 
     return (
@@ -70,7 +69,7 @@ class List extends Component {
             <Thead>
               <tr>
                 <Th>id</Th>
-                <Th>marker name</Th>
+                <Th>name</Th>
                 <Th>street</Th>
                 <Th>city</Th>
                 <Th>country</Th>
@@ -79,27 +78,27 @@ class List extends Component {
               </tr>
             </Thead>
             <Tbody>
-              {selectedMarkers
-                .filter(marker => {
+              {indicators
+                .filter(indicator => {
                   return (markerName === "All" && city === "") ||
                     (markerName === "All" &&
-                      marker.city.toLowerCase().search(city.toLowerCase()) !==
+                      indicator.city.toLowerCase().search(city.toLowerCase()) !==
                         -1)
-                    ? marker
-                    : markerName === marker.name && markerName === "All"
-                      ? marker
-                      : markerName === marker.name &&
-                        marker.city.toLowerCase().search(city.toLowerCase()) !==
+                    ? indicator
+                    : markerName === indicator.name && markerName === "All"
+                      ? indicator
+                      : markerName === indicator.name &&
+                        indicator.city.toLowerCase().search(city.toLowerCase()) !==
                           -1 &&
-                        marker;
+                        indicator;
                 })
-                .map((marker, id) => (
-                  <Tr key={marker.id}>
+                .map((indicator, id) => (
+                  <Tr key={indicator.id}>
                     <Td>{id + 1}</Td>
-                    <Td>{marker.name}</Td>
-                    <Td>{marker.street}</Td>
-                    <Td>{marker.city}</Td>
-                    <Td>{marker.country}</Td>
+                    <Td>{indicator.name}</Td>
+                    <Td>{indicator.street}</Td>
+                    <Td>{indicator.city}</Td>
+                    <Td>{indicator.country}</Td>
                     <Td>description</Td>
                     <Td>go to</Td>
                   </Tr>
@@ -113,16 +112,42 @@ class List extends Component {
 }
 
 const mapDispatchToProps = {
-  fetchSelectedMarkers,
-  fetchRecords
+  fetchIndicators,
+  fetchMarkers
 };
 
 const mapStateToProps = state => ({
-  selectedMarkers: state.selectedMarker.selectedMarkers,
-  markers: state.marker.records
+  indicators: state.mapIndicator.indicators,
+  markers: state.marker.markers
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(List);
+
+List.propTypes = {
+  indicators: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      icon: PropTypes.string.isRequired,
+      lat: PropTypes.number.isRequired,
+      lng: PropTypes.number.isRequired,
+      street: PropTypes.string,
+      city: PropTypes.string,
+      country: PropTypes.string,
+      userId: PropTypes.number.isRequired
+    })
+  ).isRequired,
+  markers: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      icon: PropTypes.string.isRequired,
+      userId: PropTypes.number.isRequired
+    })
+  ),
+  fetchIndicators: PropTypes.func.isRequired,
+  fetchMarkers: PropTypes.func.isRequired
+};

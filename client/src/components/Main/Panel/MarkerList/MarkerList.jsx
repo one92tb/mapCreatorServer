@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { fetchRecords } from "../../../../actions/fetchRecords";
-import { getSelectedMarker } from "../../../../actions/getSelectedMarker";
-import { disableMarkers } from "../../../../actions/disableMarkers";
+import { fetchMarkers } from "../../../../actions/marker/fetchMarkers";
+import { disableMarkers } from "../../../../actions/marker/disableMarkers";
+import { getSelectedMarker } from "../../../../actions/marker/getSelectedMarker";
 import { connect } from "react-redux";
 import { List, Marker, MarkerIcon, MarkerName } from "./style";
+import PropTypes from "prop-types";
 
 class MarkerList extends Component {
   constructor(props) {
@@ -15,8 +16,8 @@ class MarkerList extends Component {
   }
 
   componentDidMount() {
-    const { fetchRecords } = this.props;
-    fetchRecords();
+    const { fetchMarkers } = this.props;
+    fetchMarkers();
   }
 
   onSelect = (marker, id) => {
@@ -26,16 +27,12 @@ class MarkerList extends Component {
     const { selectedId, filteredMarkers } = this.state;
 
     if (marker.id !== selectedId && isNavSelect) {
-      // SELECT
       this.setState({ selectedId: id });
       getSelectedMarker({
         ...marker,
         url: `http://localhost:8080/images/${marker.icon}`
       });
-    }
-    //wyzerowanie selected
-    else if (marker.id === selectedId && isNavSelect) {
-      // UNSELECT
+    } else if (marker.id === selectedId && isNavSelect) {
       id = "";
       this.setState({ selectedId: id });
       getSelectedMarker({
@@ -45,14 +42,11 @@ class MarkerList extends Component {
       });
     } else {
       if (filteredMarkers.find(el => el.id === marker.id)) {
-        // delete the same
         this.setState(
           {
             filteredMarkers: filteredMarkers.filter(el => el.id !== marker.id)
           },
-          () => {
-            return disableMarkers(filteredMarkers);
-          }
+          () => disableMarkers(filteredMarkers)
         );
       } else {
         this.setState(
@@ -66,12 +60,11 @@ class MarkerList extends Component {
   };
 
   render() {
-    const { isNavSelect, records } = this.props;
+    const { isNavSelect, markers } = this.props;
     const { selectedId, filteredMarkers } = this.state;
-
     return (
       <List>
-        {records.map((marker, id) => (
+        {markers.map((marker, id) => (
           <Marker
             key={marker.id}
             isSelected={selectedId === marker.id && isNavSelect}
@@ -97,12 +90,11 @@ class MarkerList extends Component {
 }
 
 const mapStateToProps = state => ({
-  records: state.marker.records,
-  isRemoved: state.marker.isRemoved
+  markers: state.marker.markers
 });
 
 const mapDispatchToProps = {
-  fetchRecords,
+  fetchMarkers,
   getSelectedMarker,
   disableMarkers
 };
@@ -111,3 +103,20 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(MarkerList);
+
+MarkerList.propTypes = {
+  fetchMarkers: PropTypes.func.isRequired,
+  getSelectedMarker: PropTypes.func.isRequired,
+  disableMarkers: PropTypes.func.isRequired,
+  isNavSelect: PropTypes.bool.isRequired,
+  markers: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      icon: PropTypes.string.isRequired,
+      userId: PropTypes.number.isRequired
+    })
+  )
+};
+
+MarkerList.defaultProps = {};

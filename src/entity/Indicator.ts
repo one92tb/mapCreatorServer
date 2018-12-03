@@ -2,7 +2,7 @@ import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm";
 import { User } from "./User";
 
 @Entity()
-export class SelectedMarker {
+export class Indicator {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -31,6 +31,6 @@ export class SelectedMarker {
     @Column({ type: "int" })
     public userId: number;
 
-    @ManyToOne(type => User, user => user.selectedMarkers)
+    @ManyToOne(type => User, user => user.indicators)
     user: User;
 }

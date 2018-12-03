@@ -1,18 +1,18 @@
 import axios from "axios";
 
-const removedRecord = id => ({
-  type: "REMOVED_RECORD",
+const removeMarkerSuccess = id => ({
+  type: "REMOVED_MARKER_SUCCESS",
   id
 });
 
-const removedRecordError = error => ({
-  type: "REMOVED_RECORD_ERROR",
+const removeMarkerError = error => ({
+  type: "REMOVED_MARKER_ERROR",
   error
 });
 
-export const removeRecord = id => dispatch => {
+export const removeMarker = id => dispatch => {
   console.log(id);
-  dispatch({ type: "REMOVING_RECORD" });
+  dispatch({ type: "REMOVING_MARKER" });
   axios
     .create({ baseURL: "http://localhost:8080" })
     .delete(`/markers/${id}`, {
@@ -20,9 +20,9 @@ export const removeRecord = id => dispatch => {
     })
     .then(res => {
       console.log(res);
-      dispatch(removedRecord(res.data.id));
+      dispatch(removeMarkerSuccess(res.data.id));
     })
     .catch(error => {
-      dispatch(removedRecordError(error));
+      dispatch(removeMarkerError(error));
     });
 };

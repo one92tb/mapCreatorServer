@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { isNavSelect } from "../../actions/isNavSelect";
-import { getSelectedMarker } from "../../actions/getSelectedMarker";
+import { getSelectedMarker } from "../../actions/marker/getSelectedMarker";
 import { withRouter } from "react-router-dom";
-import { logout } from "../../actions/logout";
+import { logout } from "../../actions/signIn/logout";
+import PropTypes from "prop-types";
 import {
   LogoutBtn,
   Panel,
@@ -114,3 +115,9 @@ export default connect(
     pure: false
   }
 )(NavBar);
+
+NavBar.propTypes = {
+  isNavSelect: PropTypes.func.isRequired,
+  getSelectedMarker: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired
+};
