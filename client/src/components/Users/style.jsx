@@ -7,13 +7,9 @@ const Wrapper = styled.div`
   padding: 40px 20px;
 `;
 
-const Label = styled.label`
-  margin: 0;
-`;
-
 const Select = styled.select`
-  width: 200px;
-  height: 40px;
+  width: 150px;
+  height: 30px;
   color: #000;
   display: block;
   text-align: center;
@@ -21,6 +17,8 @@ const Select = styled.select`
   background: #fff;
   text-align: center;
   text-align-last: center;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const Input = styled.input`
@@ -29,13 +27,14 @@ const Input = styled.input`
   text-align: center;
   border-radius: 5px;
   border: 1px solid transparent;
+  margin-right: 50px;
 `;
 
 const Form = styled.form`
   height: calc(10% - 20px);
   margin-bottom: 20px;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-end;
   background: #00b8e6;
   align-items: center;
   border-radius: 3px;
@@ -94,9 +93,14 @@ const Td = styled.td`
   background: #4ddbff;
 `;
 
+const RemoveBtn = styled.img`
+  &:hover{
+    cursor: pointer;
+  }
+`
+
 export {
   Wrapper,
-  Label,
   Select,
   Input,
   Form,
@@ -106,5 +110,6 @@ export {
   Tbody,
   Tr,
   Th,
-  Td
+  Td,
+  RemoveBtn
 };

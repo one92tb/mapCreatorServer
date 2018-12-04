@@ -3,7 +3,6 @@ import { getManager } from "typeorm";
 import { Marker } from "../../entity/Marker";
 
 export async function postMarker(request: Request, response: Response) {
-  console.log(request);
   const markerRepository = getManager().getRepository(Marker);
 
   const marker = {

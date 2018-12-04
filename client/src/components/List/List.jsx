@@ -53,7 +53,7 @@ class List extends Component {
             <Select onChange={this.handleChange}>
               <option>All</option>
               {markers.map((marker, id, arr) => (
-                <option key={id}>{marker.name}</option>
+                <option key={marker.id}>{marker.name}</option>
               ))};
             </Select>
           </Label>
@@ -61,7 +61,7 @@ class List extends Component {
             onChange={this.handleChange}
             type="text"
             name="city"
-            placeholder="search your city"
+            placeholder="search city"
           />
         </Form>
         <TableContainer>

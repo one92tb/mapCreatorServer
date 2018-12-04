@@ -1,6 +1,7 @@
 const initialState = {
   users: [],
   error: null,
+  isAdmin: false,
   userId: "",
   userName: "",
   fetching: false,
@@ -9,7 +10,9 @@ const initialState = {
   posted: false,
   postingLogin: false,
   postedLogin: false,
-  isLoggingIn: false
+  isLoggingIn: false,
+  changingPermissions: false,
+  changedPermissions: false
 };
 
 const user = (state = initialState, action) => {
@@ -59,6 +62,47 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         error: null
+      };
+
+    case "CHANGING_PERMISSIONS":
+      return {
+        ...state,
+        changingPermissions: true,
+        changedPermissions: false
+      };
+    case "CHANGED_PERMISSIONS_SUCCESS":
+      return {
+        ...state,
+        changingPermissions: false,
+        changedPermissions: true,
+        isAdmin: action.status
+      };
+    case "CHANGED_PERMISSIONS_ERROR":
+      return {
+        ...state,
+        changingPermissions: false,
+        changedPermissions: false,
+        error: action.error
+      };
+    case "DELETING_ACCOUNT":
+      return {
+        ...state,
+        deletingAccount: true,
+        deletedAccount: false
+      };
+    case "DELETED_ACCOUNT_SUCCESS":
+      return {
+        ...state,
+        deletingAccount: false,
+        deletedAccount: true,
+        users: state.users.filter(user => user.id !== action.id)
+      };
+    case "DELETED_ACCOUNT_ERROR":
+      return {
+        ...state,
+        deletingAccount: false,
+        deletedAccount: false,
+        error: action.error
       };
     default:
       return state;

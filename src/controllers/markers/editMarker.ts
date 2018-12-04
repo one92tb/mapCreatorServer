@@ -4,8 +4,6 @@ import { Marker } from "../../entity/Marker";
 
 export const editMarker = async (request: Request, response: Response) => {
   const markerRepository = getManager().getRepository(Marker);
-
-  console.log(request.body, request.user.userData.userId);
   const marker = request.files
     ? {
         name: request.body.markerName,

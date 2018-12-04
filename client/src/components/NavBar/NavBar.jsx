@@ -95,6 +95,11 @@ class NavBar extends Component {
               <Icon src={"list.png"} width={32} height={32} />List
             </NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink to="/users" activeClassName={activeClassName}>
+              <Icon src={"users.png"} width={32} height={32} />Users
+            </NavLink>
+          </NavItem>
         </Nav>
       </Panel>
     );

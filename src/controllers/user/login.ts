@@ -5,16 +5,15 @@ const jwt = require("jsonwebtoken");
 
 export async function login(request: Request, response: Response) {
   const userRepository = getManager().getRepository(User);
-
   const checkLoginData = await userRepository.findOne({
     login: request.body.login,
     password: request.body.password
   });
-
   if (checkLoginData) {
     const userData = {
       login: request.body.login,
-      userId: checkLoginData.id
+      userId: checkLoginData.id,
+      isAdmin: checkLoginData.isAdmin
     };
 
     jwt.sign(

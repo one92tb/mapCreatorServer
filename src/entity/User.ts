@@ -10,6 +10,8 @@ export class User {
 
   @Column() password: string;
 
+  @Column() isAdmin: boolean;
+
   @OneToMany(type => Indicator, indicators => indicators.user)
   indicators: Indicator[];
 

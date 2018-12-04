@@ -12,8 +12,11 @@ import { getIndicator } from "../controllers/indicators/getIndicator";
 import { removeIndicator } from "../controllers/indicators/removeIndicator";
 
 import { login } from "../controllers/user/login";
-import { postUser } from "../controllers/user/postUser";
-import { getUsers } from "../controllers/user/getUsers";
+import { registerUser } from "../controllers/user/registerUser";
+import { fetchUsers } from "../controllers/user/fetchUsers";
+import { getUser } from "../controllers/user/getUser";
+import { changePermissions } from "../controllers/user/changePermissions";
+import { deleteAccount } from "../controllers/user/deleteAccount";
 
 export const routes = [
   {
@@ -74,11 +77,26 @@ export const routes = [
   {
     path: "/users",
     method: "post",
-    action: postUser
+    action: registerUser
   },
   {
     path: "/users",
     method: "get",
-    action: getUsers
+    action: fetchUsers
+  },
+  {
+    path: "/users/:id",
+    method: "get",
+    action: getUser
+  },
+  {
+    path: "/users/:id",
+    method: "patch",
+    action: changePermissions
+  },
+  {
+    path: "/users/:id",
+    method: "delete",
+    action: deleteAccount
   }
 ];

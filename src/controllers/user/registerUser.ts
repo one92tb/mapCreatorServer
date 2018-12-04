@@ -2,13 +2,14 @@ import { Request, Response } from "express";
 import { getManager } from "typeorm";
 import { User } from "../../entity/User";
 
-export async function postUser(request: Request, response: Response) {
-  console.log(request.body);
+export async function registerUser(request: Request, response: Response) {
   const userRepository = getManager().getRepository(User);
+  const firstUser = await userRepository.findOne(1);
 
   const user = {
     login: request.body.login,
-    password: request.body.password
+    password: request.body.password,
+    isAdmin: (firstUser) ? false : true
   };
 
   const findLogin = await userRepository.findOne({

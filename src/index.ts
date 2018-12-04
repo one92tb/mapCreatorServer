@@ -58,33 +58,23 @@ const options: ConnectionOptions = {
 createConnection(options).then(async connection => {
   routes.forEach(route => {
     const args =
-      (route.method === "post" && route.path === "/markers") ||
-      (route.method === "put" && route.path === "/markers/:id")
-        ? [route.path, upload.any()]
-        : [route.path];
+      (route.method === "post" && route.path === "/login") ||
+      (route.method === "post" && route.path === "/users")
+        ? [route.path]
+        : (route.method === "post" && route.path === "/markers") ||
+          (route.method === "put" && route.path === "/markers/:id")
+          ? [route.path, upload.any(), jwt({ secret: "secretkey-1992" })]
+          : [route.path, jwt({ secret: "secretkey-1992" })];
 
-    if (route.method === "post" && route.path === "/login" || route.method === "post" && route.path === "/users" ) {
-      app[route.method](
-        ...args,
-        (request: Request, response: Response, next: Function) => {
-          route
-            .action(request, response)
-            .then(() => next)
-            .catch(err => next(err));
-        }
-      );
-    } else {
-      app[route.method](
-        ...args,
-        jwt({ secret: "secretkey-1992" }),
-        (request: Request, response: Response, next: Function) => {
-          route
-            .action(request, response)
-            .then(() => next)
-            .catch(err => next(err));
-        }
-      );
-    }
+    app[route.method](
+      ...args,
+      (request: Request, response: Response, next: Function) => {
+        route
+          .action(request, response)
+          .then(() => next)
+          .catch(err => next(err));
+      }
+    );
   });
 });
 

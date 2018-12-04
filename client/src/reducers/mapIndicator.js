@@ -69,7 +69,9 @@ const mapIndicator = (state = initialState, action) => {
         ...state,
         removing: false,
         removed: true,
-        indicators: state.indicators.filter(el => el.id !== action.id)
+        indicators: state.indicators.filter(
+          indicator => indicator.id !== action.id
+        )
       };
     case "REMOVED_INDICATOR_ERROR":
       return {

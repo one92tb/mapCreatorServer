@@ -4,6 +4,8 @@ import Main from "../Main/Main";
 import Statistic from "../Statistic/Statistic";
 import List from "../List/List";
 import Login from "../Login/Login";
+import NoAuthorization from "../NoAuthorization/NoAuthorization";
+import Users from "../Users/Users";
 
 import { Container, Row, Col } from "reactstrap";
 import { ContainerStyle, RowStyle, ColStyle } from "./style";
@@ -12,29 +14,9 @@ import { Router, Switch, Route, Redirect } from "react-router-dom";
 import history from "../../history";
 import decode from "jwt-decode";
 
-const routes = [
-  {
-    path: "/",
-    exact: true,
-    section: Main
-  },
-  {
-    path: "/createMarker",
-    section: Main
-  },
-  {
-    path: "/statistic",
-    section: Statistic
-  },
-  {
-    path: "/list",
-    section: List
-  }
-];
-
 const checkAuth = () => {
   const token = localStorage.getItem("token");
-
+  console.log(token);
   if (!token) {
     return false;
   }
@@ -51,7 +33,26 @@ const checkAuth = () => {
   return true;
 };
 
-const AuthRoute = ({ ...rest }) => {
+const AuthAdmin = () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return false;
+  }
+  console.log(decode(token));
+  try {
+    const { userData } = decode(token);
+    console.log(userData);
+    if (userData.isAdmin === false) {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+
+  return true;
+};
+
+const AuthApp = ({ ...rest }) => {
   return (
     <Route
       {...rest}
@@ -71,14 +72,13 @@ const AppContent = () => {
         </Col>
         <Col tag={ColStyle} lg="10">
           <Switch>
-            {routes.map((route, id) => (
-              <Route
-                key={id}
-                path={route.path}
-                exact={route.exact}
-                component={route.section}
-              />
-            ))}
+            <Route exact={true} path={"/"} component={Main} />
+            <Route path={"/createMarker"} component={Main} />
+            <Route path={"/statistic"} component={Statistic} />
+            <Route path={"/list"} component={List} />
+            <Route
+              render={props => (AuthAdmin() ? <Users /> : <NoAuthorization />)}
+            />
           </Switch>
         </Col>
       </Row>
@@ -90,7 +90,7 @@ const Auth = () => (
   <Router history={history}>
     <Switch>
       <Route exact path="/login" render={props => <Login {...props} />} />
-      <AuthRoute exact />
+      <AuthApp exact />
     </Switch>
   </Router>
 );
