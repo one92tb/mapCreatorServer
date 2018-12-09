@@ -3,6 +3,7 @@ import { getSelectedMarker } from "../../../actions/marker/getSelectedMarker";
 import { postMarker } from "../../../actions/marker/postMarker";
 import { removeMarker } from "../../../actions/marker/removeMarker";
 import { editMarker } from "../../../actions/marker/editMarker";
+import { fetchMarkers } from "../../../actions/marker/fetchMarkers";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import validate from "../../../validate";
@@ -51,6 +52,11 @@ class MarkerCreator extends Component {
     };
   }
 
+  componentDidMount() {
+    const { fetchMarkers } = this.props;
+    fetchMarkers();
+  }
+
   componentDidUpdate(prevProps) {
     const { selectedMarker } = this.props;
     if (selectedMarker.id !== prevProps.selectedMarker.id) {
@@ -91,12 +97,14 @@ class MarkerCreator extends Component {
 
   sendRecord = event => {
     event.preventDefault();
-    const { postMarker, editMarker, selectedMarker } = this.props;
+    const { postMarker, editMarker, selectedMarker, markers } = this.props;
     const { markerImageFile, markerName } = this.state;
+    console.log(markers);
     const data = {
       markerName,
       markerImageFile,
-      selectedMarker
+      selectedMarker,
+      markers
     };
 
     const validationResult = validate(errors, markerValidationDetails, data);
@@ -143,7 +151,6 @@ class MarkerCreator extends Component {
       markerImageFile,
       selectedMarker
     };
-    console.log(data);
     const validationResult = validate(errors, markerValidationDetails, data);
 
     if (!validationResult.isError) {
@@ -311,11 +318,13 @@ const mapDispatchToProps = {
   postMarker,
   removeMarker,
   editMarker,
-  getSelectedMarker
+  getSelectedMarker,
+  fetchMarkers
 };
 
 const mapStateToProps = state => ({
-  selectedMarker: state.marker.selectedMarker
+  selectedMarker: state.marker.selectedMarker,
+  markers: state.marker.markers
 });
 
 export default connect(

@@ -4,7 +4,7 @@ export const errors = {
 };
 
 export const markerValidationDetails = data => {
-  const { markerName, markerImageFile, selectedMarker } = data;
+  const { markerName, markerImageFile, selectedMarker, markers } = data;
 
   return [
     {
@@ -15,12 +15,17 @@ export const markerValidationDetails = data => {
     {
       condition: !/\.(png)$/i.test(markerImageFile.name) && markerImageFile,
       nameOfErrorProperty: "markerImageFileError",
-      messageError: "format must be .png"
+      messageError: "Format must be .png"
     },
     {
       condition: !markerImageFile && !selectedMarker.id,
       nameOfErrorProperty: "markerImageFileError",
       messageError: "Input file cannot be empty"
+    },
+    {
+      condition: markers.find(marker => marker.name === markerName),
+      nameOfErrorProperty: "markerNameError",
+      messageError: "This marker is already exist"
     }
   ];
 };
