@@ -59,6 +59,7 @@ class MarkerCreator extends Component {
 
   componentDidUpdate(prevProps) {
     const { selectedMarker } = this.props;
+
     if (selectedMarker.id !== prevProps.selectedMarker.id) {
       this.setState({
         markerName: selectedMarker.name,
@@ -99,7 +100,6 @@ class MarkerCreator extends Component {
     event.preventDefault();
     const { postMarker, editMarker, selectedMarker, markers } = this.props;
     const { markerImageFile, markerName } = this.state;
-    console.log(markers);
     const data = {
       markerName,
       markerImageFile,
@@ -162,7 +162,7 @@ class MarkerCreator extends Component {
         link.click();
       });
     }
-    console.log(validationResult.errors);
+
     this.setState({
       ...validationResult.errors
     });
@@ -204,7 +204,6 @@ class MarkerCreator extends Component {
       markerImageFileError
     } = this.state;
     const { selectedMarker } = this.props;
-
     return (
       <Wrapper>
         <Inner>

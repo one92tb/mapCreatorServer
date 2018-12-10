@@ -12,17 +12,25 @@ const NavLink = css`
   cursor: pointer;
 `;
 
-const FilterLink = styled.span`
+//  pointer-events: none;
+const FilterLink = styled.a`
   ${NavLink};
 
   ${({ isSelected }) =>
     !isSelected &&
     `
-    font-weight: bold
+    font-weight: bold;
+  `};
+
+  ${({ location }) =>
+    location === "/createMarker" &&
+    `
+    pointer-events: none;
+    color: #808080!important;
   `};
 `;
 
-const SelectLink = styled.span`
+const SelectLink = styled.a`
   ${NavLink};
 
   ${({ isSelected }) =>

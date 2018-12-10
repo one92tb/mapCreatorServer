@@ -20,9 +20,17 @@ class MarkerList extends Component {
     fetchMarkers();
   }
 
-  onSelect = (marker, id) => {
-    console.log(marker);
+  componentDidUpdate() {
+    const { selectedId } = this.state;
+    const { selectedMarker } = this.props;
+    if (selectedId !== selectedMarker && selectedMarker === "") {
+      this.setState({
+        selectedId: ""
+      });
+    }
+  }
 
+  onSelect = (marker, id) => {
     const { getSelectedMarker, isNavSelect, disableMarkers } = this.props;
     const { selectedId, filteredMarkers } = this.state;
 
@@ -41,19 +49,25 @@ class MarkerList extends Component {
         url: "IMG-default.png"
       });
     } else {
+      //delete Marker from filteredMarkers if exist
       if (filteredMarkers.find(el => el.id === marker.id)) {
         this.setState(
           {
             filteredMarkers: filteredMarkers.filter(el => el.id !== marker.id)
           },
-          () => disableMarkers(filteredMarkers)
+          () => {
+            disableMarkers(this.state.filteredMarkers);
+          }
         );
+        //add Marker to filteredMarkers if not exist
       } else {
         this.setState(
           {
             filteredMarkers: [...filteredMarkers, marker]
           },
-          () => disableMarkers(filteredMarkers)
+          () => {
+            disableMarkers(this.state.filteredMarkers);
+          }
         );
       }
     }
@@ -90,6 +104,7 @@ class MarkerList extends Component {
 }
 
 const mapStateToProps = state => ({
+  selectedMarker: state.marker.selectedMarker,
   markers: state.marker.markers
 });
 

@@ -23,7 +23,7 @@ class Main extends Component {
     return (
       <Row tag={RowStyle}>
         <Col tag={ColStyle} lg="3">
-          <Panel />
+          <Panel {...this.props}/>
         </Col>
         <Col tag={ColStyle} lg="9">
           <Switch>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { isNavSelect } from "../../actions/isNavSelect";
+import { isPanelSelect } from "../../actions/isPanelSelect";
 import { getSelectedMarker } from "../../actions/marker/getSelectedMarker";
 import { withRouter } from "react-router-dom";
 import { logout } from "../../actions/signIn/logout";
@@ -48,8 +48,9 @@ class NavBar extends Component {
   };
 
   handleMapCreator = () => {
-    const { isNavSelect } = this.props;
-    isNavSelect(true);
+    const { isPanelSelect, getSelectedMarker } = this.props;
+    getSelectedMarker("");
+    isPanelSelect(true);
   };
 
   render() {
@@ -107,7 +108,7 @@ class NavBar extends Component {
 }
 
 const mapDispatchToProps = {
-  isNavSelect,
+  isPanelSelect,
   getSelectedMarker,
   logout
 };
@@ -122,7 +123,7 @@ export default connect(
 )(NavBar);
 
 NavBar.propTypes = {
-  isNavSelect: PropTypes.func.isRequired,
+  isPanelSelect: PropTypes.func.isRequired,
   getSelectedMarker: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired
 };

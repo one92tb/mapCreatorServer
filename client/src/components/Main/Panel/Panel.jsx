@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MarkerList from "./MarkerList/MarkerList";
-import { isNavSelect } from "../../../actions/isNavSelect";
+import { isPanelSelect } from "../../../actions/isPanelSelect";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
@@ -22,13 +22,25 @@ class Panel extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    const { location } = this.props;
+    if (
+      location.pathname !== prevProps.location.pathname &&
+      location.pathname === "/createMarker"
+    ) {
+      this.setState({
+        isSelected: true
+      });
+    }
+  }
+
   switch = bool => {
     const { isSelected } = this.props;
     this.setState({
       isSelected: bool
     });
 
-    isNavSelect(isSelected);
+    isPanelSelect(isSelected);
   };
 
   render() {
@@ -40,6 +52,7 @@ class Panel extends Component {
             <Nav>
               <NavItem>
                 <SelectLink
+                  exact={true}
                   isSelected={isSelected}
                   onClick={() => this.switch(true)}
                 >
@@ -50,6 +63,7 @@ class Panel extends Component {
               <NavItem>
                 <FilterLink
                   isSelected={isSelected}
+                  location={this.props.location.pathname}
                   onClick={() => this.switch(false)}
                 >
                   Filter marker
@@ -67,7 +81,7 @@ class Panel extends Component {
 }
 
 const mapDispatchToProps = {
-  isNavSelect
+  isPanelSelect
 };
 
 export default connect(
@@ -76,5 +90,5 @@ export default connect(
 )(Panel);
 
 Panel.propTypes = {
-  isNavSelect: PropTypes.func.isRequired
+  isPanelSelect: PropTypes.func.isRequired
 };

@@ -16,7 +16,6 @@ import decode from "jwt-decode";
 
 const checkAuth = () => {
   const token = localStorage.getItem("token");
-  console.log(token);
   if (!token) {
     return false;
   }
@@ -38,10 +37,9 @@ const AuthAdmin = () => {
   if (!token) {
     return false;
   }
-  console.log(decode(token));
+  
   try {
     const { userData } = decode(token);
-    console.log(userData);
     if (userData.isAdmin === false) {
       return false;
     }

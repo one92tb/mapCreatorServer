@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { fetchUsers } from "../../actions/user/fetchUsers";
 import { changePermissions } from "../../actions/user/changePermissions";
 import { deleteAccount } from "../../actions/user/deleteAccount";
+import PropTypes from "prop-types";
 import {
   Wrapper,
   Select,
@@ -31,14 +32,12 @@ class Users extends React.Component {
   };
 
   removeUser = id => {
-    console.log(id);
     const { deleteAccount } = this.props;
     deleteAccount(id);
   };
 
   render() {
     const { users } = this.props;
-    console.log(users);
     return (
       <Wrapper>
         <Form>
@@ -114,3 +113,17 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Users);
+
+Users.propTypes = {
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      login: PropTypes.string.isRequired,
+      password: PropTypes.string.isRequired,
+      isAdmin: PropTypes.bool.isRequired
+    })
+  ),
+  fetchUsers: PropTypes.func.isRequired,
+  changePermissions: PropTypes.func.isRequired,
+  deleteAccount: PropTypes.func.isRequired
+};
