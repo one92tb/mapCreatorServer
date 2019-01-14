@@ -37,7 +37,7 @@ const AuthAdmin = () => {
   if (!token) {
     return false;
   }
-  
+
   try {
     const { userData } = decode(token);
     if (userData.isAdmin === false) {
@@ -65,10 +65,10 @@ const AppContent = () => {
   return (
     <Container fluid tag={ContainerStyle}>
       <Row tag={RowStyle}>
-        <Col tag={ColStyle} lg="2">
+        <Col tag={ColStyle} lg="12" xl="2">
           <NavBar />
         </Col>
-        <Col tag={ColStyle} lg="10">
+        <Col tag={ColStyle} lg="12" xl="10">
           <Switch>
             <Route exact={true} path={"/"} component={Main} />
             <Route path={"/createMarker"} component={Main} />

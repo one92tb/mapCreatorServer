@@ -7,7 +7,6 @@ import { logout } from "../../actions/signIn/logout";
 import PropTypes from "prop-types";
 import {
   LogoutBtn,
-  Panel,
   Header,
   Logo,
   Title,
@@ -15,9 +14,12 @@ import {
   LoginImg,
   LoginName,
   Nav,
+  Input,
   NavItem,
   NavLink,
-  Icon
+  Icon,
+  Label,
+  Panel
 } from "./style";
 
 const activeClassName = "nav-item-active";
@@ -61,6 +63,8 @@ class NavBar extends Component {
           <Logo src={"earth.png"} width={50} height={50} />
           <Title className="logoName">mapCreator</Title>
         </Header>
+        <Label htmlFor="toggle">&#9776;</Label>
+        <Input type="checkbox" id="toggle" />
         <User>
           <LoginImg src={"user.png"} width={130} height={130} />
           <LoginName>UserNick</LoginName>

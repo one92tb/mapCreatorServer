@@ -5,13 +5,28 @@ const activeClassName = "nav-item-active";
 const Panel = styled.div`
   height: 100%;
   background: #4ddbff;
+
+  @media (max-width: 1199px) {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
+
 const Header = styled.div`
   display: flex;
   padding-top: 30px;
   margin-bottom: 70px;
   justify-content: center;
+
+  @media (max-width: 1199px) {
+    justify-content: flex-start;
+    margin-left: 30px;
+    margin-bottom: 0;
+    padding: 0;
+    align-items: center;
+  }
 `;
+
 const Logo = styled.img`
   margin-right: 5px;
 `;
@@ -20,8 +35,17 @@ const Title = styled.h1`
   font-size: 26px;
   display: flex;
   align-items: center;
+
+  @media (max-width: 1199px) {
+    margin: 0;
+  }
 `;
-const User = styled.div``;
+
+const User = styled.div`
+  @media (max-width: 1199px) {
+    display: none;
+  }
+`;
 
 const LoginImg = styled.img`
   display: flex;
@@ -34,9 +58,40 @@ const LoginName = styled.span`
   margin-top: 20px;
 `;
 
+const Label = styled.label`
+  display: none;
+
+  @media (max-width: 1199px) {
+    display: flex;
+    cursor: pointer;
+    font-size: 30px;
+    justify-content: flex-end;
+    margin: 0;
+    align-items: center;
+    margin-right: 30px;
+  }
+`;
+
 const Nav = styled.ul`
   margin-top: 60px;
   padding-left: 0;
+
+  @media (max-width: 1199px) {
+    display: none;
+    width: 100%;
+    text-align: center;
+    z-index: 21;
+  }
+`;
+
+const Input = styled.input`
+  display: none;
+
+  @media (max-width: 1199px) {
+    &:checked + ${Nav} {
+      display: block;
+    }
+  }
 `;
 
 const NavItem = styled.li`
@@ -95,9 +150,14 @@ const LogoutBtn = styled.button`
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.25rem;
+
+  @media (max-width: 1199px) {
+    display: none;
+  }
 `;
 
 export {
+  Label,
   LogoutBtn,
   Panel,
   Header,
@@ -109,5 +169,6 @@ export {
   Nav,
   NavItem,
   NavLink,
-  Icon
+  Icon,
+  Input
 };
