@@ -93,7 +93,7 @@ class PieGraph extends Component {
     const { displayMarkers } = this.props;
 
     return (
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer  width="100%" height="100%">
         <PieChart>
           <Pie
             activeIndex={activeIndex}

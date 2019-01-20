@@ -73,7 +73,6 @@ class List extends Component {
                 <Th>street</Th>
                 <Th>city</Th>
                 <Th>country</Th>
-                <Th>description</Th>
                 <Th>find on the map</Th>
               </tr>
             </Thead>
@@ -99,7 +98,6 @@ class List extends Component {
                     <Td>{indicator.street}</Td>
                     <Td>{indicator.city}</Td>
                     <Td>{indicator.country}</Td>
-                    <Td>description</Td>
                     <Td>go to</Td>
                   </Tr>
                 ))}

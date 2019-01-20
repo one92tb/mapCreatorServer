@@ -5,18 +5,35 @@ const Wrapper = styled.div`
   width: 100%;
   padding: 40px 20px 40px 10px;
   background: #f2f2f2;
+
+  @media only screen and (max-width: 1199px) {
+    padding: 5px;
+  }
 `;
 
 const SearchBoxInput = styled.input`
   box-sizing: border-box;
   border: 1px solid transparent;
-  width: 240px;
+  width: 200px;
   height: 40px;
   margin-top: 10px;
   padding: 0 12px;
   border-radius: 3px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   outline: none;
+
+  @media only screen and (max-width: 575.98px) {
+    margin: 5px 10px;
+    top: 50px !important;
+    left: 0 !important;
+    width: 255px;
+  }
+
+  @media only screen and (max-width: 350px) {
+    top: 15px;
+    left: 220px;
+    width: 145px;
+  }
 `;
 
 const InfoBoxContainer = styled.div`

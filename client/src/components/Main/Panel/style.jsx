@@ -5,6 +5,13 @@ const Wrapper = styled.div`
   background:#f2f2f2
   padding: 40px 10px 40px 20px;
   height: 100%;
+
+
+    @media only screen and (max-width: 991.98px) {
+      max-height: 420px;
+      padding: ${props =>
+        props.currentLocation.pathname === "/" ? "0" : "10px 5px 5px 5px"}
+    }
 `;
 
 const NavLink = css`
@@ -12,7 +19,24 @@ const NavLink = css`
   cursor: pointer;
 `;
 
-//  pointer-events: none;
+const ResponsivePanel = css`
+  @media only screen and (max-width: 991.98px) {
+    display: ${props => (props.isChecked ? "flex" : "none")}
+    position: absolute;
+    z-index: 1;
+    top: 65px;
+    left: 15px;
+    height: 250px;
+    width: 300px;
+    background: #f2f2f2;
+  }
+
+  @media only screen and (max-width: 575.98px) {
+    top: 110px;
+    width: 200px;
+  }
+`;
+
 const FilterLink = styled.a`
   ${NavLink};
 
@@ -51,6 +75,8 @@ const Card = styled.div`
   flex-direction: column;
   border-radius: 3px;
   overflow: hidden;
+
+  ${props => props.currentLocation.pathname === "/" && ResponsivePanel};
 `;
 
 const CardHeader = styled.div`
@@ -58,6 +84,11 @@ const CardHeader = styled.div`
   padding: 0.75rem 1.25rem;
   background: #4ddbff;
   display: block;
+
+  @media only screen and (max-width: 575.98px) {
+    padding: 0.25rem;
+    font-size: 12px;
+  }
 `;
 
 const Nav = styled.ul`
@@ -74,6 +105,49 @@ const CardBody = styled.div`
   padding: 1.25rem;
   height: calc(100% - 48px);
   overflow-y: auto;
+
+    @media only screen and (max-width: 575.98px) {
+      padding: 0.25rem;
+    }
+`;
+
+const Label = styled.label`
+  display: none;
+
+  @media (max-width: 991.98px) {
+    position: absolute;
+    top: 15px;
+    left: 430px;
+    z-index: 1;
+    display: ${props =>
+      props.currentLocation.pathname === "/" ? "flex" : "none"}
+    cursor: pointer;
+    font-size: 30px;
+    justify-content: flex-end;
+    align-items: center;
+    background: #fff;
+    width: 50px;
+    height: 40px;
+    justify-content: center;
+    border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid transparent;
+
+  }
+
+  @media only screen and (max-width: 575.98px) {
+    top: 15px;
+    left: 220px;
+  }
+
+  @media only screen and (max-width: 350px) {
+    top: 61px;
+    left: 165px;
+  }
+`;
+
+const Input = styled.input`
+  display: none;
 `;
 
 export {
@@ -84,5 +158,7 @@ export {
   CardHeader,
   CardBody,
   NavItem,
-  Nav
+  Nav,
+  Label,
+  Input
 };

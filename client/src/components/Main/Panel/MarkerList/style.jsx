@@ -43,6 +43,20 @@ const MarkerName = styled.span`
   float: left;
   display: flex;
   align-items: center;
+
+  @media only screen and (max-width: 575.98px) {
+    font-size: 12px;
+  }
 `;
 
-export { List, Marker, MarkerIcon, MarkerName };
+const MarkerImg = styled.img`
+  height: 32px;
+  width: 32px;
+
+  @media only screen and (max-width: 575.98px) {
+    height: 24px;
+    width: 24px;
+  }
+`;
+
+export { List, Marker, MarkerIcon, MarkerName, MarkerImg };

@@ -20,12 +20,14 @@ const routes = [
 
 class Main extends Component {
   render() {
+    console.log(this.props);
+    const { location } = this.props;
     return (
       <Row tag={RowStyle}>
-        <Col tag={ColStyle} lg="3">
-          <Panel {...this.props}/>
+        <Col currentLocation={location} tag={ColStyle} lg="3" md="12">
+          <Panel {...this.props} />
         </Col>
-        <Col tag={ColStyle} lg="9">
+        <Col currentLocation={location} tag={ColStyle} lg="9" md="12">
           <Switch>
             {routes.map((route, id) => (
               <Route

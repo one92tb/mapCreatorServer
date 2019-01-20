@@ -5,6 +5,14 @@ const Wrapper = styled.div`
   background: #f2f2f2;
   height: 100%;
   padding: 40px 20px;
+
+  @media only screen and (max-width: 1200px) {
+    height: auto;
+  }
+
+  @media only screen and (max-width: 350px) {
+    padding: 5px;
+  }
 `;
 
 const Label = styled.label`
@@ -21,6 +29,16 @@ const Select = styled.select`
   background: #fff;
   text-align: center;
   text-align-last: center;
+
+  @media only screen and (max-width: 767.98px) {
+    width: 150px;
+    height: 30px;
+  }
+
+  @media only screen and (max-width: 350px) {
+    width: 120px;
+    height: 30px;
+  }
 `;
 
 const Input = styled.input`
@@ -29,6 +47,16 @@ const Input = styled.input`
   text-align: center;
   border-radius: 5px;
   border: 1px solid transparent;
+
+  @media only screen and (max-width: 767.98px) {
+    width: 150px;
+    height: 30px;
+  }
+
+  @media only screen and (max-width: 350px) {
+    width: 120px;
+    height: 30px;
+  }
 `;
 
 const Form = styled.form`
@@ -39,6 +67,15 @@ const Form = styled.form`
   background: #00b8e6;
   align-items: center;
   border-radius: 3px;
+
+  @media only screen and (max-width: 1200px) {
+    height: 60px;
+  }
+
+  @media only screen and (max-width: 350px) {
+    margin: 5px 0 10px 0;
+    background: none;
+  }
 `;
 
 const TableContainer = styled.div`
@@ -80,6 +117,11 @@ const Cell = css`
 
   &:not(:first-child) {
     width: 15%;
+  }
+
+  @media only screen and (max-width: 767.98px) {
+    padding: 0.2rem;
+    font-size: 10px;
   }
 `;
 

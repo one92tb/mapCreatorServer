@@ -3,7 +3,7 @@ import { fetchMarkers } from "../../../../actions/marker/fetchMarkers";
 import { disableMarkers } from "../../../../actions/marker/disableMarkers";
 import { getSelectedMarker } from "../../../../actions/marker/getSelectedMarker";
 import { connect } from "react-redux";
-import { List, Marker, MarkerIcon, MarkerName } from "./style";
+import { List, Marker, MarkerIcon, MarkerName, MarkerImg } from "./style";
 import PropTypes from "prop-types";
 
 class MarkerList extends Component {
@@ -88,11 +88,9 @@ class MarkerList extends Component {
             onClick={() => this.onSelect(marker, marker.id)}
           >
             <MarkerIcon>
-              <img
+              <MarkerImg
                 src={`http://localhost:8080/images/${marker.icon}`}
                 alt={marker.icon}
-                height={32}
-                width={32}
               />
             </MarkerIcon>
             <MarkerName>{marker.name}</MarkerName>

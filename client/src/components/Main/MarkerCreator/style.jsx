@@ -5,6 +5,10 @@ const Wrapper = styled.div`
   background: #f2f2f2;
   padding: 40px 20px 40px 10px;
   height: 100%;
+
+  @media only screen and (max-width: 991.98px) {
+    padding: 5px;
+  }
 `;
 
 const Inner = styled.div`
@@ -38,6 +42,10 @@ const FormGroup = styled.div`
 
 const Label = css`
   margin-bottom: 0;
+
+  @media only screen and (max-width: 575.98px) {
+    font-size: 12px;
+  }
 `;
 
 const LabelColor = styled.label`
@@ -72,6 +80,12 @@ const InputName = css`
   width: 100%;
   padding: 0.375rem 0.75rem;
   border: 1px solid #ced4da;
+
+  @media only screen and (max-width: 575.98px) {
+    font-size: 14px;
+    padding: 0.25rem;
+    height: 31px;
+  }
 `;
 
 const Button = css`
@@ -80,6 +94,10 @@ const Button = css`
   color: #fff;
   border: 1px solid transparent;
   display: inline-block;
+
+  @media only screen and (max-width: 575.98px) {
+    width: 150px;
+  }
 `;
 
 const CrudButton = css`
@@ -88,6 +106,11 @@ const CrudButton = css`
   vertical-align: middle;
   -webkit-user-select: none;
   padding: 0.375rem 0.75rem;
+
+  @media only screen and (max-width: 575.98px) {
+    padding: 0.25rem 0.5rem;
+    font-size: 14px;
+  }
 `;
 //z-index: -00;
 const Input = styled.input`
@@ -106,6 +129,16 @@ const InputFile = styled.span`
   height: 100%;
   background: #00b8e6;
   height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media only screen and (max-width: 575.98px) {
+    font-size: 14px;
+    width: 150px;
+    padding: 4px 8px;
+    height: 31px;
+  }
 `;
 
 const SubmitBtn = styled.button`
@@ -115,6 +148,10 @@ const SubmitBtn = styled.button`
   margin-right: 10px;
   background-color: #6c757d;
   border-color: #6c757d;
+
+  @media only screen and (max-width: 575.98px) {
+    margin-bottom: 16px;
+  }
 `;
 
 const RemoveBtn = styled.button`
@@ -123,6 +160,10 @@ const RemoveBtn = styled.button`
   ${CrudButton};
   background-color: #ff6666;
   border-color: #ff6666;
+
+  @media only screen and (max-width: 575.98px) {
+    margin-bottom: 16px;
+  }
 `;
 
 const DownloadBtn = styled.button`

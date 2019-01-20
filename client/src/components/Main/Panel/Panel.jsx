@@ -11,14 +11,17 @@ import {
   CardHeader,
   CardBody,
   NavItem,
-  Nav
+  Nav,
+  Label,
+  Input
 } from "./style";
 
 class Panel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSelected: true
+      isSelected: true,
+      checked: false
     };
   }
 
@@ -34,6 +37,12 @@ class Panel extends Component {
     }
   }
 
+  handleCheckBox = event => {
+    this.setState({
+      checked: event.target.checked
+    });
+  };
+
   switch = bool => {
     const { isSelected } = this.props;
     this.setState({
@@ -44,10 +53,19 @@ class Panel extends Component {
   };
 
   render() {
+    const { location } = this.props;
     const { isSelected } = this.state;
     return (
-      <Wrapper>
-        <Card>
+      <Wrapper currentLocation={location}>
+        <Label
+          htmlFor="panel"
+          currentLocation={location}
+          onChange={this.handleCheckBox}
+        >
+          <img src={"drawMarker.png"} width={30} height={30} />
+        </Label>
+        <Input type="checkbox" id="panel" onChange={this.handleCheckBox} />
+        <Card isChecked={this.state.checked} currentLocation={location}>
           <CardHeader>
             <Nav>
               <NavItem>

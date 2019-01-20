@@ -248,7 +248,7 @@ const MapWithAMakredInfoWindow = compose(
         controlPosition={google.maps.ControlPosition.TOP_LEFT}
         onPlacesChanged={props.onPlacesChanged}
       >
-        <SearchBoxInput type="text" placeholder="Customized your placeholder" />
+        <SearchBoxInput type="text" placeholder="Search city" />
       </SearchBox>
     </GoogleMap>
   );

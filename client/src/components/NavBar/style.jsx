@@ -1,14 +1,16 @@
 import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
+
 const activeClassName = "nav-item-active";
 
 const Panel = styled.div`
   height: 100%;
   background: #4ddbff;
 
-  @media (max-width: 1199px) {
+  @media only screen and (max-width: 1199px) {
+    height: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
   }
 `;
 
@@ -20,15 +22,37 @@ const Header = styled.div`
 
   @media (max-width: 1199px) {
     justify-content: flex-start;
+    width: 100%;
     margin-left: 30px;
     margin-bottom: 0;
-    padding: 0;
+    padding-top: 10px;
     align-items: center;
+    padding: 0;
+  }
+
+  @media only screen and (max-width: 575.98px) {
+    margin-left: 20px;
+  }
+
+  @media only screen and (max-width: 350px) {
+    margin-left: 10px;
   }
 `;
 
 const Logo = styled.img`
   margin-right: 5px;
+  width: 50px;
+  height: 50px;
+
+  @media only screen and (max-width: 575.98px) {
+    width: 40px;
+    height: 40px;
+  }
+
+  @media only screen and (max-width: 350px) {
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 const Title = styled.h1`
@@ -39,36 +63,60 @@ const Title = styled.h1`
   @media (max-width: 1199px) {
     margin: 0;
   }
-`;
 
-const User = styled.div`
-  @media (max-width: 1199px) {
-    display: none;
+  @media only screen and (max-width: 575.98px) {
+    font-size: 20px;
+  }
+
+  @media only screen and (max-width: 350px) {
+    font-size: 14px;
   }
 `;
+
+const User = styled.div``;
 
 const LoginImg = styled.img`
   display: flex;
   margin-left: auto;
   margin-right: auto;
+  width: 130px;
+  height: 130px;
+
+  @media only screen and (max-width: 575.98px) {
+    width: 80px;
+    height: 80px;
+  }
 `;
 const LoginName = styled.span`
   display: block;
   text-align: center;
   margin-top: 20px;
+
+  @media only screen and (max-width: 575.98px) {
+    font-size: 12px;
+  }
 `;
 
 const Label = styled.label`
   display: none;
 
-  @media (max-width: 1199px) {
+  @media only screen and (max-width: 1199px) {
     display: flex;
     cursor: pointer;
     font-size: 30px;
     justify-content: flex-end;
-    margin: 0;
     align-items: center;
-    margin-right: 30px;
+    margin: 0 30px 0 0;
+  }
+
+  @media only screen and (max-width: 575.98px) {
+    font-size: 20px;
+    margin: 0 20px 0 0;
+  }
+
+  @media only screen and (max-width: 350px) {
+    font-size: 15px;
+    margin: 0 10px 0 0;
   }
 `;
 
@@ -76,22 +124,14 @@ const Nav = styled.ul`
   margin-top: 60px;
   padding-left: 0;
 
-  @media (max-width: 1199px) {
-    display: none;
-    width: 100%;
+  @media only screen and (max-width: 1199px) {
+    margin: 0;
     text-align: center;
-    z-index: 21;
   }
 `;
 
 const Input = styled.input`
   display: none;
-
-  @media (max-width: 1199px) {
-    &:checked + ${Nav} {
-      display: block;
-    }
-  }
 `;
 
 const NavItem = styled.li`
@@ -107,6 +147,12 @@ const NavItem = styled.li`
 
   &:hover{
     background: #00b8e6;
+  }
+
+  @media only screen and (max-width: 1199px) {
+    border-bottom: 1px solid #00b8e6;
+    width: 100%;
+    margin: 0;
   }
 `;
 
@@ -129,10 +175,25 @@ const NavLink = styled(Link).attrs({ activeClassName })`
   &.${activeClassName} {
     background: #00b8e6;
   }
+
+  @media only screen and (max-width: 1199px) {
+    border-radius: 0;
+  }
+
+  @media only screen and (max-width: 575.98px) {
+    font-size: 14px;
+  }
 `;
 
 const Icon = styled.img`
   margin-right: 5px;
+  width: 32px;
+  height: 32px;
+
+  @media only screen and (max-width: 575.98px) {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 const LogoutBtn = styled.button`
@@ -152,7 +213,34 @@ const LogoutBtn = styled.button`
   border-radius: 0.25rem;
 
   @media (max-width: 1199px) {
-    display: none;
+    margin: 15px 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media only screen and (max-width: 575.98px) {
+    width: 130px;
+    height: 30px
+    font-size: 12px;
+  }
+`;
+
+const ResponsiveMenu = styled.div`
+  @media (max-width: 1199px) {
+    width: 100%;
+    display: flex;
+    height: 100%;
+  }
+`;
+
+const ResponsiveNav = styled.div`
+  @media (max-width: 1199px) {
+    display: ${props => (props.isChecked ? "block" : "none")};
+    width: 100%;
+    background: #4ddbff;
+    z-index: 21;
+    margin: 0;
+    padding-top: 10px;
   }
 `;
 
@@ -170,5 +258,7 @@ export {
   NavItem,
   NavLink,
   Icon,
-  Input
+  Input,
+  ResponsiveMenu,
+  ResponsiveNav
 };

@@ -3,6 +3,9 @@ import styled from "styled-components";
 const ContainerStyle = styled.div`
   height: 40%;
   padding: 0 !important;
+
+  @media (max-width: 991.98px) {
+  }
 `;
 
 const RowStyle = styled.div`
@@ -18,6 +21,10 @@ const Wrapper = styled.div`
   height: 100%;
   padding: 40px 20px;
   background: #f2f2f2;
+
+  @media (max-width: 991.98px) {
+    height: auto;
+  }
 `;
 
 const Form = styled.form`
