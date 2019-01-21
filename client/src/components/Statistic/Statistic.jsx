@@ -13,6 +13,7 @@ import {
   Wrapper,
   Form,
   Input,
+  Inner
 } from "./style";
 
 class Statistic extends Component {
@@ -71,11 +72,15 @@ class Statistic extends Component {
         <BarGraph displayMarkers={displayMarkers} />
         <Container fluid tag={ContainerStyle}>
           <Row tag={RowStyle}>
-            <Col xl="6" sm="12"tag={ColStyle}>
-              <PieGraph displayMarkers={displaySumMarkers} />
+            <Col xl="6" lg="12" tag={ColStyle}>
+              <Inner>
+                <PieGraph displayMarkers={displaySumMarkers} />
+              </Inner>
             </Col>
-            <Col xl="6" sm="12" tag={ColStyle}>
-              <PieGraph displayMarkers={displayMarkers} />
+            <Col xl="6" lg="12" tag={ColStyle}>
+              <Inner>
+                <PieGraph displayMarkers={displayMarkers} />
+              </Inner>
             </Col>
           </Row>
         </Container>

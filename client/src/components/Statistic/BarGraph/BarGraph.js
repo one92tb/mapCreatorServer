@@ -11,7 +11,7 @@ import {
 } from "recharts";
 
 const BarGraph = ({ displayMarkers }) => (
-  <ResponsiveContainer width="100%" height="50%">
+  <ResponsiveContainer width="100%" height={(window.innerWidth < 767.98) ? "70%" : "50%"}>
     <BarChart
       data={displayMarkers.map(el => {
         return {
@@ -26,7 +26,7 @@ const BarGraph = ({ displayMarkers }) => (
       <YAxis />
       <Tooltip />
       <Legend />
-      <Bar dataKey="amount" barSize={35} fill="#8884d8" />;
+      <Bar dataKey="amount" barSize={30} fill="#8884d8" />;
     </BarChart>
   </ResponsiveContainer>
 );

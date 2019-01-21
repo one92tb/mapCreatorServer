@@ -93,27 +93,27 @@ class PieGraph extends Component {
     const { displayMarkers } = this.props;
 
     return (
-      <ResponsiveContainer  width="100%" height="100%">
-        <PieChart>
-          <Pie
-            activeIndex={activeIndex}
-            activeShape={renderActiveShape}
-            dataKey="value"
-            data={displayMarkers.map(el => {
-              return {
-                name: el[0],
-                value: el[1]
-              };
-            })}
-            cx={300}
-            cy={200}
-            innerRadius={60}
-            outerRadius={80}
-            fill="#8884d8"
-            onMouseEnter={this.onPieEnter}
-          />
-        </PieChart>
-      </ResponsiveContainer>
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              activeIndex={activeIndex}
+              activeShape={renderActiveShape}
+              dataKey="value"
+              data={displayMarkers.map(el => {
+                return {
+                  name: el[0],
+                  value: el[1]
+                };
+              })}
+              cx={300}
+              cy={170}
+              innerRadius={60}
+              outerRadius={80}
+              fill="#8884d8"
+              onMouseEnter={this.onPieEnter}
+            />
+          </PieChart>
+        </ResponsiveContainer>
     );
   }
 }

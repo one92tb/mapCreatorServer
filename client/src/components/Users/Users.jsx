@@ -16,7 +16,8 @@ import {
   Tr,
   Th,
   Td,
-  RemoveBtn
+  RemoveBtn,
+  Option
 } from "./style";
 
 class Users extends React.Component {
@@ -25,7 +26,11 @@ class Users extends React.Component {
     fetchUsers();
   }
 
-  handleChange = (e, user) => {
+  handleChangeUser = () => {
+    
+  }
+
+  handleChangeStatus = (e, user) => {
     const { changePermissions } = this.props;
     const status = e.target.value === "Admin" ? true : false;
     changePermissions(status, user.id);
@@ -68,13 +73,13 @@ class Users extends React.Component {
                       {user.id === 1 ? (
                         "Admin"
                       ) : (
-                        <Select onChange={e => this.handleChange(e, user)}>
-                          <option key={id}>
+                        <Select onChange={e => this.handleChangeStatus(e, user)}>
+                          <Option key={id}>
                             {user.isAdmin ? "Admin" : "User"}
-                          </option>
-                          <option key={id + 1}>
+                          </Option>
+                          <Option key={id + 1}>
                             {user.isAdmin ? "User" : "Admin"}
-                          </option>
+                          </Option>
                         </Select>
                       )}
                     </Td>
@@ -83,8 +88,6 @@ class Users extends React.Component {
                         <RemoveBtn
                           onClick={id => this.removeUser(user.id)}
                           src={"delete.png"}
-                          width={32}
-                          height={32}
                         />
                       )}
                     </Td>

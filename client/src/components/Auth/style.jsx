@@ -4,6 +4,7 @@ const ContainerStyle = styled.div`
   height: 100%;
   padding: 0 !important;
   overflow-x: hidden;
+  background: #f2f2f2;
 `;
 
 const RowStyle = styled.div`
@@ -17,11 +18,12 @@ const ColStyle = styled.div`
 
     @media (max-width: 1199px) {
       &:not(:first-child) {
-        height: 100%;
+            height: calc(100% - 60px);
       }
       height:  60px;
       flex-wrap: nowrap;
     }
+
 `;
 
 export { ContainerStyle, RowStyle, ColStyle };

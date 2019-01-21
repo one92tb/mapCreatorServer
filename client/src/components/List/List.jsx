@@ -15,7 +15,8 @@ import {
   Tbody,
   Tr,
   Th,
-  Td
+  Td,
+  Option
 } from "./style";
 
 class List extends Component {
@@ -51,9 +52,9 @@ class List extends Component {
         <Form>
           <Label>
             <Select onChange={this.handleChange}>
-              <option>All</option>
+              <Option>All</Option>
               {markers.map((marker, id, arr) => (
-                <option key={marker.id}>{marker.name}</option>
+                <Option key={marker.id}>{marker.name}</Option>
               ))};
             </Select>
           </Label>

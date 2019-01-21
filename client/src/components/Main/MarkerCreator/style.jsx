@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { css } from "styled-components";
 
 const Wrapper = styled.div`
-  background: #f2f2f2;
   padding: 40px 20px 40px 10px;
   height: 100%;
 

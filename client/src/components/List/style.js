@@ -15,6 +15,17 @@ const Wrapper = styled.div`
   }
 `;
 
+const Option = styled.option`
+  @media only screen and (max-width: 767.98px) {
+    font-size: 14px;
+  }
+
+  @media only screen and (max-width: 350px) {
+    font-size: 11px;
+    text-align: center;
+  }
+`;
+
 const Label = styled.label`
   margin: 0;
 `;
@@ -32,12 +43,16 @@ const Select = styled.select`
 
   @media only screen and (max-width: 767.98px) {
     width: 150px;
-    height: 30px;
+    height: 25px;
+    border-radius: 3px;
+    font-size: 14px;
   }
 
   @media only screen and (max-width: 350px) {
     width: 120px;
-    height: 30px;
+    height: 20px;
+    border-radius: 2px;
+    font-size: 11px;
   }
 `;
 
@@ -50,12 +65,17 @@ const Input = styled.input`
 
   @media only screen and (max-width: 767.98px) {
     width: 150px;
-    height: 30px;
+    height: 25px;
+    border-radius: 3px;
+    font-size: 14px;
   }
 
   @media only screen and (max-width: 350px) {
     width: 120px;
-    height: 30px;
+    height: 20px;
+    border: 1px solid #000;
+    border-radius: 2px;
+    font-size: 11px;
   }
 `;
 
@@ -70,6 +90,11 @@ const Form = styled.form`
 
   @media only screen and (max-width: 1200px) {
     height: 60px;
+  }
+
+  @media only screen and (max-width: 991.98px) {
+    height: auto;
+    padding: 3px;
   }
 
   @media only screen and (max-width: 350px) {
@@ -148,5 +173,6 @@ export {
   Tbody,
   Tr,
   Th,
-  Td
+  Td,
+  Option
 };

@@ -4,7 +4,6 @@ const Wrapper = styled.div`
   height: 100%;
   width: 100%;
   padding: 40px 20px 40px 10px;
-  background: #f2f2f2;
 
   @media only screen and (max-width: 1199px) {
     padding: 5px;

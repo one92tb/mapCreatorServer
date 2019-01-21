@@ -6,6 +6,18 @@ const Wrapper = styled.div`
   height: 100%;
   width: 100%;
   padding-top: 100px;
+
+  @media only screen and (max-width: 1199.98px) {
+    padding-top: 50px;
+  }
+  @media only screen and (max-width: 991.98px) {
+    padding-top: 50px;
+  }
+
+  @media only screen and (max-height:350px) {
+    padding-top: 20px;
+  }
+
 `;
 
 const Inner = styled.div`
@@ -14,10 +26,17 @@ const Inner = styled.div`
   margin-left: auto;
   margin-right: auto;
   border-radius: 0.25rem;
+
+  @media only screen and (max-width: 575.98px) {
+    width: 300px;
+  }
 `;
 
 const Form = styled.form`
   padding: 20px;
+  @media only screen and (max-width: 575.98px) {
+    padding: 10px;
+  }
 `;
 
 const FormGroup = styled.div`
@@ -33,11 +52,21 @@ const ErrorMessage = styled.span`
   font-size: 10px;
   display: block;
   margin-left: 2px;
+
+  @media only screen and (max-width: 575.98px) {
+    font-size: 8px;
+  }
 `;
 
 const Label = styled.label`
   display: block;
   margin-left: 2px;
+
+  @media only screen and (max-width: 575.98px) {
+    font-size: 14px;
+    height: 30px;
+    margin: 0 0 2px 2px;
+  }
 `;
 
 const Button = css`
@@ -48,8 +77,15 @@ const Button = css`
   border: 1px solid #00b8e6;
   color: #fff;
   font-size: 1rem;
-  line-height: 1.5;
+
+  text-align: center;
   border-radius: 0.25rem;
+
+  @media only screen and (max-width: 575.98px) {
+    height: 30px;
+    width: 120px;
+    line-height: normal;
+  }
 `;
 
 const RegisterBtn = styled.button`
@@ -67,6 +103,10 @@ const SubmitBtn = styled.button`
   background-color: #00b8e6;
   margin-top: 4px;
   width: 100%;
+
+  @media only screen and (max-width: 575.98px) {
+    width: 100%;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -76,6 +116,12 @@ const ButtonWrapper = styled.div`
   width: 100%;
   height: 80px;
   padding: 20px;
+
+  @media only screen and (max-width: 575.98px) {
+    height: 60px;
+    padding: 5px 10px;
+    align-items: center;
+  }
 `;
 
 const Input = styled.input`
@@ -86,6 +132,11 @@ const Input = styled.input`
   padding: 0.375rem 0.75rem;
   display: block;
   border: 1px solid #ced4da;
+
+  @media only screen and (max-width: 575.98px) {
+    font-size: 14px;
+    height: 30px;
+  }
 `;
 
 export {

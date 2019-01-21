@@ -2,9 +2,19 @@ import styled from "styled-components";
 import { css } from "styled-components";
 
 const Wrapper = styled.div`
-  background: #f2f2f2;
   height: 100%;
   padding: 40px 20px;
+`;
+
+const Option = styled.option`
+  @media only screen and (max-width: 767.98px) {
+    font-size: 14px;
+    height: 20px;
+  }
+  @media only screen and (max-width: 575.98px) {
+    font-size: 11px;
+    height: 5px;
+  }
 `;
 
 const Select = styled.select`
@@ -19,6 +29,18 @@ const Select = styled.select`
   text-align-last: center;
   margin-left: auto;
   margin-right: auto;
+
+  @media only screen and (max-width: 767.98px) {
+    font-size: 14px;
+    height: 20px;
+    width: 120px;
+    border-radius: 3px;
+  }
+  @media only screen and (max-width: 575.98px) {
+    font-size: 11px;
+    width: 70px;
+    height: 16px;
+  }
 `;
 
 const Input = styled.input`
@@ -28,6 +50,21 @@ const Input = styled.input`
   border-radius: 5px;
   border: 1px solid transparent;
   margin-right: 50px;
+
+  @media only screen and (max-width: 767.98px) {
+    height: 30px;
+    width: 150px;
+    border-radius: 3px;
+    margin-right: 30px;
+    font-size: 14px;
+  }
+  @media only screen and (max-width: 575.98px) {
+    height: 20px;
+    width: 120px;
+    border-radius: 2px;
+    margin-right: 10px;
+    font-size: 11px;
+  }
 `;
 
 const Form = styled.form`
@@ -38,6 +75,11 @@ const Form = styled.form`
   background: #00b8e6;
   align-items: center;
   border-radius: 3px;
+
+  @media only screen and (max-width: 1199.98px ) {
+    height: auto;
+    padding: 5px 0;
+  }
 `;
 
 const TableContainer = styled.div`
@@ -80,6 +122,16 @@ const Cell = css`
   &:not(:first-child) {
     width: 15%;
   }
+
+  @media only screen and (max-width: 767.98px) {
+    padding: 0.25rem;
+    font-size: 14px;
+  }
+
+  @media only screen and (max-width: 575.98px) {
+    padding: 0.1rem;
+    font-size: 11px;
+  }
 `;
 
 const Th = styled.th`
@@ -94,10 +146,21 @@ const Td = styled.td`
 `;
 
 const RemoveBtn = styled.img`
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
-`
+  width: 32px;
+  height: 32px;
+
+  @media only screen and (max-width: 767.98px) {
+    width: 24px;
+    height: 24px;
+  }
+  @media only screen and (max-width: 575.98px) {
+    width: 16px;
+    height: 16px;
+  }
+`;
 
 export {
   Wrapper,
@@ -111,5 +174,6 @@ export {
   Tr,
   Th,
   Td,
-  RemoveBtn
+  RemoveBtn,
+  Option
 };

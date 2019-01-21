@@ -2,16 +2,18 @@ import { css } from "styled-components";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  background:#f2f2f2
   padding: 40px 10px 40px 20px;
   height: 100%;
 
+  @media only screen and (max-width: 1199px) {
+    padding: 5px;
+  }
 
-    @media only screen and (max-width: 991.98px) {
-      max-height: 420px;
-      padding: ${props =>
-        props.currentLocation.pathname === "/" ? "0" : "10px 5px 5px 5px"}
-    }
+  @media only screen and (max-width: 991.98px) {
+    height: autp;
+    padding: ${props =>
+      props.currentLocation.pathname === "/" ? "0" : "10px 5px 5px 5px"}
+  }
 `;
 
 const NavLink = css`
@@ -106,9 +108,9 @@ const CardBody = styled.div`
   height: calc(100% - 48px);
   overflow-y: auto;
 
-    @media only screen and (max-width: 575.98px) {
-      padding: 0.25rem;
-    }
+  @media only screen and (max-width: 575.98px) {
+    padding: 0.25rem;
+  }
 `;
 
 const Label = styled.label`
