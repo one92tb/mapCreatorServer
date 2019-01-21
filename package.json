@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/one92tb/mapCreator#readme",
   "dependencies": {
+    "bcrypt": "^3.0.3",
     "body-parser": "^1.18.3",
     "concurrently": "^4.0.1",
     "connect-flash": "^0.1.1",

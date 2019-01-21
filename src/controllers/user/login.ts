@@ -3,36 +3,42 @@ import { getManager } from "typeorm";
 import { User } from "../../entity/User";
 const jwt = require("jsonwebtoken");
 
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+
 export async function login(request: Request, response: Response) {
   const userRepository = getManager().getRepository(User);
-  const checkLoginData = await userRepository.findOne({
-    login: request.body.login,
-    password: request.body.password
-  });
-  if (checkLoginData) {
-    const userData = {
-      login: request.body.login,
-      userId: checkLoginData.id,
-      isAdmin: checkLoginData.isAdmin
-    };
 
-    jwt.sign(
-      { userData },
-      "secretkey-1992",
-      { expiresIn: "86400s" },
-      (err, token) => {
-        response.json({
-          userName: checkLoginData.login,
-          userId: checkLoginData.id,
-          token: token,
-          isAuthorized: true,
-          error: ""
-        });
-      }
-    );
-  } else {
-    return response.status(401).json({
-      errorMessage: "login or password is incorrect"
-    });
-  }
+  const userDB = await userRepository.findOne({
+    login: request.body.login
+  });
+
+  bcrypt.compare(request.body.password, userDB.password, (err, res) => {
+    if (res === true) {
+      const userData = {
+        login: request.body.login,
+        userId: userDB.id,
+        isAdmin: userDB.isAdmin
+      };
+
+      jwt.sign(
+        { userData },
+        "secretkey-1992",
+        { expiresIn: "86400s" },
+        (err, token) => {
+          response.json({
+            userName: userDB.login,
+            userId: userDB.id,
+            token: token,
+            isAuthorized: true,
+            error: ""
+          });
+        }
+      );
+    } else {
+      return response.status(401).json({
+        errorMessage: "login or password is incorrect"
+      });
+    }
+  });
 }
