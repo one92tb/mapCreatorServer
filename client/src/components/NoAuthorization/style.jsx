@@ -3,8 +3,8 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  height: 100%;
-    align-items: center;
+  height: 80%;
+  align-items: center;
 `;
 
 const TextBox = styled.div`
@@ -24,7 +24,6 @@ const TextBox = styled.div`
     height: 100px;
     font-size: 14px;
   }
-
 `;
 
 export { Wrapper, TextBox };

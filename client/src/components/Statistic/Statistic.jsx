@@ -13,7 +13,9 @@ import {
   Wrapper,
   Form,
   Input,
-  Inner
+  Inner,
+  TextBox,
+  TextWrapper
 } from "./style";
 
 class Statistic extends Component {
@@ -69,21 +71,29 @@ class Statistic extends Component {
             />
           </label>
         </Form>
-        <BarGraph displayMarkers={displayMarkers} />
-        <Container fluid tag={ContainerStyle}>
-          <Row tag={RowStyle}>
-            <Col xl="6" lg="12" tag={ColStyle}>
-              <Inner>
-                <PieGraph displayMarkers={displaySumMarkers} />
-              </Inner>
-            </Col>
-            <Col xl="6" lg="12" tag={ColStyle}>
-              <Inner>
-                <PieGraph displayMarkers={displayMarkers} />
-              </Inner>
-            </Col>
-          </Row>
-        </Container>
+        {indicators.length === 0 ? (
+          <TextWrapper>
+            <TextBox>You have not any data to display on the charts</TextBox>
+          </TextWrapper>
+        ) : (
+          <React.Fragment>
+            <BarGraph displayMarkers={displayMarkers} />
+            <Container fluid tag={ContainerStyle}>
+              <Row tag={RowStyle}>
+                <Col xl="6" lg="12" tag={ColStyle}>
+                  <Inner>
+                    <PieGraph displayMarkers={displaySumMarkers} />
+                  </Inner>
+                </Col>
+                <Col xl="6" lg="12" tag={ColStyle}>
+                  <Inner>
+                    <PieGraph displayMarkers={displayMarkers} />
+                  </Inner>
+                </Col>
+              </Row>
+            </Container>
+          </React.Fragment>
+        )}
       </Wrapper>
     );
   }

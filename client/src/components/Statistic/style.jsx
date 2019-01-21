@@ -1,5 +1,34 @@
 import styled from "styled-components";
 
+const TextWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+
+  @media only screen and (max-width: 767.98px) {
+    margin-top: 20px;
+  }
+`;
+
+const TextBox = styled.div`
+  width: 600px;
+  height: 200px;
+  background: #e6e600;
+  font-size: 25px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 3px solid #ff3300;
+  justify-content: center;
+
+  @media only screen and (max-width: 767.98px) {
+    width: 300px;
+    height: 100px;
+    font-size: 14px;
+  }
+`;
+
 const Inner = styled.div`
   display: block;
   width: 100%;
@@ -88,5 +117,14 @@ const Input = styled.input`
   }
 `;
 
-
-export { ContainerStyle, RowStyle, ColStyle, Wrapper, Form, Input, Inner, };
+export {
+  ContainerStyle,
+  RowStyle,
+  ColStyle,
+  Wrapper,
+  Form,
+  Input,
+  Inner,
+  TextBox,
+  TextWrapper
+};
