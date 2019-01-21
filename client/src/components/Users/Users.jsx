@@ -21,14 +21,23 @@ import {
 } from "./style";
 
 class Users extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: ""
+    };
+  }
+
   componentDidMount() {
     const { fetchUsers } = this.props;
     fetchUsers();
   }
 
-  handleChangeUser = () => {
-    
-  }
+  handleChangeUser = e => {
+    this.setState({
+      login: e.target.value
+    });
+  };
 
   handleChangeStatus = (e, user) => {
     const { changePermissions } = this.props;
@@ -42,12 +51,13 @@ class Users extends React.Component {
   };
 
   render() {
+    const { login } = this.state;
     const { users } = this.props;
     return (
       <Wrapper>
         <Form>
           <Input
-            onChange={this.handleChange}
+            onChange={e => this.handleChangeUser(e)}
             type="text"
             name="city"
             placeholder="search user"
@@ -64,36 +74,40 @@ class Users extends React.Component {
               </tr>
             </Thead>
             <Tbody>
-              {users.map((user, id) => {
-                return (
-                  <Tr key={user.id}>
-                    <Td>{id + 1}</Td>
-                    <Td>{user.login}</Td>
-                    <Td>
-                      {user.id === 1 ? (
-                        "Admin"
-                      ) : (
-                        <Select onChange={e => this.handleChangeStatus(e, user)}>
-                          <Option key={id}>
-                            {user.isAdmin ? "Admin" : "User"}
-                          </Option>
-                          <Option key={id + 1}>
-                            {user.isAdmin ? "User" : "Admin"}
-                          </Option>
-                        </Select>
-                      )}
-                    </Td>
-                    <Td>
-                      {user.id !== 1 && (
-                        <RemoveBtn
-                          onClick={id => this.removeUser(user.id)}
-                          src={"delete.png"}
-                        />
-                      )}
-                    </Td>
-                  </Tr>
-                );
-              })}
+              {users
+                .filter(user => user.login.search(login) !== -1 && user)
+                .map((user, id) => {
+                  return (
+                    <Tr key={user.id}>
+                      <Td>{id + 1}</Td>
+                      <Td>{user.login}</Td>
+                      <Td>
+                        {user.id === 1 ? (
+                          "Admin"
+                        ) : (
+                          <Select
+                            onChange={e => this.handleChangeStatus(e, user)}
+                          >
+                            <Option key={id}>
+                              {user.isAdmin ? "Admin" : "User"}
+                            </Option>
+                            <Option key={id + 1}>
+                              {user.isAdmin ? "User" : "Admin"}
+                            </Option>
+                          </Select>
+                        )}
+                      </Td>
+                      <Td>
+                        {user.id !== 1 && (
+                          <RemoveBtn
+                            onClick={id => this.removeUser(user.id)}
+                            src={"delete.png"}
+                          />
+                        )}
+                      </Td>
+                    </Tr>
+                  );
+                })}
             </Tbody>
           </Table>
         </TableContainer>
