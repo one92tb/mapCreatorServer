@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { getManager } from "typeorm";
 import { User } from "../../entity/User";
+import {} from "./style";
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -9,8 +10,8 @@ export async function registerUser(request: Request, response: Response) {
   const userRepository = getManager().getRepository(User);
   const firstUser = await userRepository.findOne(1);
 
-   bcrypt.genSalt(saltRounds, (err, salt) => {
-     bcrypt.hash(request.body.password, salt, async (err, hash) => {
+  bcrypt.genSalt(saltRounds, (err, salt) => {
+    bcrypt.hash(request.body.password, salt, async (err, hash) => {
       const user = {
         login: request.body.login,
         password: hash,
