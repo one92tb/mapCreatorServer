@@ -14,7 +14,7 @@ export const removeIndicator = id => dispatch => {
   console.log(id);
   dispatch({ type: "REMOVING_INDICATOR" });
   axios
-    .create({ baseURL: "http://localhost:8080" })
+    .create({ baseURL: "http://46.101.186.181:8080" })
     .delete(`/indicators/${id}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })

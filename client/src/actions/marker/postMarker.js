@@ -13,7 +13,7 @@ const postedMarkerError = error => ({
 export const postMarker = marker => dispatch => {
   dispatch({ type: "POSTING_MARKER" });
   axios
-    .create({ baseURL: "http://localhost:8080" })
+    .create({ baseURL: "http://46.101.186.181:8080" })
     .post("/markers", marker, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })

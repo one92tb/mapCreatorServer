@@ -13,7 +13,7 @@ const postedIndicatorError = error => ({
 export const postIndicator = indicator => dispatch => {
   dispatch({ type: "POSTING_INDICATOR" });
   axios
-    .create({ baseURL: "http://localhost:8080" })
+    .create({ baseURL: "http://46.101.186.181:8080" })
     .post("/indicators", indicator, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })

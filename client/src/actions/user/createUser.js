@@ -13,7 +13,7 @@ const createdUserError = error => ({
 export const createUser = user => dispatch => {
   dispatch({ type: "POSTING_USER" });
   axios
-    .create({ baseURL: "http://localhost:8080" })
+    .create({ baseURL: "http://46.101.186.181:8080" })
     .post("/users", user)
     .then(res => {
       dispatch(createUserSuccess(res.data));

@@ -14,7 +14,7 @@ export const deleteAccount = id => dispatch => {
   console.log(id);
   dispatch({ type: "DELETING_ACCOUNT" });
   axios
-    .create({ baseURL: "http://localhost:8080" })
+    .create({ baseURL: "http://46.101.186.181:8080" })
     .delete(`/users/${id}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })

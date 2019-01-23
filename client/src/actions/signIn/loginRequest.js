@@ -14,7 +14,7 @@ const loginError = error => ({
 export const loginRequest = userData => dispatch => {
   dispatch({ type: "LOGIN_REQUEST" });
   axios
-    .create({ baseURL: "http://localhost:8080" })
+    .create({ baseURL: "http://46.101.186.181:8080" })
     .post("/login", userData)
     .then(res => {
       localStorage.setItem("token", res.data.token);

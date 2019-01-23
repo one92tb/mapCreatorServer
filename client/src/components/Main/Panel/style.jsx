@@ -4,11 +4,9 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   padding: 40px 10px 40px 20px;
   height: 100%;
-
   @media only screen and (max-width: 1199px) {
     padding: 5px;
   }
-
   @media only screen and (max-width: 991.98px) {
     height: autp;
     padding: ${props =>
@@ -41,7 +39,6 @@ const ResponsivePanel = css`
 
 const FilterLink = styled.a`
   ${NavLink};
-
   ${({ isSelected }) =>
     !isSelected &&
     `
@@ -58,7 +55,6 @@ const FilterLink = styled.a`
 
 const SelectLink = styled.a`
   ${NavLink};
-
   ${({ isSelected }) =>
     isSelected &&
     `
@@ -77,7 +73,6 @@ const Card = styled.div`
   flex-direction: column;
   border-radius: 3px;
   overflow: hidden;
-
   ${props => props.currentLocation.pathname === "/" && ResponsivePanel};
 `;
 
@@ -86,7 +81,6 @@ const CardHeader = styled.div`
   padding: 0.75rem 1.25rem;
   background: #4ddbff;
   display: block;
-
   @media only screen and (max-width: 575.98px) {
     padding: 0.25rem;
     font-size: 12px;
@@ -107,7 +101,6 @@ const CardBody = styled.div`
   padding: 1.25rem;
   height: calc(100% - 48px);
   overflow-y: auto;
-
   @media only screen and (max-width: 575.98px) {
     padding: 0.25rem;
   }
@@ -115,14 +108,13 @@ const CardBody = styled.div`
 
 const Label = styled.label`
   display: none;
-
   @media (max-width: 991.98px) {
     position: absolute;
     top: 15px;
     left: 430px;
     z-index: 1;
     display: ${props =>
-      props.currentLocation.pathname === "/" ? "flex" : "none"}
+    props.currentLocation.pathname === "/" ? "flex" : "none"}
     cursor: pointer;
     font-size: 30px;
     justify-content: flex-end;
@@ -134,14 +126,11 @@ const Label = styled.label`
     border-radius: 3px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     border: 1px solid transparent;
-
   }
-
   @media only screen and (max-width: 575.98px) {
     top: 15px;
     left: 220px;
   }
-
   @media only screen and (max-width: 350px) {
     top: 61px;
     left: 165px;

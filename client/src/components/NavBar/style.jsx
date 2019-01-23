@@ -235,7 +235,10 @@ const ResponsiveMenu = styled.div`
 
 const ResponsiveNav = styled.div`
   @media (max-width: 1199px) {
+    transition: all 0.7s ease;
+
     display: ${props => (props.isChecked ? "block" : "none")};
+    transform: translateY(0);
     width: 100%;
     background: #4ddbff;
     z-index: 21;
@@ -243,7 +246,7 @@ const ResponsiveNav = styled.div`
     padding-top: 10px;
   }
 `;
-
+//display: ${props => (props.isChecked ? "block" : "none")};
 export {
   Label,
   LogoutBtn,
