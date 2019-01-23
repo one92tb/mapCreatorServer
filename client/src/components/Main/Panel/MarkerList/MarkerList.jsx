@@ -38,7 +38,7 @@ class MarkerList extends Component {
       this.setState({ selectedId: id });
       getSelectedMarker({
         ...marker,
-        url: `http://localhost:8080/images/${marker.icon}`
+        url: `http://46.101.186.181:8080/images/${marker.icon}`
       });
     } else if (marker.id === selectedId && isNavSelect) {
       id = "";
