@@ -89,7 +89,7 @@ class MarkerList extends Component {
           >
             <MarkerIcon>
               <MarkerImg
-                src={`http://localhost:8080/images/${marker.icon}`}
+                src={`http://46.101.186.181:8080/images/${marker.icon}`}
                 alt={marker.icon}
               />
             </MarkerIcon>

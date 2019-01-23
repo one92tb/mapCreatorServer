@@ -189,7 +189,7 @@ const MapWithAMakredInfoWindow = compose(
                 lng: indicator.lng
               }}
               icon={{
-                url: `http://localhost:8080/images/${indicator.icon}`,
+                url: `http://46.101.186.181:8080/images/${indicator.icon}`,
                 scaledSize: {
                   width: props.zoom < 14 ? 16 : 50,
                   height: props.zoom < 14 ? 16 : 50
