@@ -99,12 +99,13 @@ class MarkerCreator extends Component {
   sendRecord = event => {
     event.preventDefault();
     const { postMarker, editMarker, selectedMarker, markers } = this.props;
-    const { markerImageFile, markerName } = this.state;
+    const { markerImageFile, markerName, uploadStatus } = this.state;
     const data = {
       markerName,
       markerImageFile,
       selectedMarker,
-      markers
+      markers,
+      uploadStatus
     };
 
     const validationResult = validate(errors, markerValidationDetails, data);
@@ -145,11 +146,12 @@ class MarkerCreator extends Component {
 
   downloadMarker = () => {
     const { markerName, markerImageFile } = this.state;
-    const { selectedMarker } = this.props;
+    const { selectedMarker, markers } = this.props;
     const data = {
       markerName,
       markerImageFile,
-      selectedMarker
+      selectedMarker,
+      markers
     };
     const validationResult = validate(errors, markerValidationDetails, data);
 

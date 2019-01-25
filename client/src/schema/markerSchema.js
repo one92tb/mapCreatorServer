@@ -4,7 +4,7 @@ export const errors = {
 };
 
 export const markerValidationDetails = data => {
-  const { markerName, markerImageFile, selectedMarker, markers } = data;
+  const { markerName, markerImageFile, selectedMarker, markers, uploadStatus } = data;
 
   return [
     {
@@ -23,7 +23,7 @@ export const markerValidationDetails = data => {
       messageError: "Input file cannot be empty"
     },
     {
-      condition: markers.find(marker => marker.name === markerName),
+      condition: uploadStatus && markers.find(marker => marker.name === markerName),
       nameOfErrorProperty: "markerNameError",
       messageError: "This marker is already exist"
     }
