@@ -1,4 +1,5 @@
 import axios from "axios";
+import baseUrl from "../../baseUrl";
 
 const editedMarkerSuccess = marker => ({
   type: "EDITED_MARKER_SUCCESS",
@@ -14,7 +15,7 @@ export const editMarker = (marker, id) => dispatch => {
   console.log(marker, id);
   dispatch({ type: "EDITING_MARKER" });
   axios
-    .create({ baseURL: "http://localhost:8080" })
+    .create({ baseURL: `${baseUrl}`  })
     .put(`/markers/${id}`, marker, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })

@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { createUser } from "../../actions/user/createUser";
 import { resetRegisterError } from "../../actions/user/resetRegisterError";
+import { resetRegisterSuccess } from "../../actions/user/resetRegisterSuccess";
 import { loginRequest } from "../../actions/signIn/loginRequest";
 import { resetLoginError } from "../../actions/signIn/resetLoginError";
 import { errors, registerValidationDetails } from "../../schema/registerSchema";
@@ -18,6 +19,7 @@ import {
   Label,
   Input,
   ErrorMessage,
+  SuccessMessage,
   SubmitBtn
 } from "./style";
 
@@ -45,7 +47,8 @@ class Login extends React.Component {
       createUser,
       loginRequest,
       resetRegisterError,
-      resetLoginError
+      resetLoginError,
+      resetRegisterSuccess
     } = this.props;
     const data = {
       login,
@@ -62,6 +65,7 @@ class Login extends React.Component {
     e.preventDefault();
     resetRegisterError();
     resetLoginError();
+    resetRegisterSuccess();
 
     !validationResult.isError && !loginStatus
       ? createUser(user)
@@ -73,7 +77,12 @@ class Login extends React.Component {
   };
 
   isLogin = status => {
-    const { resetRegisterError, resetLoginError } = this.props;
+    const {
+      resetRegisterError,
+      resetLoginError,
+      resetRegisterSuccess
+    } = this.props;
+
     this.setState({
       loginStatus: status,
       login: "",
@@ -84,6 +93,7 @@ class Login extends React.Component {
 
     resetRegisterError();
     resetLoginError();
+    resetRegisterSuccess();
   };
 
   render() {
@@ -94,7 +104,7 @@ class Login extends React.Component {
       loginError,
       passwordError
     } = this.state;
-    const { registerError, authError } = this.props;
+    const { registerError, registerSuccess, authError } = this.props;
 
     return (
       <Wrapper>
@@ -141,12 +151,13 @@ class Login extends React.Component {
 
               {passwordError &&
                 !loginStatus && <ErrorMessage>{passwordError}</ErrorMessage>}
-              {authError &&
-                loginStatus && (
-                  <ErrorMessage>
-                    {authError.response.data.errorMessage}
-                  </ErrorMessage>
-                )}
+              {authError && loginStatus ? (
+                <ErrorMessage>
+                  {authError.response.data.errorMessage}
+                </ErrorMessage>
+              ) : (
+                <SuccessMessage>{registerSuccess}</SuccessMessage>
+              )}
             </FormGroup>
             <FormGroup>
               <SubmitBtn onClick={e => this.onSubmit(e)}>
@@ -164,12 +175,14 @@ const mapDispatchToProps = {
   createUser,
   loginRequest,
   resetLoginError,
-  resetRegisterError
+  resetRegisterError,
+  resetRegisterSuccess
 };
 
 const mapStateToProps = state => ({
   isAuthorized: state.account.isAuthorized,
   registerError: state.user.error,
+  registerSuccess: state.user.success,
   authError: state.account.error
 });
 
@@ -183,10 +196,12 @@ Login.propTypes = {
   createUser: PropTypes.func.isRequired,
   loginRequest: PropTypes.func.isRequired,
   resetLoginError: PropTypes.func.isRequired,
-  resetRegisterError: PropTypes.func.isRequired
+  resetRegisterError: PropTypes.func.isRequired,
+  resetRegisterSuccess: PropTypes.func.isRequired
 };
 
 Login.defaultProps = {
   registerError: {},
+  registerSuccess: {},
   authError: {}
 };

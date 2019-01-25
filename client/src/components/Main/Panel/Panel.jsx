@@ -62,7 +62,7 @@ class Panel extends Component {
           currentLocation={location}
           onChange={this.handleCheckBox}
         >
-          <img src={"drawMarker.png"} width={30} height={30} />
+          <img src={"drawMarker.png"} alt="drawMarker" width={30} height={30} />
         </Label>
         <Input type="checkbox" id="panel" onChange={this.handleCheckBox} />
         <Card isChecked={this.state.checked} currentLocation={location}>

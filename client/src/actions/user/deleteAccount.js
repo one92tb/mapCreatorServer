@@ -1,4 +1,5 @@
 import axios from "axios";
+import baseUrl from "../../baseUrl";
 
 const deletedAccountSuccess = id => ({
   type: "DELETED_ACCOUNT_SUCCESS",
@@ -14,7 +15,7 @@ export const deleteAccount = id => dispatch => {
   console.log(id);
   dispatch({ type: "DELETING_ACCOUNT" });
   axios
-    .create({ baseURL: "http://46.101.186.181:8080" })
+    .create({ baseURL: `${baseUrl}` })
     .delete(`/users/${id}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })

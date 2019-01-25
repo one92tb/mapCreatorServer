@@ -14,10 +14,9 @@ const Wrapper = styled.div`
     padding-top: 50px;
   }
 
-  @media only screen and (max-height:350px) {
+  @media only screen and (max-height: 350px) {
     padding-top: 20px;
   }
-
 `;
 
 const Inner = styled.div`
@@ -48,7 +47,18 @@ const FormGroup = styled.div`
 `;
 
 const ErrorMessage = styled.span`
-  color: red;
+  color: #cc0000;
+  font-size: 10px;
+  display: block;
+  margin-left: 2px;
+
+  @media only screen and (max-width: 575.98px) {
+    font-size: 8px;
+  }
+`;
+
+const SuccessMessage = styled.span`
+  color: #009933;
   font-size: 10px;
   display: block;
   margin-left: 2px;
@@ -150,5 +160,6 @@ export {
   Label,
   Input,
   ErrorMessage,
+  SuccessMessage,
   SubmitBtn
 };

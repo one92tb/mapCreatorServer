@@ -5,6 +5,7 @@ import { getSelectedMarker } from "../../../../actions/marker/getSelectedMarker"
 import { connect } from "react-redux";
 import { List, Marker, MarkerIcon, MarkerName, MarkerImg } from "./style";
 import PropTypes from "prop-types";
+import baseUrl from "../../../../baseUrl";
 
 class MarkerList extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class MarkerList extends Component {
   }
 
   onSelect = (marker, id) => {
+    console.log(baseUrl, marker.icon);
     const { getSelectedMarker, isNavSelect, disableMarkers } = this.props;
     const { selectedId, filteredMarkers } = this.state;
 
@@ -38,7 +40,7 @@ class MarkerList extends Component {
       this.setState({ selectedId: id });
       getSelectedMarker({
         ...marker,
-        url: `http://46.101.186.181:8080/images/${marker.icon}`
+        url: `${baseUrl}/images/${marker.icon}`
       });
     } else if (marker.id === selectedId && isNavSelect) {
       id = "";
@@ -89,7 +91,7 @@ class MarkerList extends Component {
           >
             <MarkerIcon>
               <MarkerImg
-                src={`http://46.101.186.181:8080/images/${marker.icon}`}
+                src={`${baseUrl}/images/${marker.icon}`}
                 alt={marker.icon}
               />
             </MarkerIcon>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import baseUrl from "../../baseUrl";
 
 const fetchedMarkersSuccess = markers => ({
   type: "FETCHED_MARKERS_SUCCESS",
@@ -13,7 +14,7 @@ const fetchedMarkersError = error => ({
 export const fetchMarkers = () => dispatch => {
   dispatch({ type: "FETCHING_MARKERS" });
   axios
-    .create({ baseURL: "http://46.101.186.181:8080" })
+    .create({ baseURL: `${baseUrl}` })
     .get("/markers", {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })

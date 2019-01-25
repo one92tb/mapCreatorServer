@@ -1,6 +1,7 @@
 const initialState = {
   users: [],
   error: null,
+  success: "",
   isAdmin: false,
   userId: "",
   userName: "",
@@ -44,11 +45,12 @@ const user = (state = initialState, action) => {
         posted: false,
         error: null
       };
-    case "POSTED_USER_SUCCES":
+    case "POSTED_USER_SUCCESS":
       return {
         ...state,
         posting: false,
         posted: true,
+        success: "The account has been created",
         users: [...state.users, action.user]
       };
     case "POSTED_USER_ERROR":
@@ -63,7 +65,11 @@ const user = (state = initialState, action) => {
         ...state,
         error: null
       };
-
+    case "RESET_REGISTER_SUCCESS":
+      return {
+        ...state,
+        success: ""
+      };
     case "CHANGING_PERMISSIONS":
       return {
         ...state,

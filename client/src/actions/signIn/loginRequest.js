@@ -1,5 +1,6 @@
 import axios from "axios";
 import history from "../../history";
+import baseUrl from "../../baseUrl";
 
 const loginSuccess = userData => ({
   type: "LOGIN_SUCCESS",
@@ -14,7 +15,7 @@ const loginError = error => ({
 export const loginRequest = userData => dispatch => {
   dispatch({ type: "LOGIN_REQUEST" });
   axios
-    .create({ baseURL: "http://46.101.186.181:8080" })
+    .create({ baseURL: `${baseUrl}` })
     .post("/login", userData)
     .then(res => {
       localStorage.setItem("token", res.data.token);
@@ -22,6 +23,7 @@ export const loginRequest = userData => dispatch => {
       history.push("./");
     })
     .catch(error => {
+      console.log(error, error.response);
       dispatch(loginError(error));
     });
 };

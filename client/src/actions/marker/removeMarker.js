@@ -1,4 +1,5 @@
 import axios from "axios";
+import baseUrl from "../../baseUrl";
 
 const removeMarkerSuccess = id => ({
   type: "REMOVED_MARKER_SUCCESS",
@@ -14,7 +15,7 @@ export const removeMarker = id => dispatch => {
   console.log(id);
   dispatch({ type: "REMOVING_MARKER" });
   axios
-    .create({ baseURL: "http://46.101.186.181:8080" })
+    .create({ baseURL: `${baseUrl}` })
     .delete(`/markers/${id}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })

@@ -1,4 +1,5 @@
 import axios from "axios";
+import baseUrl from "../../baseUrl";
 
 const changePermissionsSuccess = status => ({
   type: "CHANGED_PERMISSIONS_SUCCESS",
@@ -14,7 +15,7 @@ export const changePermissions = (status, id) => dispatch => {
   console.log(status, id);
   dispatch({ type: "CHANGING_PERMISSIONS" });
   axios
-    .create({ baseURL: "http://46.101.186.181:8080" })
+    .create({ baseURL: `${baseUrl}`  })
     .patch(
       `/users/${id}`,
       {

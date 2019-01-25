@@ -1,4 +1,5 @@
 import axios from "axios";
+import baseUrl from "../../baseUrl";
 
 const postedMarkerSuccess = marker => ({
   type: "POSTED_MARKER_SUCCESS",
@@ -13,7 +14,7 @@ const postedMarkerError = error => ({
 export const postMarker = marker => dispatch => {
   dispatch({ type: "POSTING_MARKER" });
   axios
-    .create({ baseURL: "http://46.101.186.181:8080" })
+    .create({ baseURL: `${baseUrl}` })
     .post("/markers", marker, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })

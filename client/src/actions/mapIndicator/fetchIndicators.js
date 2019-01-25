@@ -1,4 +1,5 @@
 import axios from "axios";
+import baseUrl from "../../baseUrl";
 
 const fetchedIndicators = indicators => ({
   type: "FETCHED_INDICATORS_SUCCESS",
@@ -13,7 +14,7 @@ const fetchedIndicatorsError = error => ({
 export const fetchIndicators = () => dispatch => {
   dispatch({ type: "FETCHING_INDICATORS" });
   axios
-    .create({ baseURL: "http://46.101.186.181:8080" })
+    .create({ baseURL: `${baseUrl}` })
     .get("/indicators", {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })

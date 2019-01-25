@@ -1,4 +1,5 @@
 import axios from "axios";
+import baseUrl from "../../baseUrl";
 
 const postedIndicatorSuccess = indicator => ({
   type: "POSTED_INDICATOR_SUCCESS",
@@ -13,7 +14,7 @@ const postedIndicatorError = error => ({
 export const postIndicator = indicator => dispatch => {
   dispatch({ type: "POSTING_INDICATOR" });
   axios
-    .create({ baseURL: "http://46.101.186.181:8080" })
+    .create({ baseURL: `${baseUrl}`  })
     .post("/indicators", indicator, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })

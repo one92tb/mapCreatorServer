@@ -6,6 +6,8 @@ import { fetchIndicators } from "../../../actions/mapIndicator/fetchIndicators";
 import { removeIndicator } from "../../../actions/mapIndicator/removeIndicator";
 import PropTypes from "prop-types";
 import apiKey from "./apiKey";
+import baseUrl from "../../../baseUrl";
+
 import {
   Wrapper,
   SearchBoxInput,
@@ -189,7 +191,7 @@ const MapWithAMakredInfoWindow = compose(
                 lng: indicator.lng
               }}
               icon={{
-                url: `http://46.101.186.181:8080/images/${indicator.icon}`,
+                url: `${baseUrl}/images/${indicator.icon}`,
                 scaledSize: {
                   width: props.zoom < 14 ? 16 : 50,
                   height: props.zoom < 14 ? 16 : 50
