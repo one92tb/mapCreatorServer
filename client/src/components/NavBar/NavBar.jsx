@@ -81,9 +81,9 @@ class NavBar extends Component {
       checked: false
     };
   }
-  handleCheckBox = event => {
+  handleCheckBox = () => {
     this.setState({
-      checked: event.target.checked
+      checked: !this.state.checked
     });
   };
 
@@ -92,7 +92,7 @@ class NavBar extends Component {
 
     this.setState({
       checked: false
-    })
+    });
 
     if (path === "/") {
       getSelectedMarker("");
