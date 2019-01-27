@@ -21,7 +21,7 @@ export async function login(request: Request, response: Response) {
   if (userDB) {
     bcrypt.compare(request.body.password, userDB.password, (err, res) => {
       console.log(res);
-      if (res === true) {
+      if (res) {
         const userData = {
           login: request.body.login,
           userId: userDB.id,

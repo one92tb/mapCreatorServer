@@ -45,6 +45,35 @@ const Logout = withRouter(({ history, logOutFromApp }) => {
   );
 });
 
+const routes = [
+  {
+    name: "Map",
+    path: "/",
+    exact: true,
+    icon: "map.png"
+  },
+  {
+    name: "Create Marker",
+    path: "/createMarker",
+    icon: "gps.png"
+  },
+  {
+    name: "Statistic",
+    path: "/statistic",
+    icon: "graph.png"
+  },
+  {
+    name: "List",
+    path: "/list",
+    icon: "list.png"
+  },
+  {
+    name: "Users",
+    path: "/users",
+    icon: "users.png"
+  }
+];
+
 class NavBar extends Component {
   constructor(props) {
     super(props);
@@ -58,15 +87,19 @@ class NavBar extends Component {
     });
   };
 
-  handleMap = () => {
-    const { getSelectedMarker } = this.props;
-    getSelectedMarker("");
-  };
-
-  handleMapCreator = () => {
+  handleNavLink = path => {
     const { isPanelSelect, getSelectedMarker } = this.props;
-    getSelectedMarker("");
-    isPanelSelect(true);
+
+    this.setState({
+      checked: false
+    })
+
+    if (path === "/") {
+      getSelectedMarker("");
+    } else if ((path = "/createMarker")) {
+      getSelectedMarker("");
+      isPanelSelect(true);
+    }
   };
 
   render() {
@@ -88,40 +121,18 @@ class NavBar extends Component {
           </User>
           <Logout logOutFromApp={logout} />
           <Nav>
-            <NavItem>
-              <NavLink
-                onClick={this.handleMap}
-                to="/"
-                exact={true}
-                activeClassName={activeClassName}
-              >
-                <Icon src={"map.png"} /> Map
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                onClick={this.handleMapCreator}
-                to="/createMarker"
-                activeClassName={activeClassName}
-              >
-                <Icon src={"gps.png"} width={32} height={32} />Create Marker
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to="/statistic" activeClassName={activeClassName}>
-                <Icon src={"graph.png"} width={32} height={32} />Statistic
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to="/list" activeClassName={activeClassName}>
-                <Icon src={"list.png"} width={32} height={32} />List
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to="/users" activeClassName={activeClassName}>
-                <Icon src={"users.png"} width={32} height={32} />Users
-              </NavLink>
-            </NavItem>
+            {routes.map((route, id) => (
+              <NavItem key={id}>
+                <NavLink
+                  onClick={() => this.handleNavLink(route.path)}
+                  to={route.path}
+                  exact={route.exact}
+                  activeClassName={activeClassName}
+                >
+                  <Icon src={route.icon} /> {route.name}
+                </NavLink>
+              </NavItem>
+            ))}
           </Nav>
         </ResponsiveNav>
       </Panel>

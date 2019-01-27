@@ -233,15 +233,24 @@ const ResponsiveMenu = styled.div`
   }
 `;
 
+//    display: ${props => (props.isChecked ? "block" : "none")};
 const ResponsiveNav = styled.div`
   @media (max-width: 1199px) {
-    transition: all 0.7s ease;
-
-    display: ${props => (props.isChecked ? "block" : "none")};
-    transform: translateY(0);
+    display: block;
+    max-height: ${props => (props.isChecked ? "1000px" : "0")};
+    overflow: hidden;
+    -webkit-transform: ${props =>
+      props.isChecked
+        ? "perspective(400) rotate3d(0, 0, 0, 0)"
+        : "perspective(400) rotate3d(1, 0, 0, -90deg)"};
+    -webkit-transform-origin: 50% 0;
+    -webkit-transition: 350ms;
+    -moz-transition: 350ms;
+    -o-transition: 350ms;
+    transition: 350ms;
     width: 100%;
     background: #4ddbff;
-    z-index: 21;
+    z-index: 2;
     margin: 0;
     padding-top: 10px;
   }
