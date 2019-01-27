@@ -96,7 +96,7 @@ class NavBar extends Component {
 
     if (path === "/") {
       getSelectedMarker("");
-    } else if ((path = "/createMarker")) {
+    } else if (path === "/createMarker") {
       getSelectedMarker("");
       isPanelSelect(true);
     }

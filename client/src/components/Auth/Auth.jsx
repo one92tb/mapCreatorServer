@@ -55,7 +55,7 @@ const AuthApp = ({ ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        checkAuth() ? <AppContent /> : <Redirect to={{ pathname: "/login" }} />
+        checkAuth() ? <AppContent /> : <Redirect from ="/" exact to={{ pathname: "/login" }} />
       }
     />
   );
@@ -70,7 +70,7 @@ const AppContent = () => {
         </Col>
         <Col tag={ColStyle} lg="12" xl="10">
           <Switch>
-            <Route exact={true} path={"/"} component={Main} />
+            <Route path={"/"} exact={true} component={Main} />
             <Route path={"/createMarker"} component={Main} />
             <Route path={"/statistic"} component={Statistic} />
             <Route path={"/list"} component={List} />
