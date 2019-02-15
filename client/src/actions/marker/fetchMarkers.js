@@ -1,7 +1,7 @@
 import axios from "axios";
 import baseUrl from "../../baseUrl";
 
-const fetchedMarkersSuccess = markers => ({
+export const fetchedMarkersSuccess = markers => ({
   type: "FETCHED_MARKERS_SUCCESS",
   markers
 });

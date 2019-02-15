@@ -1,7 +1,7 @@
 import axios from "axios";
 import baseUrl from "../../baseUrl";
 
-const postedMarkerSuccess = marker => ({
+export const postedMarkerSuccess = marker => ({
   type: "POSTED_MARKER_SUCCESS",
   marker
 });
@@ -19,9 +19,11 @@ export const postMarker = marker => dispatch => {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => {
+      console.log(res.data);
       dispatch(postedMarkerSuccess(res.data));
     })
     .catch(error => {
+      console.log(error);
       dispatch(postedMarkerError(error));
     });
 };

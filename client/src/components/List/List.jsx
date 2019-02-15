@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { fetchIndicators } from "../../actions/mapIndicator/fetchIndicators";
 import { fetchMarkers } from "../../actions/marker/fetchMarkers";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import {
   Wrapper,
   Label,
@@ -16,8 +17,20 @@ import {
   Tr,
   Th,
   Td,
-  Option
+  Option,
+  Image
 } from "./style";
+
+const FindIndicator = withRouter(({ history }) => {
+  return (
+    <Image
+      src={"map-location.png"}
+      onClick={() => {
+        history.push("/");
+      }}
+    />
+  );
+});
 
 class List extends Component {
   constructor(props) {
@@ -41,6 +54,10 @@ class List extends Component {
     } else {
       this.setState({ markerName: e.target.value });
     }
+  };
+
+  findIndicatorOnTheMap = indicator => {
+    console.log(indicator);
   };
 
   render() {
@@ -82,14 +99,16 @@ class List extends Component {
                 .filter(indicator => {
                   return (markerName === "All" && city === "") ||
                     (markerName === "All" &&
-                      indicator.city.toLowerCase().search(city.toLowerCase()) !==
-                        -1)
+                      indicator.city
+                        .toLowerCase()
+                        .search(city.toLowerCase()) !== -1)
                     ? indicator
                     : markerName === indicator.name && markerName === "All"
                       ? indicator
                       : markerName === indicator.name &&
-                        indicator.city.toLowerCase().search(city.toLowerCase()) !==
-                          -1 &&
+                        indicator.city
+                          .toLowerCase()
+                          .search(city.toLowerCase()) !== -1 &&
                         indicator;
                 })
                 .map((indicator, id) => (
@@ -99,7 +118,9 @@ class List extends Component {
                     <Td>{indicator.street}</Td>
                     <Td>{indicator.city}</Td>
                     <Td>{indicator.country}</Td>
-                    <Td>go to</Td>
+                    <Td onClick={() => this.findIndicatorOnTheMap(indicator)}>
+                      <FindIndicator />
+                    </Td>
                   </Tr>
                 ))}
             </Tbody>

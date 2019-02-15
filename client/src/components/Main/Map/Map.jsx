@@ -52,6 +52,7 @@ const geocode = (indicator, postIndicator) => {
       }
     },
     (results, status) => {
+      console.log(results);
       if (status === "OK") {
         const mapIndicator = {
           name: indicator.name,

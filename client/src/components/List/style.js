@@ -142,11 +142,12 @@ const Cell = css`
 
   &:not(:first-child) {
     width: 15%;
+    font-size: 11px;
   }
 
   @media only screen and (max-width: 767.98px) {
     padding: 0.2rem;
-    font-size: 10px;
+    font-size: 8px;
   }
 `;
 
@@ -159,6 +160,21 @@ const Th = styled.th`
 const Td = styled.td`
   ${Cell};
   background: #4ddbff;
+`;
+
+const Image = styled.img`
+  height: 32px;
+  width: 32px;
+
+  @media only screen and (max-width: 991.98px) {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media only screen and (max-width: 350px) {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 export {
@@ -174,5 +190,6 @@ export {
   Tr,
   Th,
   Td,
-  Option
+  Option,
+  Image
 };

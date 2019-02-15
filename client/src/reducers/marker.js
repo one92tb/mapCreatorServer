@@ -74,7 +74,7 @@ const marker = (state = initialState, action) => {
     case "REMOVED_MARKER_SUCCESS":
       return {
         ...state,
-        removng: false,
+        removing: false,
         removed: true,
         markers: state.markers.filter(marker => marker.id !== action.id)
       };
@@ -112,4 +112,4 @@ const marker = (state = initialState, action) => {
   }
 };
 
-export default marker;
+export { marker, initialState };
