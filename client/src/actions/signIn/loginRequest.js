@@ -18,6 +18,7 @@ export const loginRequest = userData => dispatch => {
     .create({ baseURL: `${baseUrl}` })
     .post("/login", userData)
     .then(res => {
+      console.log(res.data);
       localStorage.setItem("token", res.data.token);
       dispatch(loginSuccess(res.data));
       history.push("./");

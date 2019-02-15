@@ -14,11 +14,12 @@ const postedIndicatorError = error => ({
 export const postIndicator = indicator => dispatch => {
   dispatch({ type: "POSTING_INDICATOR" });
   axios
-    .create({ baseURL: `${baseUrl}`  })
+    .create({ baseURL: `${baseUrl}` })
     .post("/indicators", indicator, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => {
+      console.log(res);
       dispatch(postedIndicatorSuccess(res.data));
     })
     .catch(error => {

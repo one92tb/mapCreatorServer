@@ -46,4 +46,4 @@ const account = (state = initialState, action) => {
   }
 };
 
-export default account;
+export { initialState, account };

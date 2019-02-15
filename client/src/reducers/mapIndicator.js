@@ -1,5 +1,4 @@
 const initialState = {
-  indicatorToGeocode: "",
   indicators: [],
   isNavSelect: true,
   posting: false,
@@ -85,4 +84,4 @@ const mapIndicator = (state = initialState, action) => {
   }
 };
 
-export default mapIndicator;
+export { initialState, mapIndicator };

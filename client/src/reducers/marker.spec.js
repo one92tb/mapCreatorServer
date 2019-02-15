@@ -5,7 +5,7 @@ describe("marker reducer", () => {
   it("should return the initial state", () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
-  //posting marker
+  //post
   it("posting marker", () => {
     expect(reducer(initialState, { type: "POSTING_MARKER" })).toEqual({
       ...initialState,
@@ -13,7 +13,7 @@ describe("marker reducer", () => {
       posted: false
     });
   });
-  //posted success
+
   it("posted marker success", () => {
     expect(
       reducer(initialState, {
@@ -82,7 +82,7 @@ describe("marker reducer", () => {
       ]
     });
   });
-  //posted error
+
   it("posted marker error", () => {
     expect(
       reducer(initialState, {
@@ -96,7 +96,7 @@ describe("marker reducer", () => {
       error: "sth goes wrong"
     });
   });
-  // fetching markers
+  //fetch
   it("fetching markers", () => {
     expect(reducer(initialState, { type: "FETCHING_MARKERS" })).toEqual({
       ...initialState,
@@ -104,7 +104,7 @@ describe("marker reducer", () => {
       fetched: false
     });
   });
-  //fetched markers success
+
   it("fetched markers success", () => {
     expect(
       reducer(initialState, {
@@ -144,7 +144,7 @@ describe("marker reducer", () => {
       ]
     });
   });
-  //fetched marker error
+
   it("fetched marker error", () => {
     expect(
       reducer(initialState, {
@@ -158,7 +158,7 @@ describe("marker reducer", () => {
       error: "sth goes wrong"
     });
   });
-  //editing marker
+  //edit
   it("editng marker", () => {
     expect(reducer(initialState, { type: "EDITING_MARKER" })).toEqual({
       ...initialState,
@@ -166,7 +166,7 @@ describe("marker reducer", () => {
       edited: false
     });
   });
-  //edited marker success
+
   it("edited marker success", () => {
     expect(
       reducer(
@@ -205,7 +205,7 @@ describe("marker reducer", () => {
       ]
     });
   });
-  //edited marker error
+
   it("edited marker error", () => {
     expect(
       reducer(initialState, {
@@ -219,7 +219,7 @@ describe("marker reducer", () => {
       error: "sth goes wrong"
     });
   });
-  //removing marker
+  //remove
   it("removing marker", () => {
     expect(
       reducer(initialState, {
@@ -231,7 +231,7 @@ describe("marker reducer", () => {
       removed: false
     });
   });
-  //removed marker success
+
   it("removed marker success", () => {
     expect(
       reducer(
@@ -284,6 +284,7 @@ describe("marker reducer", () => {
       error: "sth goes wrong"
     });
   });
+  //selected
   it("selected marker", () => {
     expect(
       reducer(initialState, {
@@ -305,6 +306,7 @@ describe("marker reducer", () => {
       }
     });
   });
+  //disable
   it("markers to disable", () => {
     expect(
       reducer(initialState, {

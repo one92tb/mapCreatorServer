@@ -3,14 +3,13 @@ const initialState = {
   error: null,
   success: "",
   isAdmin: false,
-  userId: "",
   userName: "",
   fetching: false,
   fetched: false,
   posting: false,
   posted: false,
-  postingLogin: false,
-  postedLogin: false,
+  deleting: false,
+  delete: false,
   isLoggingIn: false,
   changingPermissions: false,
   changedPermissions: false
@@ -93,21 +92,21 @@ const user = (state = initialState, action) => {
     case "DELETING_ACCOUNT":
       return {
         ...state,
-        deletingAccount: true,
-        deletedAccount: false
+        deleting: true,
+        deleted: false
       };
     case "DELETED_ACCOUNT_SUCCESS":
       return {
         ...state,
-        deletingAccount: false,
-        deletedAccount: true,
+        deleting: false,
+        deleted: true,
         users: state.users.filter(user => user.id !== action.id)
       };
     case "DELETED_ACCOUNT_ERROR":
       return {
         ...state,
-        deletingAccount: false,
-        deletedAccount: false,
+        deleting: false,
+        deleted: false,
         error: action.error
       };
     default:
@@ -115,4 +114,4 @@ const user = (state = initialState, action) => {
   }
 };
 
-export default user;
+export { initialState, user };
