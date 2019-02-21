@@ -13,13 +13,13 @@ const postedMarkerError = error => ({
 
 export const postMarker = marker => dispatch => {
   dispatch({ type: "POSTING_MARKER" });
-  axios
+  return axios
     .create({ baseURL: `${baseUrl}` })
     .post("/markers", marker, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => {
-      console.log(res.data);
+      console.log(res);
       dispatch(postedMarkerSuccess(res.data));
     })
     .catch(error => {
@@ -27,3 +27,7 @@ export const postMarker = marker => dispatch => {
       dispatch(postedMarkerError(error));
     });
 };
+
+export const POSTING_MARKER = 'POSTING_MARKER';
+export const POSTED_MARKER_SUCCESS = 'POSTED_MARKER_SUCCESS';
+export const POSTED_MARKER_ERROR = 'POSTED_MARKER_ERROR';
