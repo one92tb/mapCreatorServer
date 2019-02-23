@@ -42,6 +42,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.16.0",
     "moxios": "^0.4.0",
     "redux-devtools": "^3.4.1",
     "redux-devtools-extension": "^2.13.5",

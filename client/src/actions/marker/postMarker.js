@@ -6,7 +6,7 @@ export const postedMarkerSuccess = marker => ({
   marker
 });
 
-const postedMarkerError = error => ({
+export const postedMarkerError = error => ({
   type: "POSTED_MARKER_ERROR",
   error
 });
@@ -19,11 +19,11 @@ export const postMarker = marker => dispatch => {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => {
-      console.log(res);
+      //console.log(res);
       dispatch(postedMarkerSuccess(res.data));
     })
     .catch(error => {
-      console.log(error);
+      //console.log(error);
       dispatch(postedMarkerError(error));
     });
 };
