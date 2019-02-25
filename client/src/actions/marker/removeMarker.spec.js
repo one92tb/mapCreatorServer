@@ -1,21 +1,22 @@
 import * as actions from "./removeMarker";
-const axios = require("axios");
-const MockAdapter = require("axios-mock-adapter");
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import LocalStorageMock from "../../../mocks/localStorageMock";
 
+const axios = require("axios");
+const MockAdapter = require("axios-mock-adapter");
+
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
-global.localStorage = new LocalStorageMock();
-
 const mock = new MockAdapter(axios);
-let store = mockStore();
+const store = mockStore();
+
 const id = 1;
 const expectedResult = { id };
 
-describe("removeMarker actions", () => {
+global.localStorage = new LocalStorageMock();
+
+describe("remove marker actions", () => {
   beforeEach(() => {
     store.clearActions();
   });
@@ -25,9 +26,9 @@ describe("removeMarker actions", () => {
 
   it("REMOVED_MARKER_SUCCESS", () => {
     mock
-      .onDelete(`http://46.101.186.181:8080/markers/1`)
+      .onDelete(`http://46.101.186.181:8080/markers/${id}`)
       .reply(200, expectedResult);
-    store.dispatch(actions.removeMarker(1)).then(() => {
+    store.dispatch(actions.removeMarker(id)).then(() => {
       expect(store.getActions()).toEqual([
         {
           type: actions.REMOVING_MARKER

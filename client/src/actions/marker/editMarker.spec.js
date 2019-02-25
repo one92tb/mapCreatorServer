@@ -1,14 +1,15 @@
 import * as actions from "./editMarker";
-const axios = require("axios");
-const MockAdapter = require("axios-mock-adapter");
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import LocalStorageMock from "../../../mocks/localStorageMock";
 
+const axios = require("axios");
+const MockAdapter = require("axios-mock-adapter");
+
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
-global.localStorage = new LocalStorageMock();
+const mock = new MockAdapter(axios);
+const store = mockStore();
 
 const marker = {
   id: 1,
@@ -24,12 +25,12 @@ const editedMarker = {
   userId: 1
 };
 
+const id = 1;
 const expectedResult = editedMarker;
 
-const mock = new MockAdapter(axios);
-let store = mockStore();
+global.localStorage = new LocalStorageMock();
 
-describe("editMarker actions", () => {
+describe("edit marker actions", () => {
   beforeEach(() => {
     store.clearActions();
   });
@@ -39,9 +40,9 @@ describe("editMarker actions", () => {
 
   it("EDITED_MARKER_SUCCESS", () => {
     mock
-      .onPut(`http://46.101.186.181:8080/markers/1`)
+      .onPut(`http://46.101.186.181:8080/markers/${id}`)
       .reply(200, expectedResult);
-    store.dispatch(actions.editMarker(marker, 1)).then(() => {
+    store.dispatch(actions.editMarker(marker, id)).then(() => {
       expect(store.getActions()).toEqual([
         {
           type: actions.EDITING_MARKER

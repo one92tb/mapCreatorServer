@@ -19,7 +19,7 @@ describe("marker reducer", () => {
       reducer(initialState, {
         type: "POSTED_MARKER_SUCCESS",
         marker: {
-          id: 0,
+          id: 1,
           markerName: "1",
           icon: "1.png",
           userId: 1
@@ -31,7 +31,7 @@ describe("marker reducer", () => {
       posting: false,
       markers: [
         {
-          id: 0,
+          id: 1,
           markerName: "1",
           icon: "1.png",
           userId: 1
@@ -45,7 +45,7 @@ describe("marker reducer", () => {
           ...initialState,
           markers: [
             {
-              id: 0,
+              id: 1,
               markerName: "1",
               icon: "1.png",
               userId: 1
@@ -55,7 +55,7 @@ describe("marker reducer", () => {
         {
           type: "POSTED_MARKER_SUCCESS",
           marker: {
-            id: 1,
+            id: 2,
             markerName: "2",
             icon: "2.png",
             userId: 1
@@ -68,13 +68,13 @@ describe("marker reducer", () => {
       posting: false,
       markers: [
         {
-          id: 0,
+          id: 1,
           markerName: "1",
           icon: "1.png",
           userId: 1
         },
         {
-          id: 1,
+          id: 2,
           markerName: "2",
           icon: "2.png",
           userId: 1
@@ -111,13 +111,13 @@ describe("marker reducer", () => {
         type: "FETCHED_MARKERS_SUCCESS",
         markers: [
           {
-            id: 0,
+            id: 1,
             markerName: "1",
             icon: "1.png",
             userId: 1
           },
           {
-            id: 1,
+            id: 2,
             markerName: "2",
             icon: "2.png",
             userId: 1
@@ -130,13 +130,13 @@ describe("marker reducer", () => {
       fetched: true,
       markers: [
         {
-          id: 0,
+          id: 1,
           markerName: "1",
           icon: "1.png",
           userId: 1
         },
         {
-          id: 1,
+          id: 2,
           markerName: "2",
           icon: "2.png",
           userId: 1
@@ -174,7 +174,7 @@ describe("marker reducer", () => {
           ...initialState,
           markers: [
             {
-              id: 0,
+              id: 1,
               markerName: "1",
               icon: "1.png",
               userId: 1
@@ -184,7 +184,7 @@ describe("marker reducer", () => {
         {
           type: "EDITED_MARKER_SUCCESS",
           marker: {
-            id: 0,
+            id: 1,
             markerName: "221",
             icon: "1.png",
             userId: 1
@@ -197,7 +197,7 @@ describe("marker reducer", () => {
       editing: false,
       markers: [
         {
-          id: 0,
+          id: 1,
           markerName: "221",
           icon: "1.png",
           userId: 1
@@ -239,13 +239,13 @@ describe("marker reducer", () => {
           ...initialState,
           markers: [
             {
-              id: 0,
+              id: 1,
               markerName: "1",
               icon: "1.png",
               userId: 1
             },
             {
-              id: 1,
+              id: 2,
               markerName: "2",
               icon: "2.png",
               userId: 1
@@ -254,7 +254,7 @@ describe("marker reducer", () => {
         },
         {
           type: "REMOVED_MARKER_SUCCESS",
-          id: 0
+          id: 1
         }
       )
     ).toEqual({
@@ -263,7 +263,7 @@ describe("marker reducer", () => {
       removing: false,
       markers: [
         {
-          id: 1,
+          id: 2,
           markerName: "2",
           icon: "2.png",
           userId: 1
@@ -313,13 +313,13 @@ describe("marker reducer", () => {
         type: "MARKERS_TO_DISABLE",
         markers: [
           {
-            id: 0,
+            id: 1,
             markerName: "1",
             icon: "1.png",
             userId: 1
           },
           {
-            id: 1,
+            id: 2,
             markerName: "2",
             icon: "2.png",
             userId: 1
@@ -330,13 +330,13 @@ describe("marker reducer", () => {
       ...initialState,
       disableMarkers: [
         {
-          id: 0,
+          id: 1,
           markerName: "1",
           icon: "1.png",
           userId: 1
         },
         {
-          id: 1,
+          id: 2,
           markerName: "2",
           icon: "2.png",
           userId: 1

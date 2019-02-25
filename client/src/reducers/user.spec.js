@@ -19,13 +19,13 @@ describe("user reducer", () => {
         type: "FETCHED_USERS_SUCCESS",
         users: [
           {
-            id: 0,
+            id: 1,
             login: "login1",
             password: "pass1",
             isAdmin: true
           },
           {
-            id: 1,
+            id: 2,
             login: "login2",
             password: "pass2",
             isAdmin: false
@@ -38,13 +38,13 @@ describe("user reducer", () => {
       fetched: true,
       users: [
         {
-          id: 0,
+          id: 1,
           login: "login1",
           password: "pass1",
           isAdmin: true
         },
         {
-          id: 1,
+          id: 2,
           login: "login2",
           password: "pass2",
           isAdmin: false
@@ -82,7 +82,7 @@ describe("user reducer", () => {
       reducer(initialState, {
         type: "POSTED_USER_SUCCESS",
         user: {
-          id: 0,
+          id: 1,
           login: "login1",
           password: "pass1",
           isAdmin: true
@@ -95,7 +95,7 @@ describe("user reducer", () => {
       success: "The account has been created",
       users: [
         {
-          id: 0,
+          id: 1,
           login: "login1",
           password: "pass1",
           isAdmin: true
@@ -109,7 +109,7 @@ describe("user reducer", () => {
           ...initialState,
           users: [
             {
-              id: 0,
+              id: 1,
               login: "login1",
               password: "pass1",
               isAdmin: true
@@ -119,7 +119,7 @@ describe("user reducer", () => {
         {
           type: "POSTED_USER_SUCCESS",
           user: {
-            id: 1,
+            id: 2,
             login: "login2",
             password: "pass2",
             isAdmin: false
@@ -133,13 +133,13 @@ describe("user reducer", () => {
       success: "The account has been created",
       users: [
         {
-          id: 0,
+          id: 1,
           login: "login1",
           password: "pass1",
           isAdmin: true
         },
         {
-          id: 1,
+          id: 2,
           login: "login2",
           password: "pass2",
           isAdmin: false
@@ -175,20 +175,20 @@ describe("user reducer", () => {
           ...initialState,
           users: [
             {
-              id: 0,
+              id: 1,
               login: "login1",
               password: "pass1",
               isAdmin: true
             },
             {
-              id: 1,
+              id: 2,
               login: "login2",
               password: "pass2",
               isAdmin: false
             }
           ]
         },
-        { type: "DELETED_ACCOUNT_SUCCESS", id: 0 }
+        { type: "DELETED_ACCOUNT_SUCCESS", id: 1 }
       )
     ).toEqual({
       ...initialState,
@@ -196,7 +196,7 @@ describe("user reducer", () => {
       deleted: true,
       users: [
         {
-          id: 1,
+          id: 2,
           login: "login2",
           password: "pass2",
           isAdmin: false

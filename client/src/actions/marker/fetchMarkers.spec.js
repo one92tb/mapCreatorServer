@@ -1,14 +1,15 @@
 import * as actions from "./fetchMarkers";
-const axios = require("axios");
-const MockAdapter = require("axios-mock-adapter");
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import LocalStorageMock from "../../../mocks/localStorageMock";
 
+const axios = require("axios");
+const MockAdapter = require("axios-mock-adapter");
+
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
-global.localStorage = new LocalStorageMock();
+const store = mockStore();
+const mock = new MockAdapter(axios);
 
 const markers = [
   {
@@ -24,13 +25,11 @@ const markers = [
     userId: 1
   }
 ];
-
 const expectedResult = markers;
 
-const mock = new MockAdapter(axios);
-let store = mockStore();
+global.localStorage = new LocalStorageMock();
 
-describe("fetchtMarkers actions", () => {
+describe("fetcht markers actions", () => {
   beforeEach(() => {
     store.clearActions();
   });

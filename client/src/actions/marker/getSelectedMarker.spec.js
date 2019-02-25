@@ -7,9 +7,8 @@ const marker = {
   userId: 1
 };
 
-describe("getSelectedMarker action", () => {
-  it("getSelectedMarker", () => {
-    console.log(actions);
+describe("get selected marker action", () => {
+  it("get selected marker action", () => {
     expect(actions.getSelectedMarker(marker)).toEqual({
       type: actions.GET_SELECTED_MARKER,
       marker

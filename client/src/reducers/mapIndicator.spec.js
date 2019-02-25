@@ -19,7 +19,7 @@ describe("mapIndicator reducer", () => {
       reducer(initialState, {
         type: "POSTED_INDICATOR_SUCCESS",
         indicator: {
-          id: 0,
+          id: 1,
           name: "test1",
           icon: "123.png",
           lat: 50.3232,
@@ -36,7 +36,7 @@ describe("mapIndicator reducer", () => {
       posting: false,
       indicators: [
         {
-          id: 0,
+          id: 1,
           name: "test1",
           icon: "123.png",
           lat: 50.3232,
@@ -55,7 +55,7 @@ describe("mapIndicator reducer", () => {
           ...initialState,
           indicators: [
             {
-              id: 0,
+              id: 1,
               name: "test1",
               icon: "123.png",
               lat: 50.3232,
@@ -70,7 +70,7 @@ describe("mapIndicator reducer", () => {
         {
           type: "POSTED_INDICATOR_SUCCESS",
           indicator: {
-            id: 1,
+            id: 2,
             name: "test2",
             icon: "125.png",
             lat: 52.3232,
@@ -88,7 +88,7 @@ describe("mapIndicator reducer", () => {
       posted: true,
       indicators: [
         {
-          id: 0,
+          id: 1,
           name: "test1",
           icon: "123.png",
           lat: 50.3232,
@@ -99,7 +99,7 @@ describe("mapIndicator reducer", () => {
           userId: 1
         },
         {
-          id: 1,
+          id: 2,
           name: "test2",
           icon: "125.png",
           lat: 52.3232,
@@ -141,7 +141,7 @@ describe("mapIndicator reducer", () => {
         type: "FETCHED_INDICATORS_SUCCESS",
         indicators: [
           {
-            id: 0,
+            id: 1,
             name: "test1",
             icon: "123.png",
             lat: 50.3232,
@@ -152,7 +152,7 @@ describe("mapIndicator reducer", () => {
             userId: 1
           },
           {
-            id: 1,
+            id: 2,
             name: "test2",
             icon: "125.png",
             lat: 52.3232,
@@ -170,7 +170,7 @@ describe("mapIndicator reducer", () => {
       fetching: false,
       indicators: [
         {
-          id: 0,
+          id: 1,
           name: "test1",
           icon: "123.png",
           lat: 50.3232,
@@ -181,7 +181,7 @@ describe("mapIndicator reducer", () => {
           userId: 1
         },
         {
-          id: 1,
+          id: 2,
           name: "test2",
           icon: "125.png",
           lat: 52.3232,
@@ -224,7 +224,7 @@ describe("mapIndicator reducer", () => {
           ...initialState,
           indicators: [
             {
-              id: 0,
+              id: 1,
               name: "test1",
               icon: "123.png",
               lat: 50.3232,
@@ -235,7 +235,7 @@ describe("mapIndicator reducer", () => {
               userId: 1
             },
             {
-              id: 1,
+              id: 2,
               name: "test2",
               icon: "125.png",
               lat: 52.3232,
@@ -247,7 +247,7 @@ describe("mapIndicator reducer", () => {
             }
           ]
         },
-        { type: "REMOVED_INDICATOR_SUCCESS", id: 0 }
+        { type: "REMOVED_INDICATOR_SUCCESS", id: 1 }
       )
     ).toEqual({
       ...initialState,
@@ -255,7 +255,7 @@ describe("mapIndicator reducer", () => {
       removing: false,
       indicators: [
         {
-          id: 1,
+          id: 2,
           name: "test2",
           icon: "125.png",
           lat: 52.3232,

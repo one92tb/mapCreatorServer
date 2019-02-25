@@ -15,7 +15,7 @@ const markers = [
   }
 ];
 
-describe("disableMarkers action", () => {
+describe("disable markers action", () => {
   it("MARKERS_TO_DISABLE", () => {
     expect(actions.disableMarkers(markers)).toEqual({
       type: actions.MARKERS_TO_DISABLE,
