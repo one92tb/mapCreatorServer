@@ -1,27 +1,29 @@
 import axios from "axios";
 import baseUrl from "../../baseUrl";
 
+export const POSTING_USER = "POSTING_USER";
+export const POSTED_USER_SUCCESS = "POSTED_USER_SUCCESS";
+export const POSTED_USER_ERROR = "POSTED_USER_ERROR";
+
 const createUserSuccess = user => ({
-  type: "POSTED_USER_SUCCESS",
+  type: POSTED_USER_SUCCESS,
   user
 });
 
 const createdUserError = error => ({
-  type: "POSTED_USER_ERROR",
+  type: POSTED_USER_ERROR,
   error
 });
 
 export const createUser = user => dispatch => {
-  dispatch({ type: "POSTING_USER" });
-  axios
+  dispatch({ type: POSTING_USER });
+  return axios
     .create({ baseURL: `${baseUrl}` })
     .post("/users", user)
     .then(res => {
-      console.log(res.data);
       dispatch(createUserSuccess(res.data));
     })
     .catch(error => {
-      console.log(error.response.data);
       dispatch(createdUserError(error));
     });
 };

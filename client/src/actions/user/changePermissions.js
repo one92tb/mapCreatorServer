@@ -1,21 +1,24 @@
 import axios from "axios";
 import baseUrl from "../../baseUrl";
 
+export const CHANGING_PERMISSIONS = "CHANGING_PERMISSIONS";
+export const CHANGED_PERMISSIONS_SUCCESS = "CHANGED_PERMISSIONS_SUCCESS";
+export const CHANGED_PERMISSIONS_ERROR = "CHANGED_PERMISSIONS_ERROR";
+
 const changePermissionsSuccess = status => ({
-  type: "CHANGED_PERMISSIONS_SUCCESS",
+  type: CHANGED_PERMISSIONS_SUCCESS,
   status
 });
 
 const changePermissionsError = error => ({
-  type: "CHANGED_PERMISSIONS_ERROR",
+  type: CHANGED_PERMISSIONS_ERROR,
   error
 });
 
 export const changePermissions = (status, id) => dispatch => {
-  console.log(status, id);
-  dispatch({ type: "CHANGING_PERMISSIONS" });
-  axios
-    .create({ baseURL: `${baseUrl}`  })
+  dispatch({ type: CHANGING_PERMISSIONS });
+  return axios
+    .create({ baseURL: `${baseUrl}` })
     .patch(
       `/users/${id}`,
       {
@@ -26,7 +29,6 @@ export const changePermissions = (status, id) => dispatch => {
       }
     )
     .then(res => {
-      console.log(res.data);
       dispatch(changePermissionsSuccess(res.data));
     })
     .catch(error => {

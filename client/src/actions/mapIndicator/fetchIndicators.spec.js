@@ -49,16 +49,28 @@ describe("fetch indicators actions", () => {
   });
 
   it("FETCHED_INDICATORS_SUCCESS", () => {
-    mock.onGet("http://46.101.186.181:8080/indicators").reply(200, expectedResult);
+    mock
+      .onGet("http://46.101.186.181:8080/indicators")
+      .reply(200, expectedResult);
     store.dispatch(actions.fetchIndicators()).then(() => {
       expect(store.getActions()).toEqual([
         {
           type: actions.FETCHING_INDICATORS
-        },{
+        },
+        {
           type: actions.FETCHED_INDICATORS_SUCCESS,
           indicators
         }
-      ])
+      ]);
+    });
+  });
+  it("FETCHED_INDICATORS_ERROR", () => {
+    mock.onGet("http://46.101.186.181:8080/indicators").reply(404);
+    store.dispatch(actions.fetchIndicators()).then(() => {
+      expect(store.getActions()[0].type).toEqual(actions.FETCHING_INDICATORS),
+        expect(store.getActions()[1].type).toEqual(
+          actions.FETCHED_INDICATORS_ERROR
+        );
     });
   });
 });

@@ -40,7 +40,6 @@ describe("post indicator actions", () => {
       .onPost("http://46.101.186.181:8080/indicators")
       .reply(200, expectedResult);
     store.dispatch(actions.postIndicator(indicator)).then(() => {
-      console.log(store.getActions());
       expect(store.getActions()).toEqual([
         {
           type: actions.POSTING_INDICATOR
@@ -56,7 +55,6 @@ describe("post indicator actions", () => {
   it("POSTED_INDICATOR_ERROR", () => {
     mock.onPost("http://46.101.186.181:8080/indicators").reply(404);
     store.dispatch(actions.postIndicator(indicator)).then(() => {
-      console.log(store.getActions());
       expect(store.getActions()[0].type).toEqual(actions.POSTING_INDICATOR);
       expect(store.getActions()[1].type).toEqual(
         actions.POSTED_INDICATOR_ERROR
