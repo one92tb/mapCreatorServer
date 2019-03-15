@@ -40,7 +40,7 @@ describe("edit marker actions", () => {
 
   it("EDITED_MARKER_SUCCESS", () => {
     mock
-      .onPut(`http://46.101.186.181:8080/markers/${id}`)
+      .onPut(`http://localhost:8080/markers/${id}`)
       .reply(200, expectedResult);
     store.dispatch(actions.editMarker(marker, id)).then(() => {
       expect(store.getActions()).toEqual([
@@ -56,7 +56,7 @@ describe("edit marker actions", () => {
   });
 
   it("EDITED_MARKER_ERROR", () => {
-    mock.onPut("http://46.101.186.181:8080/markers").reply(404);
+    mock.onPut("http://localhost:8080/markers").reply(404);
     store.dispatch(actions.editMarker(marker)).then(() => {
       expect(store.getActions()[0].type).toEqual(actions.EDITING_MARKER);
       expect(store.getActions()[1].type).toEqual(actions.EDITED_MARKER_ERROR);

@@ -26,7 +26,7 @@ describe("change permissions actions", () => {
   });
   it("CHANGED_PERMISSIONS_SUCCESS", () => {
     mock
-      .onPatch(`http://46.101.186.181:8080/users/${id}`)
+      .onPatch(`http://localhost:8080/users/${id}`)
       .reply(200, expectedResult);
 
     store.dispatch(actions.changePermissions(status, id)).then(() => {
@@ -44,7 +44,7 @@ describe("change permissions actions", () => {
 
   it("CHANGED_PERMISSIONS_ERROR", () => {
     mock
-      .onPatch(`http://46.101.186.181:8080/users/${id}`)
+      .onPatch(`http://localhost:8080/users/${id}`)
       .reply(404, expectedResult);
 
     store.dispatch(actions.changePermissions(status.id)).then(() => {

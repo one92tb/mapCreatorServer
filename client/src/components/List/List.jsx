@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchIndicators } from "../../actions/mapIndicator/fetchIndicators";
 import { fetchMarkers } from "../../actions/marker/fetchMarkers";
+import { redirectToMain } from "../../actions/redirect/redirect";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
+//import { withRouter } from "react-router-dom";
 import {
   Wrapper,
   Label,
@@ -21,21 +22,25 @@ import {
   Image
 } from "./style";
 
-const FindIndicator = withRouter(({ history }) => {
-  return (
-    <Image
-      src={"map-location.png"}
-      onClick={() => {
-        history.push("/");
-      }}
-    />
-  );
-});
+Wrapper.displayName = "div";
+Label.displayName = "label";
+Select.displayName = "select";
+Input.displayName = "input";
+Form.displayName = "form";
+TableContainer.displayName = "div";
+Table.displayName = "table";
+Thead.displayName = "thead";
+Tbody.displayName = "tbody";
+Tr.displayName = "tr";
+Th.displayName = "th";
+Td.displayName = "td";
+Option.displayName = "option";
+Image.displayName = "img";
 
 export class List extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+
     this.state = {
       markerName: "All",
       city: ""
@@ -49,27 +54,24 @@ export class List extends Component {
     fetchMarkers();
   }
 
-  handleChange = e => {
-    if (e.target.name === "city") {
-      this.setState({ city: e.target.value });
-    } else {
-      this.setState({ markerName: e.target.value });
-    }
+  handleChange = (e, name) => {
+    this.setState({ [name]: e.target.value });
   };
 
   findIndicatorOnTheMap = indicator => {
-    console.log(indicator);
+    const { redirectToMain } = this.props;
+    redirectToMain();
   };
 
   render() {
-    const { markers, indicators } = this.props;
+    const { markers, indicators, history, redirectToMain } = this.props;
     const { markerName, city } = this.state;
 
     return (
       <Wrapper>
         <Form>
           <Label>
-            <Select onChange={this.handleChange}>
+            <Select onChange={e => this.handleChange(e, "markerName")}>
               <Option>All</Option>
               {markers.map((marker, id, arr) => (
                 <Option key={marker.id}>{marker.name}</Option>
@@ -77,7 +79,7 @@ export class List extends Component {
             </Select>
           </Label>
           <Input
-            onChange={this.handleChange}
+            onChange={e => this.handleChange(e, "city")}
             type="text"
             name="city"
             placeholder="search city"
@@ -104,13 +106,15 @@ export class List extends Component {
                         .toLowerCase()
                         .search(city.toLowerCase()) !== -1)
                     ? indicator
-                    : markerName === indicator.name && markerName === "All"
-                      ? indicator
-                      : markerName === indicator.name &&
+                    : markerName === indicator.name &&
                         indicator.city
                           .toLowerCase()
                           .search(city.toLowerCase()) !== -1 &&
                         indicator;
+
+                  //1 ) sprawdza wszystko ALL ""
+                  // 2) All  Wroclaw
+                  // 3 ) test1 Wroclaw
                 })
                 .map((indicator, id) => (
                   <Tr key={indicator.id}>
@@ -119,8 +123,11 @@ export class List extends Component {
                     <Td>{indicator.street}</Td>
                     <Td>{indicator.city}</Td>
                     <Td>{indicator.country}</Td>
-                    <Td onClick={() => this.findIndicatorOnTheMap(indicator)}>
-                      <FindIndicator />
+                    <Td>
+                      <Image
+                        src={"map-location.png"}
+                        onClick={() => this.findIndicatorOnTheMap(indicator)}
+                      />
                     </Td>
                   </Tr>
                 ))}
@@ -134,7 +141,8 @@ export class List extends Component {
 
 const mapDispatchToProps = {
   fetchIndicators,
-  fetchMarkers
+  fetchMarkers,
+  redirectToMain
 };
 
 const mapStateToProps = state => ({
@@ -170,5 +178,6 @@ List.propTypes = {
     })
   ),
   fetchIndicators: PropTypes.func.isRequired,
-  fetchMarkers: PropTypes.func.isRequired
+  fetchMarkers: PropTypes.func.isRequired,
+  redirectToMain: PropTypes.func.isRequired
 };

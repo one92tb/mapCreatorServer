@@ -41,6 +41,10 @@ const account = (state = initialState, action) => {
         ...state,
         error: null
       };
+    case "CHANGE_LOCATION":
+      return {
+        ...state
+      };
     default:
       return state;
   }

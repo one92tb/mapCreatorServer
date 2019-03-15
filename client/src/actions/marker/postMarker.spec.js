@@ -31,7 +31,7 @@ describe("post marker actions", () => {
 
   it("POSTED_MARKER_SUCCESS", () => {
     mock
-      .onPost("http://46.101.186.181:8080/markers")
+      .onPost("http://localhost:8080/markers")
       .reply(200, expectedResult);
     store.dispatch(actions.postMarker(marker)).then(() => {
       expect(store.getActions()).toEqual([
@@ -47,7 +47,7 @@ describe("post marker actions", () => {
   });
 
   it("POSTED_MARKER_ERROR", () => {
-    mock.onPost("http://46.101.186.181:8080/markers").reply(404);
+    mock.onPost("http://localhost:8080/markers").reply(404);
     store.dispatch(actions.postMarker(marker)).then(() => {
       expect(store.getActions()[0].type).toEqual(actions.POSTING_MARKER);
       expect(store.getActions()[1].type).toEqual(actions.POSTED_MARKER_ERROR);

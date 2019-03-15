@@ -26,7 +26,7 @@ describe("remove indicator actions", () => {
 
   it("REMOVED_INDICATOR_SUCCESS", () => {
     mock
-      .onDelete(`http://46.101.186.181:8080/indicators/${id}`)
+      .onDelete(`http://localhost:8080/indicators/${id}`)
       .reply(200, expectedResult);
     store.dispatch(actions.removeIndicator(id)).then(() => {
       expect(store.getActions()).toEqual([
@@ -37,7 +37,7 @@ describe("remove indicator actions", () => {
   });
 
   it("REMOVED_INDICATOR_ERROR", () => {
-    mock.onDelete(`http://46.101.186.181:8080/indicators/${id}`).reply(404);
+    mock.onDelete(`http://localhost:8080/indicators/${id}`).reply(404);
     store.dispatch(actions.removeIndicator(id)).then(() => {
       expect(store.getActions()[0].type).toEqual(actions.REMOVING_INDICATOR);
       expect(store.getActions()[1].type).toEqual(

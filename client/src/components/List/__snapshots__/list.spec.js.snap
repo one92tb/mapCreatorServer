@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`list component passses all props to List component 1`] = `
+<div>
+  <form>
+    <label>
+      <select
+        onChange={[Function]}
+      >
+        <option>
+          All
+        </option>
+        <option
+          key="1"
+        >
+          test1
+        </option>
+        <option
+          key="2"
+        >
+          basen
+        </option>
+        ;
+      </select>
+    </label>
+    <input
+      name="city"
+      onChange={[Function]}
+      placeholder="search city"
+      type="text"
+    />
+  </form>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            id
+          </th>
+          <th>
+            name
+          </th>
+          <th>
+            street
+          </th>
+          <th>
+            city
+          </th>
+          <th>
+            country
+          </th>
+          <th>
+            find on the map
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          key="2"
+        >
+          <td>
+            1
+          </td>
+          <td>
+            test1
+          </td>
+          <td>
+            Unnamed Road
+          </td>
+          <td>
+            Jelenia Góra 58-500
+          </td>
+          <td>
+            Polska
+          </td>
+          <td>
+            <img
+              onClick={[Function]}
+              src="map-location.png"
+            />
+          </td>
+        </tr>
+        <tr
+          key="3"
+        >
+          <td>
+            2
+          </td>
+          <td>
+            test1
+          </td>
+          <td>
+            Unnamed Road
+          </td>
+          <td>
+            Jelenia Góra 58-500
+          </td>
+          <td>
+             Polska
+          </td>
+          <td>
+            <img
+              onClick={[Function]}
+              src="map-location.png"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;

@@ -26,7 +26,7 @@ describe("delete account actions", () => {
 
   it("DELETED_ACCOUNT_SUCCESS", () => {
     mock
-      .onDelete(`http://46.101.186.181:8080/users/${id}`)
+      .onDelete(`http://localhost:8080/users/${id}`)
       .reply(200, expectedResult);
     store.dispatch(actions.deleteAccount(id)).then(() => {
       expect(store.getActions()).toEqual([
@@ -36,7 +36,7 @@ describe("delete account actions", () => {
     });
   });
   it("DELETED_ACCOUNT_ERROR", () => {
-    mock.onDelete(`http://46.101.186.181:8080/users/${id}`).reply(404);
+    mock.onDelete(`http://localhost:8080/users/${id}`).reply(404);
     store.dispatch(actions.deleteAccount(id)).then(() => {
       expect(store.getActions()[0].type).toEqual(actions.DELETING_ACCOUNT);
       expect(store.getActions()[1].type).toEqual(actions.DELETED_ACCOUNT_ERROR);
