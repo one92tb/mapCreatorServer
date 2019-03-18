@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`statistic component passess all props to Statistic component 1`] = `
+<div>
+  <form>
+    <label>
+      <input
+        name="city"
+        onChange={[Function]}
+        placeholder="search your city"
+        type="text"
+      />
+    </label>
+  </form>
+  <BarGraph
+    displayMarkers={[Function]}
+  />
+  <div
+    fluid={true}
+    tag={[Function]}
+  >
+    <div
+      tag={[Function]}
+    >
+      <div
+        lg="12"
+        tag={[Function]}
+        widths={
+          Array [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+          ]
+        }
+        xl="6"
+      >
+        <div>
+          <PieGraph
+            displayMarkers={[Function]}
+          />
+        </div>
+      </div>
+      <div
+        lg="12"
+        tag={[Function]}
+        widths={
+          Array [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+          ]
+        }
+        xl="6"
+      >
+        <div>
+          <PieGraph
+            displayMarkers={[Function]}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

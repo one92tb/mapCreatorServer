@@ -99,7 +99,7 @@ class PieGraph extends Component {
               activeIndex={activeIndex}
               activeShape={renderActiveShape}
               dataKey="value"
-              data={displayMarkers.map(el => {
+              data={displayMarkers().map(el => {
                 return {
                   name: el[0],
                   value: el[1]

@@ -11,9 +11,12 @@ import {
 } from "recharts";
 
 const BarGraph = ({ displayMarkers }) => (
-  <ResponsiveContainer width="100%" height={(window.innerWidth < 767.98) ? "70%" : "50%"}>
+  <ResponsiveContainer
+    width="100%"
+    height={window.innerWidth < 767.98 ? "70%" : "50%"}
+  >
     <BarChart
-      data={displayMarkers.map(el => {
+      data={displayMarkers().map(el => {
         return {
           name: el[0],
           amount: el[1]

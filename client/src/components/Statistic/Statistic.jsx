@@ -18,7 +18,17 @@ import {
   TextWrapper
 } from "./style";
 
-class Statistic extends Component {
+Container.displayName = "div";
+Row.displayName = "div";
+Col.displayName = "div";
+Wrapper.displayName = "div";
+Form.displayName = "form";
+Input.displayName = "input";
+Inner.displayName = "div";
+TextBox.displayName = "div";
+TextWrapper.displayName = "div";
+
+export class Statistic extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,13 +42,7 @@ class Statistic extends Component {
     fetchMarkers();
   }
 
-  handleChange = e => {
-    this.setState({
-      city: e.target.value
-    });
-  };
-
-  render() {
+  sumEachIndicator = () => {
     const { indicators } = this.props;
     const { city } = this.state;
 
@@ -57,8 +61,23 @@ class Statistic extends Component {
         }, {})
     );
 
-    const displaySumMarkers = [["All markers", indicators.length]];
+    return displayMarkers;
+  };
 
+  sumAllIndiacators = () => {
+    const { indicators } = this.props;
+    const displaySumMarkers = [["All markers", indicators.length]];
+    return displaySumMarkers;
+  };
+
+  handleChange = e => {
+    this.setState({
+      city: e.target.value
+    });
+  };
+
+  render() {
+    const { indicators } = this.props;
     return (
       <Wrapper>
         <Form>
@@ -77,17 +96,17 @@ class Statistic extends Component {
           </TextWrapper>
         ) : (
           <React.Fragment>
-            <BarGraph displayMarkers={displayMarkers} />
+            <BarGraph displayMarkers={this.sumEachIndicator} />
             <Container fluid tag={ContainerStyle}>
               <Row tag={RowStyle}>
                 <Col xl="6" lg="12" tag={ColStyle}>
                   <Inner>
-                    <PieGraph displayMarkers={displaySumMarkers} />
+                    <PieGraph displayMarkers={this.sumAllIndiacators} />
                   </Inner>
                 </Col>
                 <Col xl="6" lg="12" tag={ColStyle}>
                   <Inner>
-                    <PieGraph displayMarkers={displayMarkers} />
+                    <PieGraph displayMarkers={this.sumEachIndicator} />
                   </Inner>
                 </Col>
               </Row>
