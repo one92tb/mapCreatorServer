@@ -1,5 +1,4 @@
 const validate = (errors, ValidationDetails, data) => {
-  console.log(errors);
   let isError = false;
 
   ValidationDetails(data).forEach((validate, id) => {

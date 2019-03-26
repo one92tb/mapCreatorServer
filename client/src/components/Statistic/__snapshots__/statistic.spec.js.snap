@@ -12,7 +12,7 @@ exports[`statistic component passess all props to Statistic component 1`] = `
       />
     </label>
   </form>
-  <BarGraph
+  <Component
     displayMarkers={[Function]}
   />
   <div

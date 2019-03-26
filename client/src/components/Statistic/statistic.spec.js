@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import toJson from "enzyme-to-json";
 import configureStore from "redux-mock-store";
 import { Statistic } from "./Statistic";
@@ -237,26 +237,11 @@ describe("statistic component", () => {
         fetchIndicators={fetchIndicators}
       />
     );
-    wrapper.setState({ city: "Jelenia Góra" });
+
     const { city } = wrapper.instance().state;
-
-    /*    const result = Object.entries(
-      indicators
-        .filter((indicator, id, arr) => {
-          return (
-            (city === "" ||
-              indicator.city.toLowerCase().search(city.toLowerCase()) !== -1) &&
-            indicator
-          );
-        })
-        .reduce((obj, el, id) => {
-          console.log(el);
-          obj[el.name] = obj[el.name] ? ++obj[el.name] : 1;
-          return obj;
-        }, {})
-    );*/
-
     const expectedResult = [["test1", 1]];
+
+    wrapper.setState({ city: "Jelenia Góra" });
     expect(wrapper.instance().sumEachIndicator()).toEqual(expectedResult);
   });
 

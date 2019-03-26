@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`marker creator component passess all props to markerCreator component 1`] = `
+<div>
+  <div>
+    <div>
+      <button
+        onClick={[Function]}
+        status={true}
+      >
+        Upload Marker
+      </button>
+      <button
+        onClick={[Function]}
+        status={true}
+      >
+        Custom Marker
+      </button>
+    </div>
+    <div>
+      <img
+        alt=""
+        src="IMG-default.png"
+      />
+    </div>
+    <form
+      onSubmit={[Function]}
+    >
+      <div>
+        <label
+          htmlFor="exampleText"
+        >
+          Name
+        </label>
+        <input
+          name="markerName"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
+      <div>
+        <label
+          htmlFor="file"
+        >
+          <span>
+            Choose file to send
+          </span>
+           
+          Not file detected
+        </label>
+        <input
+          id="file"
+          name="markerImage"
+          onChange={[Function]}
+          type="file"
+          value=""
+        />
+      </div>
+      <div>
+        <button>
+          Edit Marker
+        </button>
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          Remove Marker
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;

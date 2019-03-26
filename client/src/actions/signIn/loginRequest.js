@@ -1,5 +1,4 @@
 import axios from "axios";
-import history from "../../history";
 import baseUrl from "../../baseUrl";
 import { redirectToMain } from "../redirect/redirect";
 

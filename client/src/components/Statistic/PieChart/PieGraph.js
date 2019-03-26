@@ -74,7 +74,7 @@ const renderActiveShape = props => {
   );
 };
 
-class PieGraph extends Component {
+export class PieGraph extends Component {
   constructor(props) {
     super(props);
     this.state = {

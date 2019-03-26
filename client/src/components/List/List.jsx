@@ -49,13 +49,12 @@ export class List extends Component {
 
   componentDidMount() {
     const { fetchIndicators, fetchMarkers } = this.props;
-
     fetchIndicators();
     fetchMarkers();
   }
 
-  handleChange = (e, name) => {
-    this.setState({ [name]: e.target.value });
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   findIndicatorOnTheMap = indicator => {
@@ -64,14 +63,14 @@ export class List extends Component {
   };
 
   render() {
-    const { markers, indicators, history, redirectToMain } = this.props;
+    const { markers, indicators } = this.props;
     const { markerName, city } = this.state;
 
     return (
       <Wrapper>
         <Form>
           <Label>
-            <Select onChange={e => this.handleChange(e, "markerName")}>
+            <Select onChange={this.handleChange} name="markerName">
               <Option>All</Option>
               {markers.map((marker, id, arr) => (
                 <Option key={marker.id}>{marker.name}</Option>
@@ -79,7 +78,7 @@ export class List extends Component {
             </Select>
           </Label>
           <Input
-            onChange={e => this.handleChange(e, "city")}
+            onChange={this.handleChange}
             type="text"
             name="city"
             placeholder="search city"

@@ -5,6 +5,7 @@ exports[`list component passses all props to List component 1`] = `
   <form>
     <label>
       <select
+        name="markerName"
         onChange={[Function]}
       >
         <option>

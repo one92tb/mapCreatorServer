@@ -23,7 +23,7 @@ export const markerValidationDetails = data => {
       messageError: "Input file cannot be empty"
     },
     {
-      condition: uploadStatus && markers.find(marker => marker.name === markerName),
+      condition: !selectedMarker.name && uploadStatus && markers.find(marker => marker.name === markerName),
       nameOfErrorProperty: "markerNameError",
       messageError: "This marker is already exist"
     }

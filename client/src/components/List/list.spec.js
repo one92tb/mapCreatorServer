@@ -425,7 +425,12 @@ describe("list component", () => {
     );
 
     const select = wrapper.find("select");
-    select.simulate("change", { target: { value: "test1" } });
+    select.simulate("change", {
+      target: {
+        name: "markerName",
+        value: "test1"
+      }
+    });
     expect(wrapper.state().markerName).toEqual("test1");
   });
 
@@ -483,7 +488,12 @@ describe("list component", () => {
     );
 
     const input = wrapper.find("input");
-    input.simulate("change", { target: { value: "Jelenia Góra" } });
+    input.simulate("change", {
+      target: {
+        name: "city",
+        value: "Jelenia Góra"
+      }
+    });
 
     expect(input.props().name).toEqual("city");
     expect(wrapper.state().city).toEqual("Jelenia Góra");
@@ -611,15 +621,6 @@ describe("list component", () => {
       />
     );
 
-    //  console.log(wrapper);
-    //  console.log(wrapper.instance().props);
-
-    wrapper.instance().findIndicatorOnTheMap = jest.fn(indicator => {
-      redirectToMain();
-    });
-
-    let { findIndicatorOnTheMap } = wrapper.instance();
-
     const mapCell = wrapper
       .find("tr")
       .at(1)
@@ -627,10 +628,8 @@ describe("list component", () => {
       .at(5)
       .childAt(0);
 
-    console.log(mapCell.html());
     mapCell.simulate("click");
 
-    expect(findIndicatorOnTheMap).toHaveBeenCalledTimes(1);
     expect(redirectToMain).toHaveBeenCalledTimes(1);
   });
 });

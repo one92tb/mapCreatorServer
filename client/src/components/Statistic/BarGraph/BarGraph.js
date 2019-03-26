@@ -10,7 +10,9 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-const BarGraph = ({ displayMarkers }) => (
+//BarGraph.displayName = "Component";
+
+export const BarGraph = ({ displayMarkers }) => (
   <ResponsiveContainer
     width="100%"
     height={window.innerWidth < 767.98 ? "70%" : "50%"}
