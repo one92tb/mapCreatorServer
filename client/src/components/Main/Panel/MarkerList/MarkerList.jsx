@@ -7,7 +7,13 @@ import { List, Marker, MarkerIcon, MarkerName, MarkerImg } from "./style";
 import PropTypes from "prop-types";
 import baseUrl from "../../../../baseUrl";
 
-class MarkerList extends Component {
+List.displayName = "div";
+Marker.displayName = "li";
+MarkerIcon.displayName = "div";
+MarkerName.displayName = "span";
+MarkerImg.displayName = "img";
+
+export class MarkerList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,6 +30,8 @@ class MarkerList extends Component {
   componentDidUpdate() {
     const { selectedId } = this.state;
     const { selectedMarker } = this.props;
+    // "", { ...} , !== ""
+
     if (selectedId !== selectedMarker && selectedMarker === "") {
       this.setState({
         selectedId: ""
@@ -32,7 +40,6 @@ class MarkerList extends Component {
   }
 
   onSelect = (marker, id) => {
-    console.log(baseUrl, marker.icon);
     const { getSelectedMarker, isNavSelect, disableMarkers } = this.props;
     const { selectedId, filteredMarkers } = this.state;
 
@@ -43,15 +50,14 @@ class MarkerList extends Component {
         url: `${baseUrl}/images/${marker.icon}`
       });
     } else if (marker.id === selectedId && isNavSelect) {
-      id = "";
-      this.setState({ selectedId: id });
+      this.setState({ selectedId: "" });
       getSelectedMarker({
         id: undefined,
         name: "",
         url: "IMG-default.png"
       });
     } else {
-      //delete Marker from filteredMarkers if exist
+      //remove Marker from filteredMarkers if exist
       if (filteredMarkers.find(el => el.id === marker.id)) {
         this.setState(
           {
