@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`user component passess all props to users component 1`] = `
+<div>
+  <form>
+    <input
+      name="user"
+      onChange={[Function]}
+      placeholder="search user"
+      type="text"
+    />
+  </form>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            id
+          </th>
+          <th>
+            name
+          </th>
+          <th>
+            change status
+          </th>
+          <th>
+            remove
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          key="1"
+        >
+          <td>
+            1
+          </td>
+          <td>
+            user1
+          </td>
+          <td>
+            Admin
+          </td>
+          <td />
+        </tr>
+        <tr
+          key="2"
+        >
+          <td>
+            2
+          </td>
+          <td>
+            user2
+          </td>
+          <td>
+            <select
+              name="user"
+              onChange={[Function]}
+            >
+              <option
+                key="1"
+              >
+                User
+              </option>
+              <option
+                key="2"
+              >
+                Admin
+              </option>
+            </select>
+          </td>
+          <td>
+            <img
+              onClick={[Function]}
+              src="delete.png"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;

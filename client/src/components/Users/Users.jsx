@@ -16,11 +16,25 @@ import {
   Tr,
   Th,
   Td,
-  RemoveBtn,
+  RemoveIcon,
   Option
 } from "./style";
 
-class Users extends React.Component {
+Wrapper.displayName = "div";
+Select.displayName = "select";
+Input.displayName = "input";
+Form.displayName = "form";
+TableContainer.displayName = "div";
+Table.displayName = "table";
+Thead.displayName = "thead";
+Tbody.displayName = "tbody";
+Tr.displayName = "tr";
+Th.displayName = "th";
+Td.displayName = "td";
+RemoveIcon.displayName = "img";
+Option.displayName = "option";
+
+export class Users extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,7 +73,7 @@ class Users extends React.Component {
           <Input
             onChange={e => this.handleChangeUser(e)}
             type="text"
-            name="city"
+            name="user"
             placeholder="search user"
           />
         </Form>
@@ -86,6 +100,7 @@ class Users extends React.Component {
                           "Admin"
                         ) : (
                           <Select
+                            name="user"
                             onChange={e => this.handleChangeStatus(e, user)}
                           >
                             <Option key={id}>
@@ -99,7 +114,7 @@ class Users extends React.Component {
                       </Td>
                       <Td>
                         {user.id !== 1 && (
-                          <RemoveBtn
+                          <RemoveIcon
                             onClick={id => this.removeUser(user.id)}
                             src={"delete.png"}
                           />

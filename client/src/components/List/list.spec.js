@@ -189,8 +189,6 @@ describe("list component", () => {
         userId: 1
       }
     ];
-    const city = "";
-    const markerName = "All";
 
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
@@ -206,11 +204,16 @@ describe("list component", () => {
       />
     );
 
+    wrapper.setState({
+      city: "",
+      markerName: "All"
+    });
+
     const filteredTr = wrapper
       .find("tbody")
       .children() //[tr,tr]
       .filterWhere(tr => {
-        if (markerName === "All" && !city) {
+        if (wrapper.state().markerName === "All" && !wrapper.state().city) {
           return tr;
         }
       });

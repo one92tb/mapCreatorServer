@@ -145,7 +145,7 @@ const Td = styled.td`
   background: #4ddbff;
 `;
 
-const RemoveBtn = styled.img`
+const RemoveIcon = styled.img`
   &:hover {
     cursor: pointer;
   }
@@ -174,6 +174,6 @@ export {
   Tr,
   Th,
   Td,
-  RemoveBtn,
+  RemoveIcon,
   Option
 };
