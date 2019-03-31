@@ -211,14 +211,11 @@ export class MarkerCreator extends Component {
   };
 
   handleUpload = status => {
-    this.setState(
-      {
-        uploadStatus: status,
-        markerNameError: "",
-        markerImageFileError: ""
-      },
-      () => console.log(this.imageBox, this.inputFile)
-    );
+    this.setState({
+      uploadStatus: status,
+      markerNameError: "",
+      markerImageFileError: ""
+    });
   };
 
   render() {

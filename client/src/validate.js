@@ -1,7 +1,7 @@
 const validate = (errors, ValidationDetails, data) => {
   let isError = false;
 
-  ValidationDetails(data).forEach((validate, id) => {
+  ValidationDetails(data).forEach((validate) => {
     if (validate.condition) {
       isError = true;
       errors[validate.nameOfErrorProperty] = validate.messageError;

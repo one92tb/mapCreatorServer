@@ -23,7 +23,20 @@ import {
   SubmitBtn
 } from "./style";
 
-class Login extends React.Component {
+Wrapper.displayName = "div";
+Inner.displayName = "div";
+ButtonWrapper.displayName = "div";
+RegisterBtn.displayName = "button";
+LoginBtn.displayName = "button";
+Form.displayName = "form";
+FormGroup.displayName = "div";
+Label.displayName = "label";
+Input.displayName = "input";
+ErrorMessage.displayName = "span";
+SuccessMessage.displayName = "span";
+SubmitBtn.displayName = "button";
+
+export class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,8 +68,8 @@ class Login extends React.Component {
       password,
       loginStatus
     };
-    const validationResult = validate(errors, registerValidationDetails, data);
 
+    const validationResult = validate(errors, registerValidationDetails, data);
     const user = {
       login,
       password
@@ -126,7 +139,7 @@ class Login extends React.Component {
               <Input
                 type="text"
                 name="login"
-                onChange={e => this.onChange(e)}
+                onChange={this.onChange}
                 value={login}
                 autocomplete="login"
               />
@@ -144,7 +157,7 @@ class Login extends React.Component {
               <Input
                 type="password"
                 name="password"
-                onChange={e => this.onChange(e)}
+                onChange={this.onChange}
                 value={password}
                 autocomplete={loginStatus ? "current password" : "new-password"}
               />

@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`login component passses all props to Login component 1`] = `
+<div>
+  <div>
+    <div>
+      <button
+        onClick={[Function]}
+        status={true}
+      >
+        Login
+      </button>
+      <button
+        onClick={[Function]}
+        status={true}
+      >
+        Register
+      </button>
+    </div>
+    <form>
+      <div>
+        <label>
+          Login
+        </label>
+        <input
+          autocomplete="login"
+          name="login"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
+      <div>
+        <label>
+          Password
+        </label>
+        <input
+          autocomplete="current password"
+          name="password"
+          onChange={[Function]}
+          type="password"
+          value=""
+        />
+        <span />
+      </div>
+      <div>
+        <button
+          onClick={[Function]}
+        >
+          Authorization
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
