@@ -254,7 +254,6 @@ describe("user component", () => {
     );
 
     const tbody = wrapper.find("tbody");
-    console.log(tbody.html());
 
     wrapper.setState({
       login: "user1"

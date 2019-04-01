@@ -176,7 +176,7 @@ const DownloadBtn = styled.button`
 const MarkerIcon = styled.div`
   position: absolute;
   border-radius: 50%;
-  border: 8px solid ${props => props.background && props.background}
+  border: 8px solid ${props => props.background && props.background};
   width: 60px;
   height: 60px;
   top: 7px;

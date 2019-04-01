@@ -1,11 +1,11 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { getSelectedMarker } from "../../../actions/marker/getSelectedMarker";
 import { postMarker } from "../../../actions/marker/postMarker";
 import { removeMarker } from "../../../actions/marker/removeMarker";
 import { editMarker } from "../../../actions/marker/editMarker";
 import { fetchMarkers } from "../../../actions/marker/fetchMarkers";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import validate from "../../../validate";
 import { errors, markerValidationDetails } from "../../../schema/markerSchema";
 import {

@@ -367,7 +367,6 @@ describe("login component", () => {
 
     const loginBtn = wrapper.find("button").first();
     loginBtn.simulate("click");
-    console.log(loginBtn.props());
     expect(wrapper.state().loginStatus).toBe(true);
   });
 });
