@@ -1,6 +1,6 @@
 import history from "./history";
 
-export const REDIRECT_TO_MAIN = "REDIRECT_TO_MAIN";
+export const REDIRECT = "REDIRECT";
 
 export const createMiddleware = handlers => {
   return store => next => action => {
@@ -20,9 +20,9 @@ export const createMiddleware = handlers => {
 
 export const redirectMiddleware = createMiddleware([
   {
-    type: REDIRECT_TO_MAIN,
-    afterHandler: pathname => {
-      history.push(pathname);
+    type: REDIRECT,
+    afterHandler: pathName => {
+      history.push(pathName);
     }
   }
 ]);

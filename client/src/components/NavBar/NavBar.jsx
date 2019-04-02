@@ -4,6 +4,7 @@ import { isPanelSelect } from "../../actions/isPanelSelect";
 import { getSelectedMarker } from "../../actions/marker/getSelectedMarker";
 import { withRouter } from "react-router-dom";
 import { logout } from "../../actions/signIn/logout";
+import { redirect } from "../../actions/redirect/redirect";
 import PropTypes from "prop-types";
 import {
   LogoutBtn,
@@ -24,26 +25,24 @@ import {
   ResponsiveNav
 } from "./style";
 
-const activeClassName = "nav-item-active";
+LogoutBtn.displayName = "button";
+Header.displayName = "div";
+Logo.displayName = "img";
+Title.displayName = "h1";
+User.displayName = "div";
+LoginImg.displayName = "img";
+LoginName.displayName = "span";
+Input.displayName = "input";
+Nav.displayName = "ul";
+NavItem.displayName = "li";
+NavLink.displayName = "a";
+Icon.displayName = "img";
+Label.displayName = "label";
+Panel.displayName = "div";
+ResponsiveMenu.displayName = "div";
+ResponsiveNav.displayName = "div";
 
-const Logout = withRouter(({ history, logOutFromApp }) => {
-  return (
-    <LogoutBtn
-      onClick={() => {
-        logOutFromApp({
-          userId: "",
-          userName: "",
-          error: "",
-          isAuthorized: false
-        });
-        localStorage.removeItem("token");
-        history.push("/login");
-      }}
-    >
-      Sign out
-    </LogoutBtn>
-  );
-});
+const activeClassName = "nav-item-active";
 
 const routes = [
   {
@@ -74,7 +73,7 @@ const routes = [
   }
 ];
 
-class NavBar extends Component {
+export class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -89,21 +88,29 @@ class NavBar extends Component {
 
   handleNavLink = path => {
     const { isPanelSelect, getSelectedMarker } = this.props;
-
     this.setState({
       checked: false
     });
 
-    if (path === "/") {
-      getSelectedMarker("");
-    } else if (path === "/createMarker") {
-      getSelectedMarker("");
+    getSelectedMarker("");
+    if (path === "/createMarker") {
       isPanelSelect(true);
     }
   };
 
+  handleLogOut = () => {
+    const { logout, redirect } = this.props;
+    logout({
+      userId: "",
+      userName: "",
+      error: "",
+      isAuthorized: false
+    });
+    localStorage.removeItem("token");
+    redirect("/login");
+  };
+
   render() {
-    const { logout } = this.props;
     return (
       <Panel>
         <ResponsiveMenu>
@@ -119,7 +126,7 @@ class NavBar extends Component {
             <LoginImg src={"user.png"} />
             <LoginName>UserNick</LoginName>
           </User>
-          <Logout logOutFromApp={logout} />
+          <LogoutBtn onClick={this.handleLogOut}>Sign out</LogoutBtn>
           <Nav>
             {routes.map((route, id) => (
               <NavItem key={id}>
@@ -143,7 +150,8 @@ class NavBar extends Component {
 const mapDispatchToProps = {
   isPanelSelect,
   getSelectedMarker,
-  logout
+  logout,
+  redirect
 };
 
 export default connect(

@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchIndicators } from "../../actions/mapIndicator/fetchIndicators";
 import { fetchMarkers } from "../../actions/marker/fetchMarkers";
-import { redirectToMain } from "../../actions/redirect/redirect";
+import { redirect } from "../../actions/redirect/redirect";
 import PropTypes from "prop-types";
-//import { withRouter } from "react-router-dom";
 import {
   Wrapper,
   Label,
@@ -58,8 +57,8 @@ export class List extends Component {
   };
 
   findIndicatorOnTheMap = indicator => {
-    const { redirectToMain } = this.props;
-    redirectToMain();
+    const { redirect } = this.props;
+    redirect("/");
   };
 
   render() {
@@ -141,7 +140,7 @@ export class List extends Component {
 const mapDispatchToProps = {
   fetchIndicators,
   fetchMarkers,
-  redirectToMain
+  redirect
 };
 
 const mapStateToProps = state => ({
@@ -178,5 +177,5 @@ List.propTypes = {
   ),
   fetchIndicators: PropTypes.func.isRequired,
   fetchMarkers: PropTypes.func.isRequired,
-  redirectToMain: PropTypes.func.isRequired
+  redirect: PropTypes.func.isRequired
 };

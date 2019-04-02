@@ -1,6 +1,6 @@
 import axios from "axios";
 import baseUrl from "../../baseUrl";
-import { redirectToMain } from "../redirect/redirect";
+import { redirect } from "../redirect/redirect";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -24,7 +24,7 @@ export const loginRequest = userData => dispatch => {
     .then(res => {
       localStorage.setItem("token", res.data.token);
       dispatch(loginSuccess(res.data));
-      dispatch(redirectToMain());
+      dispatch(redirect("/"));
     })
     .catch(error => {
       dispatch(loginError(error));

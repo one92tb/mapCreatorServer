@@ -46,7 +46,7 @@ describe("list component", () => {
         userId: 1
       }
     ];
-    const redirectToMain = jest.fn();
+    const redirect = jest.fn();
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
 
@@ -56,7 +56,7 @@ describe("list component", () => {
         indicators={indicators}
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
-        redirectToMain={redirectToMain}
+        redirect={redirect}
       />
     );
     expect(wrapper).toMatchSnapshot();
@@ -103,7 +103,7 @@ describe("list component", () => {
     ];
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
-    const redirectToMain = jest.fn();
+    const redirect = jest.fn();
 
     wrapper = shallow(
       <List
@@ -111,7 +111,7 @@ describe("list component", () => {
         indicators={indicators}
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
-        redirectToMain={redirectToMain}
+        redirect={redirect}
       />
     );
     expect(wrapper.find("tbody").children().length).toEqual(2);
@@ -135,7 +135,7 @@ describe("list component", () => {
     const indicators = [];
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
-    const redirectToMain = jest.fn();
+    const redirect = jest.fn();
 
     wrapper = shallow(
       <List
@@ -143,7 +143,7 @@ describe("list component", () => {
         indicators={indicators}
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
-        redirectToMain={redirectToMain}
+        redirect={redirect}
       />
     );
     expect(wrapper.find("tbody").children().length).toEqual(0);
@@ -192,7 +192,7 @@ describe("list component", () => {
 
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
-    const redirectToMain = jest.fn();
+    const redirect = jest.fn();
 
     wrapper = shallow(
       <List
@@ -200,7 +200,7 @@ describe("list component", () => {
         indicators={indicators}
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
-        redirectToMain={redirectToMain}
+        redirect={redirect}
       />
     );
 
@@ -264,7 +264,7 @@ describe("list component", () => {
 
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
-    const redirectToMain = jest.fn();
+    const redirect = jest.fn();
 
     wrapper = shallow(
       <List
@@ -272,7 +272,7 @@ describe("list component", () => {
         indicators={indicators}
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
-        redirectToMain={redirectToMain}
+        redirect={redirect}
       />
     );
 
@@ -339,7 +339,7 @@ describe("list component", () => {
 
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
-    const redirectToMain = jest.fn();
+    const redirect = jest.fn();
 
     wrapper = shallow(
       <List
@@ -347,7 +347,7 @@ describe("list component", () => {
         indicators={indicators}
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
-        redirectToMain={redirectToMain}
+        redirect={redirect}
       />
     );
 
@@ -415,7 +415,7 @@ describe("list component", () => {
     ];
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
-    const redirectToMain = jest.fn();
+    const redirect = jest.fn();
 
     wrapper = shallow(
       <List
@@ -423,7 +423,7 @@ describe("list component", () => {
         indicators={indicators}
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
-        redirectToMain={redirectToMain}
+        redirect={redirect}
       />
     );
 
@@ -478,7 +478,7 @@ describe("list component", () => {
     ];
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
-    const redirectToMain = jest.fn();
+    const redirect = jest.fn();
 
     wrapper = shallow(
       <List
@@ -486,7 +486,7 @@ describe("list component", () => {
         indicators={indicators}
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
-        redirectToMain={redirectToMain}
+        redirect={redirect}
       />
     );
 
@@ -543,7 +543,7 @@ describe("list component", () => {
     ];
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
-    const redirectToMain = jest.fn();
+    const redirect = jest.fn();
 
     wrapper = shallow(
       <List
@@ -551,7 +551,7 @@ describe("list component", () => {
         indicators={indicators}
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
-        redirectToMain={redirectToMain}
+        redirect={redirect}
       />
     );
 
@@ -612,7 +612,7 @@ describe("list component", () => {
 
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
-    const redirectToMain = jest.fn();
+    const redirect = jest.fn();
 
     wrapper = shallow(
       <List
@@ -620,7 +620,7 @@ describe("list component", () => {
         indicators={indicators}
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
-        redirectToMain={redirectToMain}
+        redirect={redirect}
       />
     );
 
@@ -633,6 +633,6 @@ describe("list component", () => {
 
     mapCell.simulate("click");
 
-    expect(redirectToMain).toHaveBeenCalledTimes(1);
+    expect(redirect).toHaveBeenCalledTimes(1);
   });
 });

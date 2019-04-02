@@ -46,8 +46,8 @@ describe("login request actions", () => {
           userData: expectedResult
         },
         {
-          type: redirectAction.REDIRECT_TO_MAIN,
-          pathName: redirectAction.pathName
+          type: redirectAction.REDIRECT,
+          pathName: "/"
         }
       ]);
     });
