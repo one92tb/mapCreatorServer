@@ -16,7 +16,18 @@ import {
   Input
 } from "./style";
 
-class Panel extends Component {
+Wrapper.displayName = "div";
+FilterLink.displayName = "a";
+SelectLink.displayName = "a";
+Card.displayName = "div";
+CardHeader.displayName = "div";
+CardBody.displayName = "div";
+NavItem.displayName = "li";
+Nav.displayName = "ul";
+Label.displayName = "label";
+Input.displayName = "input";
+
+export class Panel extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,13 +54,13 @@ class Panel extends Component {
     });
   };
 
-  switch = bool => {
-    const { isSelected } = this.props;
+  switchPanelStatus = bool => {
+    const { isSelected, isPanelSelect } = this.props;
     this.setState({
       isSelected: bool
     });
 
-    isPanelSelect(isSelected);
+    isPanelSelect(bool);
   };
 
   render() {
@@ -57,11 +68,7 @@ class Panel extends Component {
     const { isSelected } = this.state;
     return (
       <Wrapper currentLocation={location}>
-        <Label
-          htmlFor="panel"
-          currentLocation={location}
-          onChange={this.handleCheckBox}
-        >
+        <Label htmlFor="panel" currentLocation={location}>
           <img src={"drawMarker.png"} alt="drawMarker" width={30} height={30} />
         </Label>
         <Input type="checkbox" id="panel" onChange={this.handleCheckBox} />
@@ -72,7 +79,7 @@ class Panel extends Component {
                 <SelectLink
                   exact={true}
                   isSelected={isSelected}
-                  onClick={() => this.switch(true)}
+                  onClick={() => this.switchPanelStatus(true)}
                 >
                   Select marker
                 </SelectLink>
@@ -82,7 +89,7 @@ class Panel extends Component {
                 <FilterLink
                   isSelected={isSelected}
                   location={this.props.location.pathname}
-                  onClick={() => this.switch(false)}
+                  onClick={() => this.switchPanelStatus(false)}
                 >
                   Filter marker
                 </FilterLink>

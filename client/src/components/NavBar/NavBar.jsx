@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { isPanelSelect } from "../../actions/isPanelSelect";
 import { getSelectedMarker } from "../../actions/marker/getSelectedMarker";
-import { withRouter } from "react-router-dom";
 import { logout } from "../../actions/signIn/logout";
 import { redirect } from "../../actions/redirect/redirect";
 import PropTypes from "prop-types";
