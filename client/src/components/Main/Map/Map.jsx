@@ -126,6 +126,7 @@ const MapWithAMakredInfoWindow = compose(
           refs.map = ref;
         },
         onBoundsChanged: () => {
+          console.log(refs.map);
           this.setState({
             bounds: refs.map.getBounds(),
             center: refs.map.getCenter()
@@ -138,7 +139,7 @@ const MapWithAMakredInfoWindow = compose(
         onPlacesChanged: () => {
           const places = refs.searchBox.getPlaces();
           const bounds = new google.maps.LatLngBounds();
-
+          console.log(bounds);
           places.forEach(
             place =>
               place.geometry.viewport
@@ -172,8 +173,16 @@ const MapWithAMakredInfoWindow = compose(
       defaultZoom={props.zoom}
       onZoomChanged={props.onZoomChanged}
       onClick={e => props.addIndicator(e, geocode, postIndicator)}
-      defaultCenter={props.center}
+      defaultCenter={
+        props.selectedIndicator
+          ? {
+              lat: props.selectedIndicator.lat,
+              lng: props.selectedIndicator.lng
+            }
+          : props.center
+      }
       defaultCursor={props.cursor}
+      onChangeCenter={props.newLocation}
     >
       {props.indicators
         .filter(
@@ -258,11 +267,21 @@ const MapWithAMakredInfoWindow = compose(
 });
 
 class Map extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      mapCenter: ""
+    };
+  }
+
   componentDidMount() {
     const { fetchIndicators } = this.props;
 
     fetchIndicators();
   }
+
+  componentDidUpdate(prev) {}
 
   addIndicator = (event, geocode) => {
     const { selectedMarker, postIndicator, isNavSelect } = this.props;
@@ -286,7 +305,13 @@ class Map extends Component {
   };
 
   render() {
-    const { indicators, selectedMarker } = this.props;
+    const {
+      indicators,
+      selectedMarker,
+      selectedIndicator,
+      getSelectedIndicator
+    } = this.props;
+
     return (
       <Wrapper>
         <MapWithAMakredInfoWindow
@@ -295,6 +320,7 @@ class Map extends Component {
           addIndicator={this.addIndicator}
           removeMarker={this.removeMarker}
           disableMarkers={this.props.disableMarkers}
+          selectedIndicator={selectedIndicator}
         />
       </Wrapper>
     );
@@ -305,7 +331,8 @@ const mapStateToProps = state => ({
   indicators: state.mapIndicator.indicators,
   isNavSelect: state.mapIndicator.isNavSelect,
   selectedMarker: state.marker.selectedMarker,
-  disableMarkers: state.marker.disableMarkers
+  disableMarkers: state.marker.disableMarkers,
+  selectedIndicator: state.mapIndicator.selectedIndicator
 });
 
 const mapDispatchToProps = {

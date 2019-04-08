@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { fetchIndicators } from "../../actions/mapIndicator/fetchIndicators";
 import { fetchMarkers } from "../../actions/marker/fetchMarkers";
 import { redirect } from "../../actions/redirect/redirect";
+import { getSelectedIndicator } from "../../actions/mapIndicator/getSelectedIndicator";
 import PropTypes from "prop-types";
 import {
   Wrapper,
@@ -57,7 +58,8 @@ export class List extends Component {
   };
 
   findIndicatorOnTheMap = indicator => {
-    const { redirect } = this.props;
+    const { redirect, getSelectedIndicator } = this.props;
+    getSelectedIndicator(indicator);
     redirect("/");
   };
 
@@ -140,7 +142,8 @@ export class List extends Component {
 const mapDispatchToProps = {
   fetchIndicators,
   fetchMarkers,
-  redirect
+  redirect,
+  getSelectedIndicator
 };
 
 const mapStateToProps = state => ({
@@ -177,5 +180,6 @@ List.propTypes = {
   ),
   fetchIndicators: PropTypes.func.isRequired,
   fetchMarkers: PropTypes.func.isRequired,
-  redirect: PropTypes.func.isRequired
+  redirect: PropTypes.func.isRequired,
+  getSelectedIndicator: PropTypes.func.isRequired
 };

@@ -7,7 +7,8 @@ const initialState = {
   fetched: false,
   removing: false,
   removed: false,
-  error: null
+  error: null,
+  selectedIndicator: ""
 };
 
 const mapIndicator = (state = initialState, action) => {
@@ -78,6 +79,11 @@ const mapIndicator = (state = initialState, action) => {
         removing: false,
         removed: false,
         error: action.error
+      };
+    case "GET_SELECTED_INDICATOR":
+      return {
+        ...state,
+        selectedIndicator: action.indicator
       };
     default:
       return state;
