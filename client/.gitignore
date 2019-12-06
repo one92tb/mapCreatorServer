@@ -10,7 +10,7 @@
 /build
 
 #apiKey
-/src/components/Map/apiKey.jsx
+/src/components/Main/Map/apiKey.jsx
 
 
 

@@ -16,6 +16,12 @@ import {
   InfoContent
 } from "./style";
 
+Wrapper.displayName = "div";
+SearchBoxInput.displayName = "input";
+InfoBoxContainer.displayName = "div";
+InfoBtn.displayName = "button";
+InfoContent.displayName = "span";
+
 const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
 const {
   compose,
@@ -77,7 +83,7 @@ const geocode = (indicator, postIndicator) => {
   );
 };
 
-const MapWithAMakredInfoWindow = compose(
+export const MapWithAMakredInfoWindow = compose(
   withProps({
     googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`,
     containerElement: (
@@ -266,7 +272,7 @@ const MapWithAMakredInfoWindow = compose(
   );
 });
 
-class Map extends Component {
+export class Map extends Component {
   constructor(props) {
     super(props);
 
@@ -280,8 +286,6 @@ class Map extends Component {
 
     fetchIndicators();
   }
-
-  componentDidUpdate(prev) {}
 
   addIndicator = (event, geocode) => {
     const { selectedMarker, postIndicator, isNavSelect } = this.props;

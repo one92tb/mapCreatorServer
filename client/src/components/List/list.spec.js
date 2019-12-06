@@ -49,6 +49,7 @@ describe("list component", () => {
     const redirect = jest.fn();
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
+    const getSelectedIndicator = jest.fn();
 
     wrapper = shallow(
       <List
@@ -57,6 +58,7 @@ describe("list component", () => {
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
         redirect={redirect}
+        getSelectedIndicator={getSelectedIndicator}
       />
     );
     expect(wrapper).toMatchSnapshot();
@@ -104,6 +106,7 @@ describe("list component", () => {
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
     const redirect = jest.fn();
+    const getSelectedIndicator = jest.fn();
 
     wrapper = shallow(
       <List
@@ -112,6 +115,7 @@ describe("list component", () => {
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
         redirect={redirect}
+        getSelectedIndicator={getSelectedIndicator}
       />
     );
     expect(wrapper.find("tbody").children().length).toEqual(2);
@@ -136,6 +140,7 @@ describe("list component", () => {
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
     const redirect = jest.fn();
+    const getSelectedIndicator = jest.fn();
 
     wrapper = shallow(
       <List
@@ -144,6 +149,7 @@ describe("list component", () => {
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
         redirect={redirect}
+        getSelectedIndicator={getSelectedIndicator}
       />
     );
     expect(wrapper.find("tbody").children().length).toEqual(0);
@@ -193,6 +199,7 @@ describe("list component", () => {
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
     const redirect = jest.fn();
+    const getSelectedIndicator = jest.fn();
 
     wrapper = shallow(
       <List
@@ -201,6 +208,7 @@ describe("list component", () => {
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
         redirect={redirect}
+        getSelectedIndicator={getSelectedIndicator}
       />
     );
 
@@ -265,6 +273,7 @@ describe("list component", () => {
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
     const redirect = jest.fn();
+    const getSelectedIndicator = jest.fn();
 
     wrapper = shallow(
       <List
@@ -273,6 +282,7 @@ describe("list component", () => {
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
         redirect={redirect}
+        getSelectedIndicator={getSelectedIndicator}
       />
     );
 
@@ -340,6 +350,7 @@ describe("list component", () => {
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
     const redirect = jest.fn();
+    const getSelectedIndicator = jest.fn();
 
     wrapper = shallow(
       <List
@@ -348,6 +359,7 @@ describe("list component", () => {
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
         redirect={redirect}
+        getSelectedIndicator={getSelectedIndicator}
       />
     );
 
@@ -416,6 +428,7 @@ describe("list component", () => {
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
     const redirect = jest.fn();
+    const getSelectedIndicator = jest.fn();
 
     wrapper = shallow(
       <List
@@ -424,6 +437,7 @@ describe("list component", () => {
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
         redirect={redirect}
+        getSelectedIndicator={getSelectedIndicator}
       />
     );
 
@@ -479,6 +493,7 @@ describe("list component", () => {
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
     const redirect = jest.fn();
+    const getSelectedIndicator = jest.fn();
 
     wrapper = shallow(
       <List
@@ -487,6 +502,7 @@ describe("list component", () => {
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
         redirect={redirect}
+        getSelectedIndicator={getSelectedIndicator}
       />
     );
 
@@ -544,6 +560,7 @@ describe("list component", () => {
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
     const redirect = jest.fn();
+    const getSelectedIndicator = jest.fn();
 
     wrapper = shallow(
       <List
@@ -552,6 +569,7 @@ describe("list component", () => {
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
         redirect={redirect}
+        getSelectedIndicator={getSelectedIndicator}
       />
     );
 
@@ -613,6 +631,7 @@ describe("list component", () => {
     const fetchIndicators = jest.fn();
     const fetchMarkers = jest.fn();
     const redirect = jest.fn();
+    const getSelectedIndicator = jest.fn();
 
     wrapper = shallow(
       <List
@@ -621,6 +640,7 @@ describe("list component", () => {
         fetchIndicators={fetchIndicators}
         fetchMarkers={fetchMarkers}
         redirect={redirect}
+        getSelectedIndicator={getSelectedIndicator}
       />
     );
 

@@ -1,12 +1,9 @@
 import React, { Component } from "react";
-import Auth from "./components/Auth/Auth";
-
+import { Auth } from "./components/Auth/Auth";
 
 class App extends Component {
   render() {
-    return (
-        <Auth />
-    );
+    return <Auth />;
   }
 }
 
