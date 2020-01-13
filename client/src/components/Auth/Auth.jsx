@@ -22,8 +22,26 @@ export const checkAuth = () => {
 
   try {
     const { exp } = decode(token);
-    console.log(exp, new Date().getTime() / 1000);
     if (exp < new Date().getTime() / 1000) {
+      return false;
+    }
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+
+  return true;
+};
+
+export const AuthAdmin = () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return false;
+  }
+
+  try {
+    const { userData } = decode(token);
+    if (userData.isAdmin === false) {
       return false;
     }
   } catch (e) {
@@ -33,25 +51,19 @@ export const checkAuth = () => {
   return true;
 };
 
-export const authAdmin = () => {
-  const token = localStorage.getItem("token");
-  console.log(token);
-  const { userData } = decode(token);
-
-  if (!token) {
-    return false;
-  }
-
-  try {
-    console.log(userData);
-    if (userData.isAdmin !== true) {
-      return false;
-    }
-  } catch (e) {
-    return false;
-  }
-
-  return true;
+export const AuthApp = ({ ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        checkAuth() ? (
+          <AppContent />
+        ) : (
+          <Redirect from="/" exact to={{ pathname: "/login" }} />
+        )
+      }
+    />
+  );
 };
 
 export const AppContent = () => {
@@ -68,7 +80,7 @@ export const AppContent = () => {
             <Route path={"/statistic"} component={Statistic} />
             <Route path={"/list"} component={List} />
             <Route
-              render={props => (authAdmin() ? <Users /> : <NoAuthorization />)}
+              render={props => (AuthAdmin() ? <Users /> : <NoAuthorization />)}
             />
           </Switch>
         </Col>
@@ -80,42 +92,8 @@ export const AppContent = () => {
 export const Auth = () => (
   <Router history={history}>
     <Switch>
-      <Route
-        exact
-        path="/login"
-        render={props => {
-          console.log(props);
-          return <Login {...props} />;
-        }}
-      />
-      <Route
-        exact
-        render={props => {
-          //  console.log(props);
-          return checkAuth() ? (
-            <AppContent />
-          ) : (
-            <Redirect from="/" exact to={{ pathname: "/login" }} />
-          );
-        }}
-      />
+      <Route exact path="/login" render={props => <Login {...props} />} />
+      <AuthApp exact />
     </Switch>
   </Router>
 );
-
-/*
-export const AuthApp = ({ ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        checkAuth() ? (
-          <AppContent />
-        ) : (
-          <Redirect from="/" exact to={{ pathname: "/login" }} />
-        )
-      }
-    />
-  );
-};
-*/
