@@ -33,7 +33,7 @@ export const checkAuth = () => {
   return true;
 };
 
-export const AuthAdmin = () => {
+export const authAdmin = () => {
   const token = localStorage.getItem("token");
   if (!token) {
     return false;
@@ -80,7 +80,7 @@ export const AppContent = () => {
             <Route path={"/statistic"} component={Statistic} />
             <Route path={"/list"} component={List} />
             <Route
-              render={props => (AuthAdmin() ? <Users /> : <NoAuthorization />)}
+              render={props => (authAdmin() ? <Users /> : <NoAuthorization />)}
             />
           </Switch>
         </Col>
