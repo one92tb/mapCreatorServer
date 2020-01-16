@@ -4,120 +4,53 @@ import { shallow, mount, render } from "enzyme";
 import { MemoryRouter } from "react-router";
 import LocalStorageMock from "../../../mocks/localStorageMock";
 import { Provider } from "react-redux";
-import { Auth, checkAuth, authAdmin, AppContent, AuthApp } from "./Auth";
+import { Auth } from "./Auth";
 import Login from "../Login/Login";
 import decode from "jwt-decode";
+
+import configureMockStore from "redux-mock-store";
+import thunk from "redux-thunk";
+
+const middleware = [thunk];
+const mockStore = configureMockStore(middleware);
+const initState = {
+  account: {
+    isAuthorized: false,
+    error: {
+      response: {
+        data: {
+          errorMessage: "auth Error"
+        }
+      }
+    }
+  },
+  user: {
+    registerError: {
+      response: {
+        data: {
+          errorMessage: "register Error"
+        }
+      }
+    },
+    registerSuccess: "register Success"
+  }
+};
+const store = mockStore(initState);
+
 jest.mock("jwt-decode", () => jest.fn());
 
 global.localStorage = new LocalStorageMock();
 
 describe("auth", () => {
-  afterEach(() => {
-    jest.resetAllMocks();
-  });
+  it("auth", () => {
+    let wrapper = mount(
+      <MemoryRouter initialEntries={["/login"]}>
+        <Provider store={store}>
+          <Auth />
+        </Provider>
+      </MemoryRouter>
+    );
 
-  it("allows the user to login successfully", () => {
-    localStorage.setItem("token", "fake_token_user");
-    const token = localStorage.getItem("token");
-
-    decode.mockImplementationOnce(token => {
-      return {
-        exp: new Date().getTime() / 1000 + 1,
-        iat: 1575751766,
-        userData: { isAdmin: true, login: "one92tb", userId: 1 }
-      };
-    });
-
-    expect(token).toBe("fake_token_user");
-    expect(checkAuth()).toBe(true);
-  });
-
-  it("test without token", () => {
-    localStorage.setItem("token", "");
-    const token = localStorage.getItem("token");
-    decode.mockImplementationOnce(token => {
-      return {
-        exp: new Date().getTime() / 1000 + 1,
-        iat: 1575751766,
-        userData: { isAdmin: true, login: "one92tb", userId: 1 }
-      };
-    });
-
-    expect(checkAuth()).toBe(false);
-  });
-
-  it("exp is less than Date", () => {
-    localStorage.setItem("token", "fake_token_user");
-    const token = localStorage.getItem("token");
-    decode.mockImplementationOnce(token => {
-      return {
-        exp: new Date().getTime() / 1000 - 1,
-        iat: 1575751766,
-        userData: { isAdmin: true, login: "one92tb", userId: 1 }
-      };
-    });
-
-    expect(checkAuth()).toBe(false);
-  });
-  it("exp is not defined", () => {
-    localStorage.setItem("token", "fake_token_user");
-    const token = localStorage.getItem("token");
-
-    expect(checkAuth()).toBe(false);
-  });
-
-  it("test authAdmin", () => {
-    localStorage.setItem("token", "fake_token_user");
-    const token = localStorage.getItem("token");
-
-    decode.mockImplementationOnce(token => {
-      return {
-        exp: new Date().getTime() / 1000 - 1,
-        iat: 1575751766,
-        userData: { isAdmin: true, login: "one92tb", userId: 1 }
-      };
-    });
-
-
-    expect(authAdmin()).toBe(true);
-  })
-
-  it("test authAdmin without token", () => {
-    localStorage.setItem("token", "");
-    const token = localStorage.getItem("token");
-
-    decode.mockImplementationOnce(token => {
-      return {
-        exp: new Date().getTime() / 1000 - 1,
-        iat: 1575751766,
-        userData: { isAdmin: true, login: "one92tb", userId: 1 }
-      };
-    });
-
-
-    expect(authAdmin()).toBe(false);
-  })
-
-  it("test authAdmin when user is not admin", () => {
-    localStorage.setItem("token", "fake_token_user");
-    const token = localStorage.getItem("token");
-
-    decode.mockImplementationOnce(token => {
-      return {
-        exp: new Date().getTime() / 1000 - 1,
-        iat: 1575751766,
-        userData: { isAdmin: false, login: "one92tb", userId: 1 }
-      };
-    });
-
-
-    expect(authAdmin()).toBe(false);
-  })
-
-  it("userdata is not defined", () => {
-    localStorage.setItem("token", "fake_token_user");
-    const token = localStorage.getItem("token");
-
-    expect(authAdmin()).toBe(false);
+    expect(wrapper.find(Login)).toHaveLength(1);
   });
 });
