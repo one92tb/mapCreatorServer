@@ -13,7 +13,7 @@ MarkerIcon.displayName = "div";
 MarkerName.displayName = "span";
 MarkerImg.displayName = "img";
 
-export class MarkerList extends Component {
+class MarkerList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -79,7 +79,7 @@ export class MarkerList extends Component {
         );
       }
     }
-  };
+  }
 
   render() {
     const { isNavSelect, markers } = this.props;

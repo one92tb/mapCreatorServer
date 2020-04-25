@@ -1,27 +1,31 @@
-import { css } from "styled-components";
+import {css} from "styled-components";
 import styled from "styled-components";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div `
   padding: 40px 10px 40px 20px;
   height: 100%;
   @media only screen and (max-width: 1199px) {
     padding: 5px;
   }
   @media only screen and (max-width: 991.98px) {
-    height: autp;
-    padding: ${props =>
-      props.currentLocation.pathname === "/" ? "0" : "10px 5px 5px 5px"}
+    height: 0;
+    padding: ${props => props.currentLocation.pathname === "/"
+  ? "0"
+  : "10px 5px 5px 5px"}
   }
 `;
 
-const NavLink = css`
+const NavLink = css `
   margin: 0 10px;
   cursor: pointer;
 `;
 
-const ResponsivePanel = css`
+const ResponsivePanel = css `
   @media only screen and (max-width: 991.98px) {
-    display: ${props => (props.isChecked ? "flex" : "none")}
+    display: ${props => (
+  props.isChecked
+  ? "flex"
+  : "none")}
     position: absolute;
     z-index: 1;
     top: 65px;
@@ -37,32 +41,29 @@ const ResponsivePanel = css`
   }
 `;
 
-const FilterLink = styled.a`
+const FilterLink = styled.a `
   ${NavLink};
-  ${({ isSelected }) =>
-    !isSelected &&
-    `
-    font-weight: bold;
-  `};
 
-  ${({ location }) =>
-    location === "/createMarker" &&
-    `
-    pointer-events: none;
-    color: #808080!important;
-  `};
+  font-weight: ${props => !props.isSelected && props.location === "/"
+  ? "bold"
+  : "normal"};
+
+
+  &:hover {
+   cursor: ${props => props.location === "/createMarker" ? "not-allowed" : "pointer"}
+  }
+
 `;
 
-const SelectLink = styled.a`
+  const SelectLink = styled.a `
   ${NavLink};
-  ${({ isSelected }) =>
-    isSelected &&
-    `
-    font-weight: bold
-  `};
-`;
 
-const Card = styled.div`
+  font-weight: ${props => !props.isSelected && props.location === "/"
+  ? "normal"
+  : "bold"}
+  `;
+
+  const Card = styled.div `
   height: 100%;
   border: 1px solid #00b8e6;
   width: 100%;
@@ -76,7 +77,7 @@ const Card = styled.div`
   ${props => props.currentLocation.pathname === "/" && ResponsivePanel};
 `;
 
-const CardHeader = styled.div`
+  const CardHeader = styled.div `
   border-bottom: 1px solid #00b8e6;
   padding: 0.75rem 1.25rem;
   background: #4ddbff;
@@ -87,7 +88,7 @@ const CardHeader = styled.div`
   }
 `;
 
-const Nav = styled.ul`
+  const Nav = styled.ul `
   display: flex;
   flex-wrap: wrap;
   list-style: none;
@@ -95,9 +96,9 @@ const Nav = styled.ul`
   margin-bottom: 0;
   justify-content: center;
 `;
-const NavItem = styled.li``;
+  const NavItem = styled.li ``;
 
-const CardBody = styled.div`
+  const CardBody = styled.div `
   padding: 1.25rem;
   height: calc(100% - 48px);
   overflow-y: auto;
@@ -106,15 +107,16 @@ const CardBody = styled.div`
   }
 `;
 
-const Label = styled.label`
+  const Label = styled.label `
   display: none;
   @media (max-width: 991.98px) {
     position: absolute;
     top: 15px;
     left: 430px;
     z-index: 1;
-    display: ${props =>
-    props.currentLocation.pathname === "/" ? "flex" : "none"}
+    display: ${props => props.currentLocation.pathname === "/"
+    ? "flex"
+    : "none"}
     cursor: pointer;
     font-size: 30px;
     justify-content: flex-end;
@@ -137,19 +139,19 @@ const Label = styled.label`
   }
 `;
 
-const Input = styled.input`
+  const Input = styled.input `
   display: none;
 `;
 
-export {
-  Wrapper,
-  FilterLink,
-  SelectLink,
-  Card,
-  CardHeader,
-  CardBody,
-  NavItem,
-  Nav,
-  Label,
-  Input
-};
+  export {
+    Wrapper,
+    FilterLink,
+    SelectLink,
+    Card,
+    CardHeader,
+    CardBody,
+    NavItem,
+    Nav,
+    Label,
+    Input
+  };

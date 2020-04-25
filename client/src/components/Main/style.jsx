@@ -6,7 +6,7 @@ const RowStyle = styled.div`
 `;
 
 const ColStyle = styled.div`
-  padding: 0!important
+  padding: 0!important;
   height: 100%;
 
   @media only screen and (max-width: 991.98px) {

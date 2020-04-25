@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
 import { RowStyle, ColStyle } from "./style";
-import Panel from "./Panel/Panel";
+import { PanelComponent, Panel } from "./Panel/Panel";
 import Map from "./Map/Map";
 import MarkerCreator from "./MarkerCreator/MarkerCreator";
 import { Switch, Route } from "react-router-dom";
@@ -24,7 +24,7 @@ const routes = [
 export const Main = ({ ...props }) => (
   <Row tag={RowStyle}>
     <Col currentLocation={props.location} tag={ColStyle} lg="3" md="12">
-      <Panel {...props} />
+      <PanelComponent {...props} />
     </Col>
     <Col currentLocation={props.location} tag={ColStyle} lg="9" md="12">
       <Switch>

@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`no authorization component shallow authorization component 1`] = `
-<div>
-  <div>
-    You have no permission to access this components. You must have admin status.
-  </div>
-</div>
-`;
