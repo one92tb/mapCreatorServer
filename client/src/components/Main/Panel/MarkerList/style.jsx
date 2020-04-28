@@ -15,19 +15,24 @@ const Marker = styled.li`
   margin-bottom: 5px !important;
   padding: 0 !important;
   display: flex;
-
+  opacity: 1;
+  
   &:hover {
     background: #4ddbff;
     cursor: pointer;
   }
 
+
   ${({ isSelected, isFiltered }) => {
-    if (isSelected) {
-      return `background: #00b8e6`;
-    } else if (isFiltered) {
-      return `background: #999; opacity: 0.7`;
-    }
-  }};
+   if (isSelected) {
+     return `background: #00b8e6`;
+   } else if (isFiltered) {
+     return `background: #999; opacity: 0.7`;
+   } else {
+     return `background: transparent`
+   }
+ }};
+
 `;
 
 const MarkerIcon = styled.div`

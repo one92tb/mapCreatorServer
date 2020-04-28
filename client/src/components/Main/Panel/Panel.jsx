@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import MarkerList from "./MarkerList/MarkerList";
+import {MarkerListComponent} from "./MarkerList/MarkerList";
 import {isPanelSelect} from "../../../actions/isPanelSelect";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
@@ -44,7 +44,6 @@ export class Panel extends React.Component {
   }
 
   handleCheckBox = event => {
-    console.log(event.target.checked);
     this.setState({checked: event.target.checked});
   };
 
@@ -60,6 +59,7 @@ export class Panel extends React.Component {
   };
 
   render() {
+    console.log(this.props);
     const {location} = this.props;
     const {isSelected} = this.state;
     return (<Wrapper currentLocation={location}>
@@ -84,7 +84,7 @@ export class Panel extends React.Component {
           </Nav>
         </CardHeader>
         <CardBody className="scroll">
-          <MarkerList isNavSelect={isSelected}/>
+          <MarkerListComponent isNavSelect={isSelected} currentLocation={location}/>
         </CardBody>
       </Card>
     </Wrapper>);
