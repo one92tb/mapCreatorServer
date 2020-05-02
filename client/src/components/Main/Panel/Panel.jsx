@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import {MarkerListComponent} from "./MarkerList/MarkerList";
 import {isPanelSelect} from "../../../actions/isPanelSelect";
 import {connect} from "react-redux";
@@ -48,13 +48,13 @@ export class Panel extends React.Component {
   };
 
   switchPanelStatus = bool => {
-    const {location} = this.props;
+
+    const {location, isPanelSelect} = this.props;
     if (location === "createMarker" && bool === false) {
       return false;
     }
-    const {isSelected, isPanelSelect} = this.props;
-    this.setState({isSelected: bool});
 
+    this.setState({isSelected: bool});
     isPanelSelect(bool);
   };
 

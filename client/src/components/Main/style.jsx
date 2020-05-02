@@ -1,11 +1,11 @@
 import styled from "styled-components";
-
-const RowStyle = styled.div`
+import { Row, Col } from "reactstrap";
+const RowStyle = styled(Row)`
   height: 100%;
   margin: 0 !important;
 `;
 
-const ColStyle = styled.div`
+const ColStyle = styled(Col)`
   padding: 0!important;
   height: 100%;
 
@@ -13,7 +13,7 @@ const ColStyle = styled.div`
     height: auto;
         &:not(:first-child) {
           height: ${props =>
-            props.currentLocation.pathname === "/" ? "100%" : "auto"};
+            props.pathname === "/" ? "100%" : "auto"};
           display: block;
         }
   }

@@ -313,7 +313,7 @@ export class Map extends Component {
       indicators,
       selectedMarker,
       selectedIndicator,
-      getSelectedIndicator
+    //  getSelectedIndicator
     } = this.props;
 
     return (

@@ -18,9 +18,9 @@ import {
   LabelColor,
   LabelFile,
   LabelName,
-  HideInput,
+  FileInput,
   Input,
-  InputFile,
+  InputSpan,
   SubmitBtn,
   RemoveBtn,
   DownloadBtn,
@@ -45,9 +45,9 @@ FormGroup.displayName = "div";
 LabelColor.displayName = "label";
 LabelFile.displayName = "label";
 LabelName.displayName = "label";
-HideInput.displayName = "input";
+FileInput.displayName = "input";
 Input.displayName = "input";
-InputFile.displayName = "span";
+InputSpan.displayName = "span";
 SubmitBtn.displayName = "button";
 RemoveBtn.displayName = "button";
 DownloadBtn.displayName = "button";
@@ -134,7 +134,6 @@ export class MarkerCreator extends Component {
     };
 
     const validationResult = validate(errors, markerValidationDetails, data);
-
     let fd = new FormData();
 
     fd.append("file", markerImageFile);
@@ -180,7 +179,7 @@ export class MarkerCreator extends Component {
     const validationResult = validate(errors, markerValidationDetails, data);
     if (!validationResult.isError) {
       const node = this.imageBox;
-      domtoimage.toPng(node).then(dataUrl => {
+      domtoimage.toPng(node.current).then(dataUrl => {
         const link = document.createElement("a");
         link.download = `${markerName}.png`;
         link.href = dataUrl;
@@ -210,7 +209,7 @@ export class MarkerCreator extends Component {
     });
   };
 
-  handleUpload = status => {
+  switchUpload = status => {
     this.setState({
       uploadStatus: status,
       markerNameError: "",
@@ -219,7 +218,6 @@ export class MarkerCreator extends Component {
   };
 
   render() {
-    //    console.log(this.imageBox);
     const {
       uploadStatus,
       displaySelectedImage,
@@ -236,13 +234,13 @@ export class MarkerCreator extends Component {
           <ButtonGroup>
             <UploadButton
               status={uploadStatus}
-              onClick={() => this.handleUpload(true)}
+              onClick={() => this.switchUpload(true)}
             >
               Upload Marker
             </UploadButton>
             <CustomButton
               status={uploadStatus}
-              onClick={() => this.handleUpload(false)}
+              onClick={() => this.switchUpload(false)}
             >
               Custom Marker
             </CustomButton>
@@ -253,7 +251,7 @@ export class MarkerCreator extends Component {
             </ImageBox>
           ) : (
             <AdditionalWrapper>
-              <MarkerIconBox innerRef={ref => (this.imageBox = ref)}>
+              <MarkerIconBox ref={this.imageBox}>
                 <MarkerIcon background={color}>
                   <ImageInsideMarker src={displaySelectedImage} />
                 </MarkerIcon>
@@ -263,11 +261,12 @@ export class MarkerCreator extends Component {
 
           <Form onSubmit={this.sendRecord}>
             <FormGroup>
-              <LabelName htmlFor="exampleText">Name</LabelName>
+              <LabelName htmlFor="markerName">Name</LabelName>
               <Input
                 type="text"
                 name="markerName"
                 value={markerName}
+                id="markerName"
                 onChange={this.onChange}
               />
               {markerNameError && (
@@ -276,12 +275,12 @@ export class MarkerCreator extends Component {
             </FormGroup>
             {!uploadStatus && (
               <FormGroup>
-                <LabelColor htmlFor="exampleColor">Color</LabelColor>
+                <LabelColor htmlFor="markerColor">Color</LabelColor>
                 <Input
                   onChange={this.onChange}
                   type="color"
                   name="color"
-                  id="exampleColor"
+                  id="markerColor"
                   value={color}
                   placeholder="color placeholder"
                 />
@@ -289,14 +288,15 @@ export class MarkerCreator extends Component {
             )}
             <FormGroup>
               <LabelFile htmlFor="file">
-                <InputFile>Choose file to send</InputFile>{" "}
+                <InputSpan>Choose file to send</InputSpan>{" "}
                 {displaySelectedImage === "IMG-default.png"
                   ? "Not file detected"
                   : markerImageFile === ""
                     ? `${markerName}.png`
                     : markerImageFile.name}
               </LabelFile>
-              <HideInput
+              <FileInput
+                data-testid="inputFile"
                 type="file"
                 id="file"
                 name="markerImage"
@@ -350,7 +350,7 @@ const mapStateToProps = state => ({
   markers: state.marker.markers
 });
 
-export default connect(
+export const MarkerCreatorComponent = connect(
   mapStateToProps,
   mapDispatchToProps
 )(MarkerCreator);

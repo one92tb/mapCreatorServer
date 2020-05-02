@@ -5,9 +5,8 @@ import Main from "../../Main/Main";
 import Statistic from "../../Statistic/Statistic";
 import NavBar from "../../NavBar/NavBar";
 import List from "../../List/List";
-import { Switch, Route } from "react-router-dom";
-import { Container, Row, Col } from "reactstrap";
-import { ContainerStyle, RowStyle, ColStyle } from "../style";
+import {Switch, Route} from "react-router-dom";
+import {ContainerStyle, RowStyle, ColStyle} from "../style";
 import decode from "jwt-decode";
 
 export const authAdmin = () => {
@@ -17,7 +16,7 @@ export const authAdmin = () => {
   }
 
   try {
-    const { userData } = decode(token);
+    const {userData} = decode(token);
     if (userData.isAdmin === false) {
       return false;
     }
@@ -29,24 +28,23 @@ export const authAdmin = () => {
 };
 
 export const AuthAdmin = () => {
-  return (
-    <Container fluid tag={ContainerStyle}>
-      <Row tag={RowStyle}>
-        <Col tag={ColStyle} lg="12" xl="2">
-          <NavBar />
-        </Col>
-        <Col tag={ColStyle} lg="12" xl="10">
-          <Switch>
-            <Route path={"/"} exact={true} component={Main} />
-            <Route path={"/createMarker"} component={Main} />
-            <Route path={"/statistic"} component={Statistic} />
-            <Route path={"/list"} component={List} />
-            <Route
-              render={props => (authAdmin() ? <Users /> : <NoAuthorization />)}
-            />
-          </Switch>
-        </Col>
-      </Row>
-    </Container>
-  );
+  return (<ContainerStyle fluid={true}>
+    <RowStyle>
+      <ColStyle lg="12" xl="2">
+        <NavBar/>
+      </ColStyle>
+      <ColStyle lg="12" xl="10">
+        <Switch>
+          <Route path={"/"} exact={true} component={Main}/>
+          <Route path={"/createMarker"} component={Main}/>
+          <Route path={"/statistic"} component={Statistic}/>
+          <Route path={"/list"} component={List}/>
+          <Route render={props => (
+              authAdmin()
+              ? <Users/>
+              : <NoAuthorization/>)}/>
+        </Switch>
+      </ColStyle>
+    </RowStyle>
+  </ContainerStyle>);
 };

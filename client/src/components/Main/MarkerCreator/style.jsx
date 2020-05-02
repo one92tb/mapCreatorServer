@@ -1,10 +1,8 @@
-import styled from "styled-components";
-import { css } from "styled-components";
+import styled ,{ css } from "styled-components";
 
 const Wrapper = styled.div`
   padding: 40px 20px 40px 10px;
   height: 100%;
-
   @media only screen and (max-width: 1199px) {
     padding: 5px;
   }
@@ -18,8 +16,8 @@ const Inner = styled.div`
 `;
 
 const ImageInsideMarker = styled.img`
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
 `;
 
 const ImageWithoutMarker = styled.img`
@@ -61,7 +59,7 @@ const LabelName = styled.label`
   margin-left: 2px;
 `;
 
-const HideInput = styled.input`
+const FileInput = styled.input`
   visibility: hidden;
   position: absolute;
   opacity: 0;
@@ -114,12 +112,11 @@ const CrudButton = css`
 //z-index: -00;
 const Input = styled.input`
   ${InputStyle} ${InputName};
-
   background-color: #fff;
   height: 40px;
 `;
 
-const InputFile = styled.span`
+const InputSpan = styled.span`
   ${InputStyle} ${Button}
   margin-right: 10px;
   margin-bottom: 0;
@@ -131,7 +128,6 @@ const InputFile = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-
   @media only screen and (max-width: 575.98px) {
     font-size: 14px;
     width: 150px;
@@ -147,7 +143,6 @@ const SubmitBtn = styled.button`
   margin-right: 10px;
   background-color: #6c757d;
   border-color: #6c757d;
-
   @media only screen and (max-width: 575.98px) {
     margin-bottom: 16px;
   }
@@ -159,7 +154,6 @@ const RemoveBtn = styled.button`
   ${CrudButton};
   background-color: #ff6666;
   border-color: #ff6666;
-
   @media only screen and (max-width: 575.98px) {
     margin-bottom: 16px;
   }
@@ -174,6 +168,7 @@ const DownloadBtn = styled.button`
 `;
 
 const MarkerIcon = styled.div`
+  display: flex;
   position: absolute;
   border-radius: 50%;
   border: 8px solid ${props => props.background && props.background};
@@ -181,10 +176,8 @@ const MarkerIcon = styled.div`
   height: 60px;
   top: 7px;
   background: ${props => props.background && props.background}
-  display: flex;
   justify-content: center;
   align-items: center;
-
   &::after {
     position: absolute;
     content: "";
@@ -199,7 +192,7 @@ const MarkerIcon = styled.div`
 const UploadButton = styled.button`
   ${Button};
   ${CrudButton};
-  background-color: ${props => (props.status ? "#00b8e6" : "#B2CFE7")};
+  background: ${props => (props.status ? "#00b8e6" : "#B2CFE7")};
   border-color: #00b8e6;
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
@@ -210,7 +203,7 @@ const CustomButton = styled.button`
   ${CrudButton};
   font-size: 1rem;
   line-height: 1.5;
-  background-color: ${props => (!props.status ? "#00b8e6" : "#B2CFE7")};
+  background: ${props => (!props.status ? "#00b8e6" : "#B2CFE7")};
   border-color: #00b8e6;
   border-right: 1px solid #00b8e6;
   border-top-right-radius: 0.25rem;
@@ -269,9 +262,9 @@ export {
   LabelColor,
   LabelFile,
   LabelName,
-  HideInput,
+  FileInput,
   Input,
-  InputFile,
+  InputSpan,
   SubmitBtn,
   RemoveBtn,
   DownloadBtn,

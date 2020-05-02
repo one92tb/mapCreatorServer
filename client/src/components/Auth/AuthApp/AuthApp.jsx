@@ -1,8 +1,8 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import {Route, Redirect} from "react-router-dom";
 
 import decode from "jwt-decode";
-import { AuthAdmin } from "../AuthAdmin/AuthAdmin";
+import {AuthAdmin} from "../AuthAdmin/AuthAdmin";
 
 export const checkAuth = () => {
   const token = localStorage.getItem("token");
@@ -11,7 +11,7 @@ export const checkAuth = () => {
   }
 
   try {
-    const { exp } = decode(token);
+    const {exp} = decode(token);
     if (exp < new Date().getTime() / 1000) {
       return false;
     }
@@ -22,17 +22,12 @@ export const checkAuth = () => {
   return true;
 };
 
-export const AuthApp = ({ ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        checkAuth() ? (
-          <AuthAdmin />
-        ) : (
-          <Redirect from="/" exact to={{ pathname: "/login" }} />
-        )
-      }
-    />
-  );
+export const AuthApp = ({
+  ...rest
+}) => {
+  return (<Route {...rest} render={props => checkAuth()
+      ? (<AuthAdmin/>)
+      : (<Redirect from="/" exact="exact" to={{
+          pathname: "/login"
+        }}/>)}/>);
 };

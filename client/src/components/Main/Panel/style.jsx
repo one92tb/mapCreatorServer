@@ -8,10 +8,15 @@ const Wrapper = styled.div `
     padding: 5px;
   }
   @media only screen and (max-width: 991.98px) {
-    height: 0;
-    padding: ${props => props.currentLocation.pathname === "/"
+    height:  ${props => props.currentLocation.pathname === "/"
   ? "0"
-  : "10px 5px 5px 5px"}
+  : "100%"};
+    padding: ${props => props.currentLocation.pathname === "/"
+    ? "0"
+    : "10px 5px 5px 5px"};
+    background: ${props => props.currentLocation.pathname === "/"
+      ? "red"
+      : "blue"};
   }
 `;
 
@@ -48,14 +53,15 @@ const FilterLink = styled.a `
   ? "bold"
   : "normal"};
 
-
   &:hover {
-   cursor: ${props => props.location === "/createMarker" ? "not-allowed" : "pointer"}
+   cursor: ${props => props.location === "/createMarker"
+    ? "not-allowed"
+    : "pointer"}
   }
 
 `;
 
-  const SelectLink = styled.a `
+const SelectLink = styled.a `
   ${NavLink};
 
   font-weight: ${props => !props.isSelected && props.location === "/"
@@ -63,7 +69,7 @@ const FilterLink = styled.a `
   : "bold"}
   `;
 
-  const Card = styled.div `
+const Card = styled.div `
   height: 100%;
   border: 1px solid #00b8e6;
   width: 100%;
@@ -77,7 +83,7 @@ const FilterLink = styled.a `
   ${props => props.currentLocation.pathname === "/" && ResponsivePanel};
 `;
 
-  const CardHeader = styled.div `
+const CardHeader = styled.div `
   border-bottom: 1px solid #00b8e6;
   padding: 0.75rem 1.25rem;
   background: #4ddbff;
@@ -88,7 +94,7 @@ const FilterLink = styled.a `
   }
 `;
 
-  const Nav = styled.ul `
+const Nav = styled.ul `
   display: flex;
   flex-wrap: wrap;
   list-style: none;
@@ -96,9 +102,9 @@ const FilterLink = styled.a `
   margin-bottom: 0;
   justify-content: center;
 `;
-  const NavItem = styled.li ``;
+const NavItem = styled.li ``;
 
-  const CardBody = styled.div `
+const CardBody = styled.div `
   padding: 1.25rem;
   height: calc(100% - 48px);
   overflow-y: auto;
@@ -107,7 +113,7 @@ const FilterLink = styled.a `
   }
 `;
 
-  const Label = styled.label `
+const Label = styled.label `
   display: none;
   @media (max-width: 991.98px) {
     position: absolute;
@@ -115,8 +121,8 @@ const FilterLink = styled.a `
     left: 430px;
     z-index: 1;
     display: ${props => props.currentLocation.pathname === "/"
-    ? "flex"
-    : "none"}
+  ? "flex"
+  : "none"}
     cursor: pointer;
     font-size: 30px;
     justify-content: flex-end;
@@ -139,19 +145,19 @@ const FilterLink = styled.a `
   }
 `;
 
-  const Input = styled.input `
+const Input = styled.input `
   display: none;
 `;
 
-  export {
-    Wrapper,
-    FilterLink,
-    SelectLink,
-    Card,
-    CardHeader,
-    CardBody,
-    NavItem,
-    Nav,
-    Label,
-    Input
-  };
+export {
+  Wrapper,
+  FilterLink,
+  SelectLink,
+  Card,
+  CardHeader,
+  CardBody,
+  NavItem,
+  Nav,
+  Label,
+  Input
+};
