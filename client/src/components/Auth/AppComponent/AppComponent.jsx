@@ -21,13 +21,14 @@ export const authAdmin = () => {
       return false;
     }
   } catch (e) {
+    console.log(e);
     return false;
   }
 
   return true;
 };
 
-export const AuthAdmin = () => {
+export const AppComponent = () => {
   return (<ContainerStyle fluid={true}>
     <RowStyle>
       <ColStyle lg="12" xl="2">

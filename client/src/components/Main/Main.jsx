@@ -1,19 +1,18 @@
 import React from "react";
-import {Row, Col} from "reactstrap";
 import {RowStyle, ColStyle} from "./style";
 import {PanelComponent} from "./Panel/Panel";
-import Map from "./Map/Map";
+import {MapComponent} from "./Map/Map";
 import {MarkerCreatorComponent} from "./MarkerCreator/MarkerCreator";
 import {Switch, Route} from "react-router-dom";
 
-Row.displayName = "div";
-Col.displayName = "div";
+RowStyle.displayName = "div";
+ColStyle.displayName = "div";
 
 const routes = [
   {
     path: "/",
     exact: true,
-    section: Map
+    section: MapComponent
   }, {
     path: "/createMarker",
     section: MarkerCreatorComponent

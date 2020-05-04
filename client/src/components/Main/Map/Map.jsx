@@ -200,6 +200,7 @@ export const MapWithAMakredInfoWindow = compose(
         .map((indicator, index) => {
           return (
             <Marker
+              data-testid="marker"
               onClick={() => props.onToggleOpen(indicator.id)}
               key={index}
               position={{
@@ -250,7 +251,7 @@ export const MapWithAMakredInfoWindow = compose(
                       <InfoContent>{indicator.street}</InfoContent>
                       <InfoContent>{indicator.city}</InfoContent>
                       <InfoContent>{indicator.country}</InfoContent>
-                      <InfoBtn onClick={() => props.removeMarker(indicator.id)}>
+                      <InfoBtn onClick={() => props.remove(indicator.id)} data-testid="removeBtn">
                         Remove Marker
                       </InfoBtn>
                     </InfoBoxContainer>
@@ -283,7 +284,6 @@ export class Map extends Component {
 
   componentDidMount() {
     const { fetchIndicators } = this.props;
-
     fetchIndicators();
   }
 
@@ -302,7 +302,7 @@ export class Map extends Component {
     }
   };
 
-  removeMarker = id => {
+  remove = id => {
     const { removeIndicator } = this.props;
 
     removeIndicator(id);
@@ -322,7 +322,7 @@ export class Map extends Component {
           indicators={indicators}
           selectedMarker={selectedMarker}
           addIndicator={this.addIndicator}
-          removeMarker={this.removeMarker}
+          remove={this.remove}
           disableMarkers={this.props.disableMarkers}
           selectedIndicator={selectedIndicator}
         />
@@ -345,7 +345,7 @@ const mapDispatchToProps = {
   removeIndicator
 };
 
-export default connect(
+export const MapComponent = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Map);

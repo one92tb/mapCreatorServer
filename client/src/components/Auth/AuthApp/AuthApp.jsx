@@ -2,7 +2,7 @@ import React from "react";
 import {Route, Redirect} from "react-router-dom";
 
 import decode from "jwt-decode";
-import {AuthAdmin} from "../AuthAdmin/AuthAdmin";
+import {AppComponent} from "../AppComponent/AppComponent";
 
 export const checkAuth = () => {
   const token = localStorage.getItem("token");
@@ -26,7 +26,7 @@ export const AuthApp = ({
   ...rest
 }) => {
   return (<Route {...rest} render={props => checkAuth()
-      ? (<AuthAdmin/>)
+      ? (<AppComponent/>)
       : (<Redirect from="/" exact="exact" to={{
           pathname: "/login"
         }}/>)}/>);
