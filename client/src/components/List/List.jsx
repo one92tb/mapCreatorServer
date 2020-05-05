@@ -70,8 +70,8 @@ export class List extends Component {
     return (
       <Wrapper>
         <Form>
-          <Label>
-            <Select onChange={this.handleChange} name="markerName">
+          <Label htmlFor="markerName">
+            <Select onChange={this.handleChange} id="markerName" name="markerName" data-testid="select">
               <Option>All</Option>
               {markers.map((marker, id, arr) => (
                 <Option key={marker.id}>{marker.name}</Option>
@@ -117,14 +117,14 @@ export class List extends Component {
                   // 3 ) test1 Wroclaw
                 })
                 .map((indicator, id) => (
-                  <Tr key={indicator.id}>
+                  <Tr key={indicator.id} data-testid="indicator">
                     <Td>{id + 1}</Td>
                     <Td>{indicator.name}</Td>
                     <Td>{indicator.street}</Td>
                     <Td>{indicator.city}</Td>
                     <Td>{indicator.country}</Td>
                     <Td>
-                      <Image
+                      <Image data-testid="findIndicator"
                         src={"map-location.png"}
                         onClick={() => this.findIndicatorOnTheMap(indicator)}
                       />
