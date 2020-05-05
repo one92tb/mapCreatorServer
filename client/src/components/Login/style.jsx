@@ -100,12 +100,12 @@ const Button = css`
 
 const RegisterBtn = styled.button`
   ${Button};
-  background-color: ${props => (!props.status ? "#00b8e6" : "#4ddbff")};
+  background: ${props => (!props.status ? "#00b8e6" : "#4ddbff")};
 `;
 
 const LoginBtn = styled.button`
   ${Button};
-  background-color: ${props => (props.status ? "#00b8e6" : "#4ddbff")};
+  background: ${props => (props.status ? "#00b8e6" : "#4ddbff")};
 `;
 
 const SubmitBtn = styled.button`

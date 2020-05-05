@@ -83,7 +83,6 @@ export class Login extends React.Component {
     !validationResult.isError && !loginStatus
       ? createUser(user)
       : loginRequest(user);
-
     this.setState({
       ...validationResult.errors
     });
@@ -135,8 +134,9 @@ export class Login extends React.Component {
           </ButtonWrapper>
           <Form>
             <FormGroup>
-              <Label>Login</Label>
+              <Label htmlFor="userLogin">Login</Label>
               <Input
+                id="userLogin"
                 type="text"
                 name="login"
                 onChange={this.onChange}
@@ -153,10 +153,11 @@ export class Login extends React.Component {
                 )}
             </FormGroup>
             <FormGroup>
-              <Label>Password</Label>
+              <Label htmlFor="userPassword">Password</Label>
               <Input
                 type="password"
                 name="password"
+                id="userPassword"
                 onChange={this.onChange}
                 value={password}
                 autocomplete={loginStatus ? "current password" : "new-password"}
