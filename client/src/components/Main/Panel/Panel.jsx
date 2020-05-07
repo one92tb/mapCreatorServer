@@ -1,5 +1,5 @@
 import React from "react";
-import {MarkerListComponent} from "./MarkerList/MarkerList";
+import MarkerList from "./MarkerList/MarkerList";
 import {isPanelSelect} from "../../../actions/isPanelSelect";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
@@ -84,7 +84,7 @@ export class Panel extends React.Component {
           </Nav>
         </CardHeader>
         <CardBody className="scroll">
-          <MarkerListComponent isNavSelect={isSelected} currentLocation={location}/>
+          <MarkerList isNavSelect={isSelected} currentLocation={location}/>
         </CardBody>
       </Card>
     </Wrapper>);
@@ -95,7 +95,7 @@ const mapDispatchToProps = {
   isPanelSelect
 };
 
-export const PanelComponent = connect(null, mapDispatchToProps)(Panel);
+export default connect(null, mapDispatchToProps)(Panel);
 
 Panel.propTypes = {
   isPanelSelect: PropTypes.func.isRequired

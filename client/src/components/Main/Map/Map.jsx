@@ -345,7 +345,7 @@ const mapDispatchToProps = {
   removeIndicator
 };
 
-export const MapComponent = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Map);

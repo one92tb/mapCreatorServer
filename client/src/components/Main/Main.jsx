@@ -1,8 +1,8 @@
 import React from "react";
 import {RowStyle, ColStyle} from "./style";
-import {PanelComponent} from "./Panel/Panel";
-import {MapComponent} from "./Map/Map";
-import {MarkerCreatorComponent} from "./MarkerCreator/MarkerCreator";
+import  Panel from "./Panel/Panel";
+import Map from "./Map/Map";
+import MarkerCreator from "./MarkerCreator/MarkerCreator";
 import {Switch, Route} from "react-router-dom";
 
 RowStyle.displayName = "div";
@@ -12,10 +12,10 @@ const routes = [
   {
     path: "/",
     exact: true,
-    section: MapComponent
+    section: Map
   }, {
     path: "/createMarker",
-    section: MarkerCreatorComponent
+    section: MarkerCreator
   }
 ];
 
@@ -25,7 +25,7 @@ export const Main = ({
   console.log(props);
   return (<RowStyle>
     <ColStyle pathname={props.location.pathname} lg="3" md="12">
-      <PanelComponent {...props}/>
+      <Panel {...props}/>
     </ColStyle>
     <ColStyle pathname={props.location.pathname} lg="9" md="12">
       <Switch>

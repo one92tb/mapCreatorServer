@@ -350,7 +350,7 @@ const mapStateToProps = state => ({
   markers: state.marker.markers
 });
 
-export const MarkerCreatorComponent = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(MarkerCreator);

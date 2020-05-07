@@ -12,7 +12,6 @@ import LocalStorageMock from "../../../../../mocks/localStorageMock";
 import {
   Provider
 } from "react-redux";
-//import { Auth, checkAuth, authAdmin, AppContent, AuthApp } from "../Auth";
 import {
   AuthApp,
   checkAuth

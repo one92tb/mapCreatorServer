@@ -95,7 +95,7 @@ const mapDispatchToProps = {
   disableMarkers
 };
 
-export const MarkerListComponent = connect(mapStateToProps, mapDispatchToProps)(MarkerList);
+export default connect(mapStateToProps, mapDispatchToProps)(MarkerList);
 
 MarkerList.propTypes = {
   fetchMarkers: PropTypes.func.isRequired,
