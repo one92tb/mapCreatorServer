@@ -58,7 +58,6 @@ const geocode = (indicator, postIndicator) => {
       }
     },
     (results, status) => {
-      console.log(results);
       if (status === "OK") {
         const mapIndicator = {
           name: indicator.name,
@@ -132,7 +131,6 @@ export const MapWithAMakredInfoWindow = compose(
           refs.map = ref;
         },
         onBoundsChanged: () => {
-          console.log(refs.map);
           this.setState({
             bounds: refs.map.getBounds(),
             center: refs.map.getCenter()

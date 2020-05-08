@@ -44,11 +44,11 @@ export class Panel extends React.Component {
   }
 
   handleCheckBox = event => {
+    console.log("dupa", event.target.checked);
     this.setState({checked: event.target.checked});
   };
 
   switchPanelStatus = bool => {
-
     const {location, isPanelSelect} = this.props;
     if (location === "createMarker" && bool === false) {
       return false;

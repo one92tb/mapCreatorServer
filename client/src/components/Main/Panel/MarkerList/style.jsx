@@ -16,7 +16,7 @@ const Marker = styled.li`
   padding: 0 !important;
   display: flex;
   opacity: 1;
-  
+
   &:hover {
     background: #4ddbff;
     cursor: pointer;

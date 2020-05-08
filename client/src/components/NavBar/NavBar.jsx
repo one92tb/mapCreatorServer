@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { isPanelSelect } from "../../actions/isPanelSelect";
-import { getSelectedMarker } from "../../actions/marker/getSelectedMarker";
-import { logout } from "../../actions/signIn/logout";
-import { redirect } from "../../actions/redirect/redirect";
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import {isPanelSelect} from "../../actions/isPanelSelect";
+import {getSelectedMarker} from "../../actions/marker/getSelectedMarker";
+import {logout} from "../../actions/signIn/logout";
+import {redirect} from "../../actions/redirect/redirect";
 import PropTypes from "prop-types";
 import {
   LogoutBtn,
@@ -49,23 +49,19 @@ const routes = [
     path: "/",
     exact: true,
     icon: "map.png"
-  },
-  {
+  }, {
     name: "Create Marker",
     path: "/createMarker",
     icon: "gps.png"
-  },
-  {
+  }, {
     name: "Statistic",
     path: "/statistic",
     icon: "graph.png"
-  },
-  {
+  }, {
     name: "List",
     path: "/list",
     icon: "list.png"
-  },
-  {
+  }, {
     name: "Users",
     path: "/users",
     icon: "users.png"
@@ -86,10 +82,8 @@ export class NavBar extends Component {
   };
 
   handleNavLink = path => {
-    const { isPanelSelect, getSelectedMarker } = this.props;
-    this.setState({
-      checked: false
-    });
+    const {isPanelSelect, getSelectedMarker} = this.props;
+    this.setState({checked: false});
 
     getSelectedMarker("");
     if (path === "/createMarker") {
@@ -98,51 +92,41 @@ export class NavBar extends Component {
   };
 
   handleLogOut = () => {
-    const { logout, redirect } = this.props;
-    logout({
-      userId: "",
-      userName: "",
-      error: "",
-      isAuthorized: false
-    });
+    const {logout, redirect} = this.props;
+    logout({userId: "", userName: "", error: "", isAuthorized: false});
+    console.log("a");
     localStorage.removeItem("token");
     redirect("/login");
+    console.log("b");
   };
 
   render() {
-    return (
-      <Panel>
-        <ResponsiveMenu>
-          <Header>
-            <Logo src={"earth.png"} />
-            <Title className="logoName">mapCreator</Title>
-          </Header>
-          <Label htmlFor="toggle">&#9776;</Label>
-          <Input type="checkbox" id="toggle" onChange={this.handleCheckBox} />
-        </ResponsiveMenu>
-        <ResponsiveNav isChecked={this.state.checked}>
-          <User>
-            <LoginImg src={"user.png"} />
-            <LoginName>UserNick</LoginName>
-          </User>
-          <LogoutBtn onClick={this.handleLogOut}>Sign out</LogoutBtn>
-          <Nav>
-            {routes.map((route, id) => (
-              <NavItem key={id}>
-                <NavLink
-                  onClick={() => this.handleNavLink(route.path)}
-                  to={route.path}
-                  exact={route.exact}
-                  activeClassName={activeClassName}
-                >
-                  <Icon src={route.icon} /> {route.name}
-                </NavLink>
-              </NavItem>
-            ))}
-          </Nav>
-        </ResponsiveNav>
-      </Panel>
-    );
+    return (<Panel>
+      <ResponsiveMenu>
+        <Header>
+          <Logo src={"earth.png"}/>
+          <Title className="logoName">mapCreator</Title>
+        </Header>
+        <Label htmlFor="toggle">&#9776;</Label>
+        <Input type="checkbox" id="toggle" onChange={this.handleCheckBox}/>
+      </ResponsiveMenu>
+      <ResponsiveNav isChecked={this.state.checked}>
+        <User>
+          <LoginImg src={"user.png"}/>
+          <LoginName>UserNick</LoginName>
+        </User>
+        <LogoutBtn onClick={this.handleLogOut}>Sign out</LogoutBtn>
+        <Nav>
+          {
+            routes.map((route, id) => (<NavItem key={id}>
+              <NavLink onClick={() => this.handleNavLink(route.path)} to={route.path} exact={route.exact} activeClassName={activeClassName}>
+                <Icon src={route.icon}/> {route.name}
+              </NavLink>
+            </NavItem>))
+          }
+        </Nav>
+      </ResponsiveNav>
+    </Panel>);
   }
 }
 
@@ -153,14 +137,7 @@ const mapDispatchToProps = {
   redirect
 };
 
-export default connect(
-  null,
-  mapDispatchToProps,
-  null,
-  {
-    pure: false
-  }
-)(NavBar);
+export default connect(null, mapDispatchToProps, null, {pure: false})(NavBar);
 
 NavBar.propTypes = {
   isPanelSelect: PropTypes.func.isRequired,

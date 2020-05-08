@@ -8,15 +8,13 @@ const Wrapper = styled.div `
     padding: 5px;
   }
   @media only screen and (max-width: 991.98px) {
-    height:  ${props => props.currentLocation.pathname === "/"
+    height: ${props => props.currentLocation.pathname === "/"
   ? "0"
   : "100%"};
     padding: ${props => props.currentLocation.pathname === "/"
     ? "0"
     : "10px 5px 5px 5px"};
-    background: ${props => props.currentLocation.pathname === "/"
-      ? "red"
-      : "blue"};
+
   }
 `;
 
@@ -27,10 +25,7 @@ const NavLink = css `
 
 const ResponsivePanel = css `
   @media only screen and (max-width: 991.98px) {
-    display: ${props => (
-  props.isChecked
-  ? "flex"
-  : "none")}
+    display: ${props => props.isChecked ? "flex" : "none"};
     position: absolute;
     z-index: 1;
     top: 65px;
@@ -48,22 +43,18 @@ const ResponsivePanel = css `
 
 const FilterLink = styled.a `
   ${NavLink};
-
   font-weight: ${props => !props.isSelected && props.location === "/"
   ? "bold"
   : "normal"};
-
   &:hover {
    cursor: ${props => props.location === "/createMarker"
     ? "not-allowed"
     : "pointer"}
   }
-
 `;
 
 const SelectLink = styled.a `
   ${NavLink};
-
   font-weight: ${props => !props.isSelected && props.location === "/"
   ? "normal"
   : "bold"}
@@ -116,13 +107,11 @@ const CardBody = styled.div `
 const Label = styled.label `
   display: none;
   @media (max-width: 991.98px) {
+    display: ${props => props.currentLocation.pathname === "/" ? "flex" : "none"};
     position: absolute;
     top: 15px;
     left: 430px;
     z-index: 1;
-    display: ${props => props.currentLocation.pathname === "/"
-  ? "flex"
-  : "none"}
     cursor: pointer;
     font-size: 30px;
     justify-content: flex-end;
@@ -145,19 +134,19 @@ const Label = styled.label `
   }
 `;
 
-const Input = styled.input `
+  const Input = styled.input `
   display: none;
 `;
 
-export {
-  Wrapper,
-  FilterLink,
-  SelectLink,
-  Card,
-  CardHeader,
-  CardBody,
-  NavItem,
-  Nav,
-  Label,
-  Input
-};
+  export {
+    Wrapper,
+    FilterLink,
+    SelectLink,
+    Card,
+    CardHeader,
+    CardBody,
+    NavItem,
+    Nav,
+    Label,
+    Input
+  };

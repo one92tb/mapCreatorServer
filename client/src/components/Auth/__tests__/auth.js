@@ -39,7 +39,7 @@ const store = mockStore({
   }
 });
 
-test("test auth method", () => {
+test("it should render auth component", () => {
   render( <MemoryRouter initialEntries = {["/login"]}>
       <Provider store = {store}>
         <Auth />
