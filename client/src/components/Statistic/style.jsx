@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Container, Row, Col } from "reactstrap";
 
 const TextWrapper = styled.div`
   display: flex;
@@ -42,7 +43,7 @@ const Inner = styled.div`
   }
 `;
 
-const ContainerStyle = styled.div`
+const ContainerStyle = styled(Container)`
   height: 40%;
   padding: 0 !important;
 
@@ -51,11 +52,11 @@ const ContainerStyle = styled.div`
   }
 `;
 
-const RowStyle = styled.div`
+const RowStyle = styled(Row)`
   height: 100%;
   margin: 0 !important;
 `;
-const ColStyle = styled.div`
+const ColStyle = styled(Col)`
   padding: 0!important
   height: 100%;
 `;

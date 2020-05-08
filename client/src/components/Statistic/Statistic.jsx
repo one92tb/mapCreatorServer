@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { fetchIndicators } from "../../actions/mapIndicator/fetchIndicators";
-import { fetchMarkers } from "../../actions/marker/fetchMarkers";
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import {fetchIndicators} from "../../actions/mapIndicator/fetchIndicators";
+import {fetchMarkers} from "../../actions/marker/fetchMarkers";
 import BarGraph from "./BarGraph/BarGraph";
 import PieGraph from "./PieChart/PieGraph";
-import { Container, Row, Col } from "reactstrap";
+import {Container, Row, Col} from "reactstrap";
 import PropTypes from "prop-types";
 import {
   ContainerStyle,
@@ -37,124 +37,96 @@ export class Statistic extends Component {
   }
 
   componentDidMount() {
-    const { fetchIndicators, fetchMarkers } = this.props;
+    const {fetchIndicators, fetchMarkers} = this.props;
     fetchIndicators();
     fetchMarkers();
   }
 
-  sumEachIndicator = () => {
-    const { indicators } = this.props;
-    const { city } = this.state;
+  sumVisibleIndicators = () => {
+    const {indicators} = this.props;
+    const {city} = this.state;
 
-    const displayMarkers = Object.entries(
-      indicators
-        .filter((indicator, id, arr) => {
-          return (
-            (city === "" ||
-              indicator.city.toLowerCase().search(city.toLowerCase()) !== -1) &&
-            indicator
-          );
-        })
-        .reduce((obj, el, id) => {
-          obj[el.name] = obj[el.name] ? ++obj[el.name] : 1;
-          return obj;
-        }, {})
-    );
+    const displayMarkers = Object.entries(indicators.filter((indicator, id, arr) => {
+      return ((city === "" || indicator.city.toLowerCase().search(city.toLowerCase()) !== -1) && indicator);
+    }).reduce((obj, el, id) => {
+      obj[el.name] = obj[el.name]
+        ? ++obj[el.name]
+        : 1;
+      return obj;
+    }, {}));
 
     return displayMarkers;
   };
 
   sumAllIndiacators = () => {
-    const { indicators } = this.props;
-    const displaySumMarkers = [["All markers", indicators.length]];
+    const {indicators} = this.props;
+    const displaySumMarkers = [
+      ["All markers", indicators.length]
+    ];
     return displaySumMarkers;
   };
 
   handleChange = e => {
-    this.setState({
-      city: e.target.value
-    });
+    this.setState({city: e.target.value});
   };
 
   render() {
-    const { indicators } = this.props;
-    return (
-      <Wrapper>
-        <Form>
-          <label>
-            <Input
-              onChange={this.handleChange}
-              type="text"
-              name="city"
-              placeholder="search your city"
-            />
-          </label>
-        </Form>
-        {indicators.length === 0 ? (
-          <TextWrapper>
+    const {indicators} = this.props;
+    return (<Wrapper>
+      <Form>
+        <label>
+          <Input onChange={this.handleChange} type="text" name="city" placeholder="search your city"/>
+        </label>
+      </Form>
+      {
+        indicators.length === 0
+          ? (<TextWrapper>
             <TextBox>You have not any data to display on the charts</TextBox>
-          </TextWrapper>
-        ) : (
-          <React.Fragment>
-            <BarGraph displayMarkers={this.sumEachIndicator} />
-            <Container fluid tag={ContainerStyle}>
-              <Row tag={RowStyle}>
-                <Col xl="6" lg="12" tag={ColStyle}>
+          </TextWrapper>)
+          : (<React.Fragment>
+            <BarGraph displayMarkers={this.sumVisibleIndicators}/>
+            <ContainerStyle fluid={true}>
+              <RowStyle>
+                <ColStyle xl="6" lg="12">
                   <Inner>
-                    <PieGraph displayMarkers={this.sumAllIndiacators} />
+                    <PieGraph displayMarkers={this.sumAllIndiacators}/>
                   </Inner>
-                </Col>
-                <Col xl="6" lg="12" tag={ColStyle}>
+                </ColStyle>
+                <ColStyle xl="6" lg="12">
                   <Inner>
-                    <PieGraph displayMarkers={this.sumEachIndicator} />
+                    <PieGraph displayMarkers={this.sumVisibleIndicators}/>
                   </Inner>
-                </Col>
-              </Row>
-            </Container>
-          </React.Fragment>
-        )}
-      </Wrapper>
-    );
+                </ColStyle>
+              </RowStyle>
+            </ContainerStyle>
+          </React.Fragment>)
+      }
+    </Wrapper>);
   }
 }
 
-const mapStateToProps = state => ({
-  indicators: state.mapIndicator.indicators,
-  markers: state.marker.markers
-});
+const mapStateToProps = state => ({indicators: state.mapIndicator.indicators, markers: state.marker.markers});
 
 const mapDispatchToProps = {
   fetchIndicators,
   fetchMarkers
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Statistic);
+export default connect(mapStateToProps, mapDispatchToProps)(Statistic);
 
 Statistic.propTypes = {
   fetchIndicators: PropTypes.func.isRequired,
   fetchMarkers: PropTypes.func.isRequired,
-  indicators: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      icon: PropTypes.string.isRequired,
-      lat: PropTypes.number.isRequired,
-      lng: PropTypes.number.isRequired,
-      street: PropTypes.string,
-      city: PropTypes.string,
-      country: PropTypes.string,
-      userId: PropTypes.number.isRequired
-    })
-  ).isRequired,
-  markers: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      icon: PropTypes.string.isRequired,
-      userId: PropTypes.number.isRequired
-    })
-  ).isRequired
+  indicators: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired,
+    street: PropTypes.string,
+    city: PropTypes.string,
+    country: PropTypes.string,
+    userId: PropTypes.number.isRequired
+  })).isRequired,
+  markers: PropTypes.arrayOf(PropTypes.shape({id: PropTypes.number.isRequired, name: PropTypes.string.isRequired, icon: PropTypes.string.isRequired, userId: PropTypes.number.isRequired})).isRequired
 };
