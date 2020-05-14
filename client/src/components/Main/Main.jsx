@@ -8,7 +8,7 @@ import {Switch, Route} from "react-router-dom";
 RowStyle.displayName = "div";
 ColStyle.displayName = "div";
 
-const routes = [
+export const routes = [
   {
     path: "/",
     exact: true,
@@ -22,7 +22,6 @@ const routes = [
 export const Main = ({
   ...props
 }) => {
-  console.log(props);
   return (<RowStyle>
     <ColStyle pathname={props.location.pathname} lg="3" md="12">
       <Panel {...props}/>

@@ -1,8 +1,11 @@
 import React from "react";
-import MarkerList from "./MarkerList/MarkerList";
 import {isPanelSelect} from "../../../actions/isPanelSelect";
+import {fetchMarkers} from "../../../actions/marker/fetchMarkers";
+import {disableMarkers} from "../../../actions/marker/disableMarkers";
+import {getSelectedMarker} from "../../../actions/marker/getSelectedMarker";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
+import baseUrl from "../../../baseUrl";
 import {
   Wrapper,
   FilterLink,
@@ -13,7 +16,12 @@ import {
   NavItem,
   Nav,
   Label,
-  Input
+  Input,
+  List,
+  Marker,
+  MarkerIcon,
+  MarkerName,
+  MarkerImg
 } from "./style";
 
 Wrapper.displayName = "div";
@@ -26,20 +34,71 @@ NavItem.displayName = "li";
 Nav.displayName = "ul";
 Label.displayName = "label";
 Input.displayName = "input";
+List.displayName = "div";
+Marker.displayName = "li";
+MarkerIcon.displayName = "div";
+MarkerName.displayName = "span";
+MarkerImg.displayName = "img";
 
 export class Panel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isSelected: true,
-      checked: false
+      checked: false,
+      selectedId: "",
+      filteredMarkers: []
     };
+  }
+
+  componentDidMount() {
+    const {fetchMarkers} = this.props;
+    fetchMarkers();
   }
 
   componentDidUpdate(prevProps) {
     const {location} = this.props;
     if (location.pathname !== prevProps.location.pathname && location.pathname === "/createMarker") {
       this.setState({isSelected: true});
+    }
+
+    if (location.pathname !== prevProps.location.pathname) {
+      this.setState({selectedId: ""});
+    }
+  }
+
+  onSelect = (marker, id) => {
+    const {getSelectedMarker, disableMarkers} = this.props;
+    const {selectedId, filteredMarkers, isSelected} = this.state;
+
+    if (marker.id !== selectedId && isSelected) {
+      this.setState({selectedId: id});
+      getSelectedMarker({
+        ...marker,
+        url: `${baseUrl}/images/${marker.icon}`
+      });
+    } else if (marker.id === selectedId && isSelected) {
+      this.setState({selectedId: ""});
+      getSelectedMarker({id: undefined, name: "", url: "IMG-default.png"});
+    } else {
+      //remove Marker from filteredMarkers if exist
+      if (filteredMarkers.find(el => el.id === marker.id)) {
+        this.setState({
+          filteredMarkers: filteredMarkers.filter(el => el.id !== marker.id)
+        }, () => {
+          disableMarkers(this.state.filteredMarkers);
+        });
+        //add Marker to filteredMarkers if not exist
+      } else {
+        this.setState({
+          filteredMarkers: [
+            ...filteredMarkers,
+            marker
+          ]
+        }, () => {
+          disableMarkers(this.state.filteredMarkers);
+        });
+      }
     }
   }
 
@@ -59,9 +118,8 @@ export class Panel extends React.Component {
   };
 
   render() {
-    console.log(this.props);
-    const {location} = this.props;
-    const {isSelected} = this.state;
+    const {location, markers} = this.props;
+    const {isSelected, selectedId, filteredMarkers} = this.state;
     return (<Wrapper currentLocation={location}>
       <Label htmlFor="panel" currentLocation={location}>
         <img src={"drawMarker.png"} alt="drawMarker" width={30} height={30}/>
@@ -84,7 +142,17 @@ export class Panel extends React.Component {
           </Nav>
         </CardHeader>
         <CardBody className="scroll">
-          <MarkerList isNavSelect={isSelected} currentLocation={location}/>
+          <List>
+            {
+              markers.map((marker, id) => (<Marker data-testid="marker" key={marker.id} isSelected={selectedId === marker.id && this.state.isSelected} isFiltered={filteredMarkers.find(el => el.id === marker.id) && !isSelected
+} onClick={() => this.onSelect(marker, marker.id)}>
+                <MarkerIcon>
+                  <MarkerImg src={`${baseUrl}/images/${marker.icon}`} alt={marker.icon}/>
+                </MarkerIcon>
+                <MarkerName>{marker.name}</MarkerName>
+              </Marker>))
+            }
+          </List>
         </CardBody>
       </Card>
     </Wrapper>);
@@ -92,11 +160,20 @@ export class Panel extends React.Component {
 }
 
 const mapDispatchToProps = {
-  isPanelSelect
+  isPanelSelect,
+  fetchMarkers,
+  getSelectedMarker,
+  disableMarkers
 };
 
-export default connect(null, mapDispatchToProps)(Panel);
+const mapStateToProps = state => ({selectedMarker: state.marker.selectedMarker, markers: state.marker.markers});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Panel);
 
 Panel.propTypes = {
-  isPanelSelect: PropTypes.func.isRequired
+  isPanelSelect: PropTypes.func.isRequired,
+  fetchMarkers: PropTypes.func.isRequired,
+  getSelectedMarker: PropTypes.func.isRequired,
+  disableMarkers: PropTypes.func.isRequired,
+  markers: PropTypes.arrayOf(PropTypes.shape({id: PropTypes.number.isRequired, name: PropTypes.string.isRequired, icon: PropTypes.string.isRequired, userId: PropTypes.number.isRequired}))
 };
