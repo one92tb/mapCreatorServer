@@ -48,9 +48,49 @@ test("it should render main component with panel and markerCreator child compone
 
   render(<Provider store={store}>
     <MemoryRouter initialEntries={["/createMarker"]}>
-      <Main location={{pathname: "/createMarker"}}></Main>
+      <Main location={{
+          pathname: "/createMarker"
+        }}></Main>
     </MemoryRouter>
   </Provider>)
 
+  screen.debug();
+})
+
+test("it should add new marker to the panel component", async () => {
+  render(<Provider store={store}>
+    <MemoryRouter initialEntries={["/createMarker"]}>
+      <Main location={{
+          pathname: "/createMarker"
+        }}></Main>
+    </MemoryRouter>
+  </Provider>)
+
+  const inputName = screen.getByLabelText("Name");
+  //screen.debug(inputName);
+  const inputFile = screen.getByTestId("inputFile")
+  //screen.debug(inputFile);
+  const submitBtn = screen.getByText("Upload new marker");
+  //screen.debug(submitBtn);
+  global.URL.createObjectURL = jest.fn(() => 'details');
+
+  fireEvent.change(inputName, {
+    target: {
+      value: "pool"
+    }
+  })
+
+  fireEvent.change(inputFile, {
+    target: {
+      files: [new File(['(⌐□_□)'], 'pool.png', {type: 'image/png'})]
+    }
+  })
+
+  fireEvent.click(submitBtn);
+
+  const markersInPanel = screen.queryAllByTestId("marker");
+  //expect(markersInPanel).toHaveLength(4);
+
+  await waitForDomChange();
   screen.debug();
 })

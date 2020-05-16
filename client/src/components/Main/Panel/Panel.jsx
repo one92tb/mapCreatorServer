@@ -6,6 +6,7 @@ import {getSelectedMarker} from "../../../actions/marker/getSelectedMarker";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import baseUrl from "../../../baseUrl";
+import {defaultMarkers} from "./defaultMarkers";
 import {
   Wrapper,
   FilterLink,
@@ -144,13 +145,16 @@ export class Panel extends React.Component {
         <CardBody className="scroll">
           <List>
             {
-              markers.map((marker, id) => (<Marker data-testid="marker" key={marker.id} isSelected={selectedId === marker.id && this.state.isSelected} isFiltered={filteredMarkers.find(el => el.id === marker.id) && !isSelected
+              markers.map((marker, id) => {
+                console.log(marker);
+                return (<Marker data-testid="marker" key={marker.id} isSelected={selectedId === marker.id && this.state.isSelected} isFiltered={filteredMarkers.find(el => el.id === marker.id) && !isSelected
 } onClick={() => this.onSelect(marker, marker.id)}>
-                <MarkerIcon>
-                  <MarkerImg src={`${baseUrl}/images/${marker.icon}`} alt={marker.icon}/>
-                </MarkerIcon>
-                <MarkerName>{marker.name}</MarkerName>
-              </Marker>))
+                  <MarkerIcon>
+                    <MarkerImg src={`${baseUrl}/images/${marker.icon}`} alt={marker.icon}/>
+                  </MarkerIcon>
+                  <MarkerName>{marker.name}</MarkerName>
+                </Marker>)
+              })
             }
           </List>
         </CardBody>

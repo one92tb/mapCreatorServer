@@ -16,8 +16,8 @@ const Inner = styled.div`
 `;
 
 const ImageInsideMarker = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
 `;
 
 const ImageWithoutMarker = styled.img`
@@ -170,14 +170,15 @@ const DownloadBtn = styled.button`
 const MarkerIcon = styled.div`
   display: flex;
   position: absolute;
+  justify-content: center;
+  align-items:center;
   border-radius: 50%;
   border: 8px solid ${props => props.background && props.background};
   width: 60px;
   height: 60px;
   top: 7px;
-  background: ${props => props.background && props.background}
-  justify-content: center;
-  align-items: center;
+  background: ${props => props.background && props.background};
+
   &::after {
     position: absolute;
     content: "";
@@ -186,7 +187,7 @@ const MarkerIcon = styled.div`
     bottom: -45px;
     left: 2px;
     border: 20px solid transparent;
-    border-top: 25px solid ${props => props.background && props.background}
+    border-top: 25px solid ${props => props.background && props.background};
   }`;
 
 const UploadButton = styled.button`
