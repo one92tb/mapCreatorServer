@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { getManager } from "typeorm";
 import { User } from "../../entity/User";
-import {} from "./style";
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;

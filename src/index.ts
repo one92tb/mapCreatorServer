@@ -16,8 +16,18 @@ const jwt = require("express-jwt");
 
 import { routes } from "./routes/index";
 
+const ENV = process.env.NODE_ENV;
+const PORT = process.env.PORT || 8080;
+
+if (ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+  app.use((req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  });
+}
+
 app.engine("pug", require("pug").__express);
-app.set("port", 8080);
+app.set("port", PORT);
 app.set("../views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
@@ -52,7 +62,9 @@ const options: ConnectionOptions = {
   logging: true,
   database: "db/mydb.db",
   synchronize: true,
-  entities: ["src/entity/*.ts"]
+  entities: ['dist/entity/*.js'],
+  migrations: ['src/migration/**/*.ts'],
+  subscribers: ['src/subscriber/**/*.ts'],
 };
 
 createConnection(options).then(async connection => {
@@ -78,4 +90,4 @@ createConnection(options).then(async connection => {
   });
 });
 
-module.exports = app;
+export default app;

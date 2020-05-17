@@ -7,7 +7,7 @@ export const createMiddleware = handlers => {
     const actionHandler = handlers.find(
       handler => handler.type === action.type
     );
-
+  
     let result = next(action);
 
     if (actionHandler && actionHandler.afterHandler) {

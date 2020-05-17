@@ -1,24 +1,24 @@
 {
-   "type": "sqlite",
-   "host": "localhost",
-   "port": 3330,
-   "username": "one92tb",
-   "password": "asd123",
-   "database": "db/mydb.db",
-   "synchronize": true,
-   "logging": false,
-   "entities": [
-      "src/entity/**/*.ts"
-   ],
-   "migrations": [
-      "src/migration/**/*.ts"
-   ],
-   "subscribers": [
-      "src/subscriber/**/*.ts"
-   ],
-   "cli": {
-      "entitiesDir": "src/entity",
-      "migrationsDir": "src/migration",
-      "subscribersDir": "src/subscriber"
-   }
+  "type": "sqlite",
+  "host": "localhost",
+  "port": 3330,
+  "username": "one92tb",
+  "password": "asd123",
+  "database": "db/mydb.db",
+  "synchronize": true,
+  "logging": false,
+  "entities": [
+    "src/modules/**/*.entity.{ts,js}"
+  ],
+  "migrations": [
+    "src/migrations/**/*.{ts,js}"
+  ],
+  "subscribers": [
+    "dist/subscriber/**/*.js"
+  ],
+  "cli": {
+    "entitiesDir": "src/entity",
+    "migrationsDir": "ts-node node_modules\typeorm\cli.js",
+    "subscribersDir": "src/subscriber"
+  }
 }
