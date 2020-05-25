@@ -5,7 +5,7 @@ import { postIndicator } from "../../../actions/mapIndicator/postIndicator";
 import { fetchIndicators } from "../../../actions/mapIndicator/fetchIndicators";
 import { removeIndicator } from "../../../actions/mapIndicator/removeIndicator";
 import PropTypes from "prop-types";
-import apiKey from "./apiKey";
+//import apiKey from "./apiKey";
 import baseUrl from "../../../baseUrl";
 
 import {

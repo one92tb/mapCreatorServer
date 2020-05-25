@@ -62,7 +62,7 @@ const options: ConnectionOptions = {
   logging: true,
   database: "db/mydb.db",
   synchronize: true,
-  entities: ['dist/entity/*.js'],
+  entities: ['src/entity/**/*.ts'],
   migrations: ['src/migration/**/*.ts'],
   subscribers: ['src/subscriber/**/*.ts'],
 };
