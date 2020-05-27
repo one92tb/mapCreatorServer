@@ -20,82 +20,82 @@ import { deleteAccount } from "../controllers/user/deleteAccount";
 
 export const routes = [
   {
-    path: "/",
+    path: "/api/",
     method: "get",
     action: getHomePage
   },
   {
-    path: "/markers",
+    path: "/api/markers",
     method: "get",
     action: fetchMarkers
   },
   {
-    path: "/markers",
+    path: "/api/markers",
     method: "post",
     action: postMarker
   },
   {
-    path: "/markers/:id",
+    path: "/api/markers/:id",
     method: "delete",
     action: removeMarker
   },
   {
-    path: "/markers/:id",
+    path: "/api/markers/:id",
     method: "put",
     action: editMarker
   },
   {
-    path: "/indicators",
+    path: "/api/indicators",
     method: "post",
     action: postIndicator
   },
   {
-    path: "/indicators",
+    path: "/api/indicators",
     method: "get",
     action: fetchIndicators
   },
   {
-    path: "/indicators/:id",
+    path: "/api/indicators/:id",
     method: "get",
     action: getIndicator
   },
   {
-    path: "/indicators/:id",
+    path: "/api/indicators/:id",
     method: "delete",
     action: removeIndicator
   },
   {
-    path: "/markers/:id",
+    path: "/api/markers/:id",
     method: "get",
     action: getMarker
   },
   {
-    path: "/login",
+    path: "/api/login",
     method: "post",
     action: login
   },
   {
-    path: "/users",
+    path: "/api/users",
     method: "post",
     action: registerUser
   },
   {
-    path: "/users",
+    path: "/api/users",
     method: "get",
     action: fetchUsers
   },
   {
-    path: "/users/:id",
+    path: "/api/users/:id",
     method: "get",
     action: getUser
   },
   {
-    path: "/users/:id",
+    path: "/api/users/:id",
     method: "patch",
     action: changePermissions
   },
   {
-    path: "/users/:id",
+    path: "/api/users/:id",
     method: "delete",
     action: deleteAccount
   }

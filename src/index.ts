@@ -19,13 +19,6 @@ import { routes } from "./routes/index";
 const ENV = process.env.NODE_ENV;
 const PORT = process.env.PORT || 8080;
 
-if (ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
-  app.use((req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
-  });
-}
-
 app.engine("pug", require("pug").__express);
 app.set("port", PORT);
 app.set("../views", path.join(__dirname, "views"));
@@ -62,19 +55,17 @@ const options: ConnectionOptions = {
   logging: true,
   database: "db/mydb.db",
   synchronize: true,
-  entities: ['src/entity/**/*.ts'],
-  migrations: ['src/migration/**/*.ts'],
-  subscribers: ['src/subscriber/**/*.ts'],
+  entities: ['build/entity/**/*.js'],
 };
 
 createConnection(options).then(async connection => {
   routes.forEach(route => {
     const args =
-      (route.method === "post" && route.path === "/login") ||
-      (route.method === "post" && route.path === "/users")
+      (route.method === "post" && route.path === "/api/login") ||
+        (route.method === "post" && route.path === "/api/users")
         ? [route.path]
-        : (route.method === "post" && route.path === "/markers") ||
-          (route.method === "put" && route.path === "/markers/:id")
+        : (route.method === "post" && route.path === "/api/markers") ||
+          (route.method === "put" && route.path === "/api/markers/:id")
           ? [route.path, upload.any(), jwt({ secret: "secretkey-1992" })]
           : [route.path, jwt({ secret: "secretkey-1992" })];
 

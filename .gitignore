@@ -9,3 +9,4 @@ db/**
 public/images/**
 # but keep the folders
 !*.gitkeep
+.env

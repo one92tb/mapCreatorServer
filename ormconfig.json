@@ -7,10 +7,15 @@
   "database": "db/mydb.db",
   "synchronize": true,
   "logging": false,
-
   "cli": {
     "entitiesDir": "src/entity",
     "migrationsDir": "ts-node node_modules\typeorm\cli.js",
+  "entities": [
+     "src/entity/**/*.ts"
+  ],
+  "cli": {
+    "entitiesDir": "src/entity",
+    "migrationsDir": "src/migration",
     "subscribersDir": "src/subscriber"
   }
 }

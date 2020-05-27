@@ -17,17 +17,14 @@ export async function login(request: Request, response: Response) {
       errorMessage: "login or password is incorrect"
     });
   };
-
   if (userDB) {
     bcrypt.compare(request.body.password, userDB.password, (err, res) => {
-      console.log(res);
       if (res) {
         const userData = {
           login: request.body.login,
           userId: userDB.id,
           isAdmin: userDB.isAdmin
         };
-
         jwt.sign(
           { userData },
           "secretkey-1992",

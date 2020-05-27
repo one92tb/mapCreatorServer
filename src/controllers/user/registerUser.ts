@@ -8,7 +8,7 @@ const saltRounds = 10;
 export async function registerUser(request: Request, response: Response) {
   const userRepository = getManager().getRepository(User);
   const firstUser = await userRepository.findOne(1);
-
+  console.log(request, response);
   bcrypt.genSalt(saltRounds, (err, salt) => {
     bcrypt.hash(request.body.password, salt, async (err, hash) => {
       const user = {
