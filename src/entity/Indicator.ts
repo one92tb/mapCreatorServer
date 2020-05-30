@@ -28,6 +28,9 @@ export class Indicator {
     @Column()
     country: string;
 
+    @Column()
+    isDefault: boolean;
+
     @Column({ type: "int" })
     public userId: number;
 

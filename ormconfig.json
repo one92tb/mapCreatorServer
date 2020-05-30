@@ -2,20 +2,23 @@
   "type": "sqlite",
   "host": "localhost",
   "port": 3330,
-  "username": "one92tb",
-  "password": "asd123",
+  "username": process.env.USER_NAME,
+  "password": process.env.USER_PASSWORD,
   "database": "db/mydb.db",
   "synchronize": true,
   "logging": false,
-  "cli": {
-    "entitiesDir": "src/entity",
-    "migrationsDir": "ts-node node_modules\typeorm\cli.js",
   "entities": [
      "src/entity/**/*.ts"
   ],
+  "migrations": [
+     "src/migration/**/*.ts"
+  ],
+  "subscribers": [
+     "src/subscriber/**/*.ts"
+  ],
   "cli": {
-    "entitiesDir": "src/entity",
-    "migrationsDir": "src/migration",
-    "subscribersDir": "src/subscriber"
+     "entitiesDir": "src/entity",
+     "migrationsDir": "src/migration",
+     "subscribersDir": "src/subscriber"
   }
 }

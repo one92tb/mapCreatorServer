@@ -10,8 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "start": "node build/server.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run client\" \"npm start\""
+    "client": "npm start --prefix client"
   },
   "repository": {
     "type": "git",
@@ -44,7 +43,7 @@
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^4.2.0",
     "ts-node": "^8.10.1",
-    "typeorm": "^0.2.24",
+    "typeorm": "^0.3.0-alpha.24",
     "typescript": "^3.9.2"
   },
   "devDependencies": {
