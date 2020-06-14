@@ -28,7 +28,7 @@ export const editMarker = async (request: Request, response: Response) => {
     })
     .catch(error =>
       response.status(403).json({
-        errorMessage: "blablabla"
+        errorMessage: "error"
       })
     );
 };

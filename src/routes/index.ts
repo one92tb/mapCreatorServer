@@ -10,6 +10,7 @@ import { postIndicator } from "../controllers/indicators/postIndicator";
 import { fetchIndicators } from "../controllers/indicators/fetchIndicators";
 import { getIndicator } from "../controllers/indicators/getIndicator";
 import { removeIndicator } from "../controllers/indicators/removeIndicator";
+import { editIndicator } from "../controllers/indicators/editIndicator";
 
 import { login } from "../controllers/user/login";
 import { registerUser } from "../controllers/user/registerUser";
@@ -63,6 +64,11 @@ export const routes = [
     path: "/api/indicators/:id",
     method: "delete",
     action: removeIndicator
+  },
+  {
+    path: "/api/indicators/:id",
+    method: "patch",
+    action: editIndicator
   },
   {
     path: "/api/markers/:id",

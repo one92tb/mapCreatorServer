@@ -55,20 +55,17 @@ const options: ConnectionOptions = {
   logging: true,
   database: "db/mydb.db",
   synchronize: true,
-  entities: ['build/entity/**/*.js'],
+  entities: ['src/entity/**/*.ts'],
 };
-
+  //entities: ['build/entity/**/*.js'],
 createConnection(options).then(async connection => {
   routes.forEach(route => {
     const args =
-      (route.method === "post" && route.path === "/api/login") ||
-        (route.method === "post" && route.path === "/api/users")
-        ? [route.path]
-        : (route.method === "post" && route.path === "/api/markers") ||
-          (route.method === "put" && route.path === "/api/markers/:id")
-          ? [route.path, upload.any(), jwt({ secret: "secretkey-1992" })]
-          : [route.path, jwt({ secret: "secretkey-1992" })];
+      (route.method === "post" && route.path === "/api/login") || (route.method === "post" && route.path === "/api/users") ? [route.path]
+        : (route.method === "post" && route.path === "/api/markers") || (route.method === "put" && route.path === "/api/markers/:id")
+          ? [route.path, upload.any(), jwt({ secret: "secretkey-1992" })] : [route.path, jwt({ secret: "secretkey-1992" })];
 
+// 1) logowanie, rejestracja 2) dodawanie, edycja markera ze zdj  3) reszta
     app[route.method](
       ...args,
       (request: Request, response: Response, next: Function) => {
