@@ -55,7 +55,7 @@ const options: ConnectionOptions = {
   logging: true,
   database: "db/mydb.db",
   synchronize: true,
-  entities: ['src/entity/**/*.ts'],
+  entities: ['build/entity/**/*.js'],
 };
   //entities: ['build/entity/**/*.js'],
 createConnection(options).then(async connection => {
