@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+require('dotenv').config();
+
 export async function login(request: Request, response: Response) {
   const userRepository = getManager().getRepository(User);
   const userDB = await userRepository.findOne({
@@ -27,7 +29,7 @@ export async function login(request: Request, response: Response) {
         };
         jwt.sign(
           { userData },
-          "secretkey-1992",
+          process.env.SECRET_KEY,
           { expiresIn: "86400s" },
           (err, token) => {
             response.json({
