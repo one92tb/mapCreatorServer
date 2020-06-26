@@ -27,7 +27,7 @@ export async function login(request: Request, response: Response) {
         };
         jwt.sign(
           { userData },
-          "secretkey-1992",
+          process.env.SECRET_KEY,
           { expiresIn: "86400s" },
           (err, token) => {
             response.json({

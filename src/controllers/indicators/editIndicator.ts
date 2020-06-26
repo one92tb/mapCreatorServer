@@ -4,7 +4,6 @@ import { Indicator } from "../../entity/Indicator";
 
 
 export async function editIndicator(request: Request, response: Response) {
-
   const indicatorRepository = getManager().getRepository(Indicator);
   const indicatorToEdit = await indicatorRepository.findOne(
     request.params.id
