@@ -3,6 +3,7 @@ import { getManager } from "typeorm";
 import { Indicator } from "../../entity/Indicator";
 
 export async function postIndicator(request: Request, response: Response) {
+  console.log(request.body);
   const indicatorRepository = getManager().getRepository(Indicator);
   const indicator = {
     name: request.body.name,

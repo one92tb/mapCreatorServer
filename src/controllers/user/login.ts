@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+require('dotenv').config();
+
 export async function login(request: Request, response: Response) {
   const userRepository = getManager().getRepository(User);
   const userDB = await userRepository.findOne({

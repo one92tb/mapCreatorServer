@@ -11,6 +11,10 @@ export const removeMarker = async (request: Request, response: Response) => {
     name: markerToDelete.name
   });
 
+  mapIndicatorsToDelete.forEach(el => {
+    console.log(el.userId);
+  });
+
   if (
     markerToDelete.userId === request.user.userData.userId &&
     mapIndicatorsToDelete.every(
