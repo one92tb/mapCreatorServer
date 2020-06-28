@@ -6,6 +6,7 @@ import { getUser } from "../controllers/user/getUser";
 import { changePermissions } from "../controllers/user/changePermissions";
 import { deleteAccount } from "../controllers/user/deleteAccount";
 
+const checkAuth = require("../middleware/checkAuth");
 const express = require("express");
 const router = express.Router();
 const jwt = require("express-jwt");
@@ -30,13 +31,13 @@ router.get("/:id", jwt({ secret: process.env.SECRET_KEY }), (request: Request, r
     .catch(err => next(err));
 })
 
-router.patch("/:id", jwt({ secret: process.env.SECRET_KEY }), (request: Request, response: Response, next: Function) => {
+router.patch("/:id", checkAuth, jwt({ secret: process.env.SECRET_KEY }), (request: Request, response: Response, next: Function) => {
   changePermissions(request, response)
     .then(() => next)
     .catch(err => next(err));
 })
 
-router.delete("/:id", jwt({ secret: process.env.SECRET_KEY }), (request: Request, response: Response, next: Function) => {
+router.delete("/:id", checkAuth, jwt({ secret: process.env.SECRET_KEY }), (request: Request, response: Response, next: Function) => {
   deleteAccount(request, response)
     .then(() => next)
     .catch(err => next(err));
