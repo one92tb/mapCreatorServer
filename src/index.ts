@@ -42,13 +42,29 @@ const options: ConnectionOptions = {
   logging: true,
   database: "db/mydb.db",
   synchronize: true,
-  entities: ['build/entity/**/*.js'],
+  entities: ['src/entity/**/*.ts'],
 };
-//entities: ['build/entity/**/*.js'],
+
 createConnection(options).then(async connection => {
+
+  app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+    if (req.method === "OPTIONS") {
+      res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+      return res.status(200).json({});
+    }
+    next();
+  });
+
   app.use("/api/indicators/", indicatorRoutes);
   app.use("/api/markers/", markerRoutes);
   app.use("/api/users/", userRoutes);
 });
+
+
 
 export default app;
