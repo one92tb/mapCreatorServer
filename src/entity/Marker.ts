@@ -9,6 +9,8 @@ export class Marker {
 
   @Column() icon: string;
 
+  @Column() isDefault: boolean;
+
   @Column({ type: "int" })
   public userId: number;
 
