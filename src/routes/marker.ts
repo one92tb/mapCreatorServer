@@ -21,34 +21,24 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.get("/", jwt({ secret: process.env.SECRET_KEY }), (request: Request, response: Response, next: Function) => {
-  fetchMarkers(request, response)
-    .then(() => next)
-    .catch(err => next(err));
-})
+router.get("/", jwt({ secret: process.env.SECRET_KEY }), (request: Request, response: Response) => {
+  fetchMarkers(request, response);
+});
 
-router.get("/:id", jwt({ secret: process.env.SECRET_KEY }), (request: Request, response: Response, next: Function) => {
-  getMarker(request, response)
-    .then(() => next)
-    .catch(err => next(err));
-})
+router.get("/:id", jwt({ secret: process.env.SECRET_KEY }), (request: Request, response: Response) => {
+  getMarker(request, response);
+});
 
-router.delete("/:id", jwt({ secret: process.env.SECRET_KEY }), (request: Request, response: Response, next: Function) => {
-  removeMarker(request, response)
-    .then(() => next)
-    .catch(err => next(err));
-})
+router.delete("/:id", jwt({ secret: process.env.SECRET_KEY }), (request: Request, response: Response) => {
+  removeMarker(request, response);
+});
 
-router.put("/:id", upload.any(), jwt({ secret: process.env.SECRET_KEY }), (request: Request, response: Response, next: Function) => {
-  editMarker(request, response)
-    .then(() => next)
-    .catch(err => next(err));
-})
+router.put("/:id", upload.any(), jwt({ secret: process.env.SECRET_KEY }), (request: Request, response: Response) => {
+  editMarker(request, response);
+});
 
-router.post("/", upload.any(), jwt({ secret: process.env.SECRET_KEY }), (request: Request, response: Response, next: Function) => {
-  postMarker(request, response)
-    .then(() => next)
-    .catch(err => next(err));
-})
+router.post("/", upload.any(), jwt({ secret: process.env.SECRET_KEY }), (request: Request, response: Response) => {
+  postMarker(request, response);
+});
 
 module.exports = router;
