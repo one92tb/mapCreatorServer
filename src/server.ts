@@ -2,6 +2,9 @@ import "reflect-metadata";
 import * as bodyParser from "body-parser";
 import { createConnection } from "typeorm";
 import { ConnectionOptions } from "typeorm";
+import indicatorRoutes from "./routes/indicator";
+import markerRoutes from "./routes/marker";
+import userRoutes from "./routes/users";
 
 const express = require("express");
 const app = express();
@@ -10,17 +13,17 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 
-const indicatorRoutes = require("./routes/indicator");
-const markerRoutes = require("./routes/marker");
-const userRoutes = require("./routes/users");
+//const indicatorRoutes = require("./routes/indicator");
+//const markerRoutes = require("./routes/marker");
+//const userRoutes = require("./routes/users");
 
 const ENV = process.env.NODE_ENV;
 const PORT = process.env.PORT || 8080;
 
 app.engine("pug", require("pug").__express);
 app.set("port", PORT);
-app.set("../views", path.join(__dirname, "views"));
-app.set("view engine", "pug");
+//app.set("../views", path.join(__dirname, "views"));
+//app.set("view engine", "pug");
 
 app.use(cors());
 app.use(bodyParser.json({ limit: "50mb" }));
@@ -45,10 +48,17 @@ const options: ConnectionOptions = {
 
 createConnection(options).then(async connection => {
 
-  app.use((req, res) => {
+  app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
     if (req.method === "OPTIONS") {
+      res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
       return res.status(200).json({});
     }
+    next();
   });
 
   app.use("/api/indicators/", indicatorRoutes);

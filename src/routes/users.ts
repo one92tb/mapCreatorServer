@@ -49,4 +49,4 @@ router.post("/login", (request: Request, response: Response, next: Function) => 
     .catch(err => next(err));
 })
 
-module.exports = router;
+export default router;

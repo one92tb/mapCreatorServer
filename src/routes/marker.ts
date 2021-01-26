@@ -41,4 +41,4 @@ router.post("/", upload.any(), jwt({ secret: process.env.SECRET_KEY }), (request
   postMarker(request, response);
 });
 
-module.exports = router;
+export default router;

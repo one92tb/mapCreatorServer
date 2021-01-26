@@ -31,4 +31,4 @@ router.patch("/:id", jwt({ secret: process.env.SECRET_KEY }), (request: Request,
   editIndicator(request, response);
 })
 
-module.exports = router;
+export default router;
